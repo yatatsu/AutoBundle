@@ -1,5 +1,6 @@
 package com.yatatsu.autobundle.processor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.lang.model.element.TypeElement;
@@ -9,8 +10,7 @@ import javax.lang.model.util.Elements;
 public class AutoBundleBindingClass {
 
     public enum BuilderType {
-        Intent, Fragment, None,
-        ;
+        Intent, Fragment,;
 
         public static BuilderType byName(String clazzName) {
             if (clazzName.endsWith("Fragment")) {
@@ -20,25 +20,30 @@ public class AutoBundleBindingClass {
                     clazzName.endsWith("Service")) {
                 return Intent;
             }
-            return None;
+            throw new UnsupportedOperationException(clazzName + "is not supported.");
         }
     }
 
     private final TypeElement typeElement;
     private final String packageName;
     private final String className;
+    private final BuilderType builderType;
     private final List<AutoBundleBindingArg> requiredArgs;
     private final List<AutoBundleBindingArg> notRequiredArgs;
-    private final BuilderType builderType;
 
     public AutoBundleBindingClass(TypeElement typeElement, Elements elementsUtils) {
         this.typeElement = typeElement;
-        this.packageName = AutoBundleDetector.getPackageName(elementsUtils, typeElement);
-        this.className = AutoBundleDetector.getClassName(typeElement, this.packageName);
-        this.requiredArgs = AutoBundleDetector.findArgFields(typeElement, true);
-        this.notRequiredArgs = AutoBundleDetector.findArgFields(typeElement, false);
+        Validator.checkAutoBundleTargetModifier(this.typeElement);
+        this.packageName = BindingDetector.getPackageName(elementsUtils, typeElement);
+        this.className = BindingDetector.getClassName(typeElement, this.packageName);
         this.builderType = BuilderType.byName(className);
-        // TODO: add validations.
+
+        this.requiredArgs = BindingDetector.findArgFields(typeElement, true);
+        this.notRequiredArgs = BindingDetector.findArgFields(typeElement, false);
+        List<AutoBundleBindingArg> args = new ArrayList<>();
+        args.addAll(requiredArgs);
+        args.addAll(notRequiredArgs);
+        Validator.checkDuplicatedArgsKey(args);
     }
 
     public TypeElement getTypeElement() {

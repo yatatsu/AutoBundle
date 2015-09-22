@@ -21,6 +21,9 @@ public class SomeFragment extends Fragment {
     @AutoBundle(converter = DateArgConverter.class)
     Date targetDate;
 
+    @AutoBundle(converter = MessageConverter.class)
+    String[] messages;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +40,19 @@ public class SomeFragment extends Fragment {
         @Override
         public Date original(Long s) {
             return new Date(s);
+        }
+    }
+
+    public static class MessageConverter implements Converter<String[], String[]> {
+
+        @Override
+        public String[] convert(String[] o) {
+            return o;
+        }
+
+        @Override
+        public String[] original(String[] s) {
+            return s;
         }
     }
 }

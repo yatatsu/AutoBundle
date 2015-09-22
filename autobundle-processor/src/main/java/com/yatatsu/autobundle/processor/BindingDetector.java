@@ -14,7 +14,7 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.util.Elements;
 
-final class AutoBundleDetector {
+final class BindingDetector {
 
     static List<AutoBundleBindingClass> bindingClasses(RoundEnvironment env,
                                                        Elements elementUtils) {
@@ -51,7 +51,7 @@ final class AutoBundleDetector {
         return type.getQualifiedName().toString().substring(packageLen).replace('.', '$');
     }
 
-    private AutoBundleDetector() {
+    private BindingDetector() {
         throw new AssertionError("no instances");
     }
 }

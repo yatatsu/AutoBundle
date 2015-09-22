@@ -47,7 +47,7 @@ public class AutoBundleProcessor extends AbstractProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         List<AutoBundleBindingClass> classes =
-                AutoBundleDetector.bindingClasses(roundEnv, elementUtils);
+                BindingDetector.bindingClasses(roundEnv, elementUtils);
         for (AutoBundleBindingClass clazz : classes) {
             AutoBundleWriter writer = new AutoBundleWriter(clazz);
             try {

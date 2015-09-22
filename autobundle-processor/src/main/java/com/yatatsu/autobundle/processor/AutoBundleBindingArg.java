@@ -33,17 +33,19 @@ public class AutoBundleBindingArg {
         this.argKey = annotation.key().length() > 0 ? annotation.key() : this.fieldName;
         this.required = annotation.required();
         this.argType = TypeName.get(element.asType());
-
+        Validator.checkAutoBundleFieldModifier(element);
 
         TypeName converter;
         TypeName convertedType;
         try {
             Class clazz = annotation.converter();
+            Validator.checkConverterClass(clazz);
             converter = TypeName.get(clazz);
             convertedType = detectConvertedTypeNameByClass(clazz);
         } catch (MirroredTypeException mte) {
             DeclaredType classTypeMirror = (DeclaredType) mte.getTypeMirror();
             TypeElement classTypeElement = (TypeElement) classTypeMirror.asElement();
+            Validator.checkConverterClass(classTypeElement);
             converter = TypeName.get(classTypeMirror);
             convertedType = detectConvertedTypeByTypeElement(classTypeElement);
         }
@@ -51,8 +53,9 @@ public class AutoBundleBindingArg {
         this.hasCustomConverter =
                 !this.converter.equals(ClassName.get("com.yatatsu.autobundle", "DefaultConverter"));
         this.convertedType = convertedType;
-
-        // TODO validation
+        if (hasCustomConverter) {
+            Validator.checkNotSupportedConvertClass(this.convertedType);
+        }
     }
 
     public TypeName getArgType() {
@@ -116,8 +119,8 @@ public class AutoBundleBindingArg {
     }
 
     static TypeName detectConvertedTypeNameByClass(Class clazz) {
-        Type type = getConverterGenericsTypesByClass(clazz)[1];
-        TypeName typeName = TypeName.get(type);
+        Type converted = getConverterGenericsTypesByClass(clazz)[1];
+        TypeName typeName = TypeName.get(converted);
         try {
             typeName = typeName.unbox();
         } catch (UnsupportedOperationException ignore) {}

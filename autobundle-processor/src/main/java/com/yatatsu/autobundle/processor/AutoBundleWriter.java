@@ -296,7 +296,7 @@ public class AutoBundleWriter {
             TypeName argType = arg.getArgType();
 
             if (!argType.isPrimitive()) {
-                String exceptionMessage  = String.format("%s must not be null.", fieldName);
+                String exceptionMessage = String.format("%s must not be null.", fieldName);
                 builder.beginControlFlow("if (source.$N == null)", fieldName)
                         .addStatement("throw new IllegalStateException($S)", exceptionMessage)
                         .endControlFlow();
