@@ -10,4 +10,5 @@ import java.lang.annotation.Target;
 public @interface AutoBundle {
     boolean required() default true;
     String key() default "";
+    Class<? extends Converter> converter() default DefaultConverter.class;
 }

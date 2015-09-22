@@ -79,9 +79,18 @@ public class AutoBundleWriter {
         for (AutoBundleBindingArg arg : target.getRequiredArgs()) {
             String key = arg.getArgKey();
             TypeName type = arg.getArgType();
-            String methodName = createOperationMethodName("put", type);
-            builder.addParameter(type, key)
-                    .addStatement("this.$N.$N($S, $N)", fieldName, methodName, key, key);
+            builder.addParameter(type, key);
+            if (arg.hasCustomConverter()) {
+                TypeName converter = arg.getConverter();
+                TypeName converted = arg.getConvertedType();
+                String operationName = createOperationMethodName("put", converted);
+                builder.addStatement("$T $NConverter = new $T()", converter, key, converter)
+                        .addStatement("this.$N.$N($S, $NConverter.convert($N))",
+                                fieldName, operationName, key, key, key);
+            } else {
+                String operationName = createOperationMethodName("put", type);
+                builder.addStatement("this.$N.$N($S, $N)", fieldName, operationName, key, key);
+            }
         }
 
         return builder.build();
@@ -128,15 +137,26 @@ public class AutoBundleWriter {
         for (AutoBundleBindingArg arg : target.getNotRequiredArgs()) {
             String argKey = arg.getArgKey();
             TypeName argType = arg.getArgType();
-            String operationMethodName = createOperationMethodName("put", argType);
-            MethodSpec method = MethodSpec.methodBuilder(argKey)
+
+            MethodSpec.Builder builder = MethodSpec.methodBuilder(argKey)
                     .addModifiers(Modifier.PUBLIC)
                     .addParameter(argType, argKey)
-                    .returns(ClassName.get(target.getPackageName(), target.getBuilderClassName()))
-                    .addStatement("$N.$N($S, $N)", fieldName, operationMethodName, argKey, argKey)
-                    .addStatement("return this")
-                    .build();
-            methodSpecs.add(method);
+                    .returns(ClassName.get(target.getPackageName(), target.getBuilderClassName()));
+
+            if (arg.hasCustomConverter()) {
+                TypeName converter = arg.getConverter();
+                TypeName converted = arg.getArgType();
+                String operationName = createOperationMethodName("put", converted);
+                builder.addStatement("$T $NConverter = new $T()", converter, argKey, converter)
+                        .addStatement("$N.$N($S, $NConverter.convert($N))",
+                                fieldName, operationName, argKey, argKey, argKey);
+            } else {
+                String operationName = createOperationMethodName("put", argType);
+                builder.addStatement("$N.$N($S, $N)", fieldName, operationName, argKey, argKey);
+            }
+
+            builder.addStatement("return this");
+            methodSpecs.add(builder.build());
         }
         return methodSpecs;
     }
@@ -213,10 +233,21 @@ public class AutoBundleWriter {
 
         for (AutoBundleBindingArg arg : args) {
             String key = arg.getArgKey();
-            String methodName =
-                    createOperationMethodName("get", arg.getArgType());
-            builder.beginControlFlow("if (source.containsKey($S))", key)
-                    .addStatement("target.$N = source.$N($S)", arg.getFieldName(), methodName, key);
+            String fieldName = arg.getFieldName();
+            builder.beginControlFlow("if (source.containsKey($S))", key);
+
+            if (arg.hasCustomConverter()) {
+                TypeName converter = arg.getConverter();
+                TypeName converted = arg.getConvertedType();
+                String operationName = createOperationMethodName("get", converted);
+                builder.addStatement("$T $NConverter = new $T()", converter, key, converter)
+                        .addStatement("target.$N = $NConverter.original(source.$N($S))",
+                                fieldName, key, operationName, key);
+            } else {
+                String operationName = createOperationMethodName("get", arg.getArgType());
+                builder.addStatement("target.$N = source.$N($S)", fieldName, operationName, key);
+            }
+
             if (arg.isRequired()) {
                 String exceptionMessage
                         = String.format("%s is required, but not found in the bundle.", key);
@@ -263,18 +294,23 @@ public class AutoBundleWriter {
             String key = arg.getArgKey();
             String fieldName = arg.getFieldName();
             TypeName argType = arg.getArgType();
-            String methodName = createOperationMethodName("put", argType);
+
             if (!argType.isPrimitive()) {
-                builder.beginControlFlow("if (source.$N != null)", fieldName)
-                        .addStatement("args.$N($S, source.$N)", methodName, key, fieldName);
-                if (arg.isRequired()) {
-                    String exceptionMessage  = String.format("%s must not be null.", fieldName);
-                    builder.nextControlFlow("else")
-                            .addStatement("throw new IllegalStateException($S)", exceptionMessage);
-                }
-                builder.endControlFlow();
+                String exceptionMessage  = String.format("%s must not be null.", fieldName);
+                builder.beginControlFlow("if (source.$N == null)", fieldName)
+                        .addStatement("throw new IllegalStateException($S)", exceptionMessage)
+                        .endControlFlow();
+            }
+            if (arg.hasCustomConverter()) {
+                TypeName converter = arg.getConverter();
+                TypeName converted = arg.getConvertedType();
+                String operationName = createOperationMethodName("put", converted);
+                builder.addStatement("$T $NConverter = new $T()", converter, key, converter)
+                        .addStatement("args.$N($S, $NConverter.convert(source.$N))",
+                                operationName, key, key, fieldName);
             } else {
-                builder.addStatement("args.$N($S, source.$N)", methodName, key, fieldName);
+                String operationName = createOperationMethodName("put", argType);
+                builder.addStatement("args.$N($S, source.$N)", operationName, key, fieldName);
             }
         }
         return builder.build();
