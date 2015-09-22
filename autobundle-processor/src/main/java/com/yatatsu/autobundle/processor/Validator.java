@@ -5,6 +5,8 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.yatatsu.autobundle.AutoBundle;
 import com.yatatsu.autobundle.AutoBundleTarget;
+import com.yatatsu.autobundle.processor.exceptions.DuplicatedArgKeyException;
+import com.yatatsu.autobundle.processor.exceptions.UnsupportedClassException;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -25,7 +27,8 @@ import javax.lang.model.element.VariableElement;
  */
 final class Validator {
 
-    static final List<String> allowConvertedArrayTypes = Collections.unmodifiableList(new ArrayList<String>() {
+    static final List<String> allowConvertedArrayTypes =
+            Collections.unmodifiableList(new ArrayList<String>() {
         {
             add("boolean");
             add("byte");
@@ -41,7 +44,8 @@ final class Validator {
         }
     }) ;
 
-    static final List<TypeName> allowConvertedTypes = Collections.unmodifiableList(new ArrayList<TypeName>() {
+    static final List<TypeName> allowConvertedTypes =
+            Collections.unmodifiableList(new ArrayList<TypeName>() {
         {
             add(ClassName.get("java.lang", "Boolean"));
             add(ClassName.get("java.lang", "Byte"));
@@ -72,10 +76,12 @@ final class Validator {
     static void checkAutoBundleTargetModifier(TypeElement typeElement) {
         Set<Modifier> modifiers = typeElement.getModifiers();
         if (modifiers.contains(Modifier.ABSTRACT)) {
-            throw new IllegalStateException(AutoBundleTarget.class + " must be with concrete class.");
+            throw new UnsupportedClassException(
+                    AutoBundleTarget.class + " must be with concrete class.");
         } else if (typeElement.getModifiers().contains(Modifier.PRIVATE) ||
                 modifiers.contains(Modifier.PROTECTED)) {
-            throw new IllegalStateException(AutoBundleTarget.class + " must not be with private/protected class.");
+            throw new UnsupportedClassException(
+                    AutoBundleTarget.class + " must not be with private/protected class.");
         }
     }
 
@@ -84,7 +90,8 @@ final class Validator {
         for (AutoBundleBindingArg arg : args) {
             String key = arg.getArgKey();
             if (keySet.contains(key)) {
-                throw new IllegalStateException("key " + key  + " is duplicated in " + AutoBundle.class);
+                throw new DuplicatedArgKeyException(
+                        "key " + key  + " is duplicated in " + AutoBundle.class);
             }
             keySet.add(key);
         }
@@ -94,7 +101,8 @@ final class Validator {
         Set<Modifier> modifiers = element.getModifiers();
         if (modifiers.contains(Modifier.PRIVATE) ||
                 modifiers.contains(Modifier.PROTECTED)) {
-            throw new IllegalStateException(AutoBundle.class + " must not be with private/protected class.");
+            throw new IllegalStateException(
+                    AutoBundle.class + " must not be with private/protected class.");
         }
     }
 
@@ -146,10 +154,10 @@ final class Validator {
                 className = className.substring(0, className.length() - 2);
             }
             if (!allowConvertedArrayTypes.contains(className)) {
-                throw new UnsupportedOperationException(type + " is not supported type.");
+                throw new UnsupportedClassException(type + " is not supported type.");
             }
         } else if (!allowConvertedTypes.contains(type)) {
-            throw new UnsupportedOperationException(type + " is not supported type.");
+            throw new UnsupportedClassException(type + " is not supported type.");
         }
     }
 

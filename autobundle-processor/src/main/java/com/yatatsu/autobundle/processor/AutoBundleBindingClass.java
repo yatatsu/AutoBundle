@@ -1,5 +1,7 @@
 package com.yatatsu.autobundle.processor;
 
+import com.yatatsu.autobundle.processor.exceptions.UnsupportedClassException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +22,7 @@ public class AutoBundleBindingClass {
                     clazzName.endsWith("Service")) {
                 return Intent;
             }
-            throw new UnsupportedOperationException(clazzName + "is not supported.");
+            throw new UnsupportedClassException(clazzName + "is not supported.");
         }
     }
 
