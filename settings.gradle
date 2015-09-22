@@ -1,0 +1,1 @@
+include ':example', ':autobundle-processor', ':autobundle'
