@@ -2,7 +2,7 @@ package com.yatatsu.autobundle.processor;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.TypeName;
-import com.yatatsu.autobundle.AutoBundle;
+import com.yatatsu.autobundle.Arg;
 import com.yatatsu.autobundle.Converter;
 
 import java.lang.reflect.ParameterizedType;
@@ -28,7 +28,7 @@ public class AutoBundleBindingArg {
     private final TypeName convertedType;
 
     public AutoBundleBindingArg(VariableElement element,
-                                AutoBundle annotation) {
+                                Arg annotation) {
         this.fieldName = element.toString();
         this.argKey = annotation.key().length() > 0 ? annotation.key() : this.fieldName;
         this.required = annotation.required();

@@ -17,7 +17,7 @@ public class AllValidType implements SourceBase {
                 "import android.os.Parcelable;\n" +
                 "import android.util.SparseArray;\n" +
                 "\n" +
-                "import com.yatatsu.autobundle.AutoBundle;\n" +
+                "import com.yatatsu.autobundle.Arg;\n" +
                 "import com.yatatsu.autobundle.AutoBundleTarget;\n" +
                 "\n" +
                 "import java.io.Serializable;\n" +
@@ -26,91 +26,91 @@ public class AllValidType implements SourceBase {
                 "@AutoBundleTarget\n" +
                 "public class ExampleActivity extends Activity {\n" +
                 "\n" +
-                "@AutoBundle\n" +
+                "@Arg\n" +
                 "boolean booelean1;\n" +
                 "\n" +
-                "@AutoBundle\n" +
+                "@Arg\n" +
                 "boolean[] booeleanArray1;\n" +
                 "\n" +
-                "@AutoBundle\n" +
+                "@Arg\n" +
                 "byte byte1;\n" +
                 "\n" +
-                "@AutoBundle\n" +
+                "@Arg\n" +
                 "byte[] byteArray1;\n" +
                 "\n" +
-                "@AutoBundle\n" +
+                "@Arg\n" +
                 "char char1;\n" +
                 "\n" +
-                "@AutoBundle\n" +
+                "@Arg\n" +
                 "char[] charArray1;\n" +
                 "\n" +
-                "@AutoBundle\n" +
+                "@Arg\n" +
                 "CharSequence charSequence1;\n" +
                 "\n" +
-                "@AutoBundle\n" +
+                "@Arg\n" +
                 "CharSequence[] charSequenceArray1;\n" +
                 "\n" +
-                "@AutoBundle\n" +
+                "@Arg\n" +
                 "double double1;\n" +
                 "\n" +
-                "@AutoBundle\n" +
+                "@Arg\n" +
                 "double[] doubleArray1;\n" +
                 "\n" +
-                "@AutoBundle\n" +
+                "@Arg\n" +
                 "float float1;\n" +
                 "\n" +
-                "@AutoBundle\n" +
+                "@Arg\n" +
                 "float[] floatArray1;\n" +
                 "\n" +
-                "@AutoBundle\n" +
+                "@Arg\n" +
                 "int int1;\n" +
                 "\n" +
-                "@AutoBundle\n" +
+                "@Arg\n" +
                 "int[] intArray1;\n" +
                 "\n" +
-                "@AutoBundle\n" +
+                "@Arg\n" +
                 "long long1;\n" +
                 "\n" +
-                "@AutoBundle\n" +
+                "@Arg\n" +
                 "long[] longArray1;\n" +
                 "\n" +
-                "@AutoBundle\n" +
+                "@Arg\n" +
                 "short short1;\n" +
                 "\n" +
-                "@AutoBundle\n" +
+                "@Arg\n" +
                 "short[] shortArray1;\n" +
                 "\n" +
-                "@AutoBundle\n" +
+                "@Arg\n" +
                 "String string1;\n" +
                 "\n" +
-                "@AutoBundle\n" +
+                "@Arg\n" +
                 "String[] stringArray1;\n" +
                 "\n" +
-                "@AutoBundle\n" +
+                "@Arg\n" +
                 "Parcelable parcelable;\n" +
                 "\n" +
-                "@AutoBundle\n" +
+                "@Arg\n" +
                 "Parcelable[] parcelableArray;\n" +
                 "\n" +
-                "@AutoBundle\n" +
+                "@Arg\n" +
                 "Serializable serializable1;\n" +
                 "\n" +
-                "@AutoBundle\n" +
+                "@Arg\n" +
                 "Bundle bundle1;\n" +
                 "\n" +
-                "@AutoBundle\n" +
+                "@Arg\n" +
                 "ArrayList<Integer> integerArrayList1;\n" +
                 "\n" +
-                "@AutoBundle\n" +
+                "@Arg\n" +
                 "ArrayList<String> stringArrayList1;\n" +
                 "\n" +
-                "@AutoBundle\n" +
+                "@Arg\n" +
                 "ArrayList<CharSequence> charSequenceArrayList1;\n" +
                 "\n" +
-                "@AutoBundle\n" +
+                "@Arg\n" +
                 "ArrayList<Parcelable> parcelableArrayList1;\n" +
                 "\n" +
-                "@AutoBundle\n" +
+                "@Arg\n" +
                 "SparseArray<Parcelable> parcelableSparseArray1;\n" +
                 "}";
     }

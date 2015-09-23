@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.SOURCE)
-public @interface AutoBundle {
+public @interface Arg {
     boolean required() default true;
     String key() default "";
     Class<? extends Converter> converter() default DefaultConverter.class;

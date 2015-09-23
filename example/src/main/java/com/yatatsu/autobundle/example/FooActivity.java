@@ -5,7 +5,7 @@ import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.SparseArray;
 
-import com.yatatsu.autobundle.AutoBundle;
+import com.yatatsu.autobundle.Arg;
 import com.yatatsu.autobundle.AutoBundleTarget;
 
 import java.util.ArrayList;
@@ -14,16 +14,16 @@ import java.util.ArrayList;
 @AutoBundleTarget
 public class FooActivity extends AppCompatActivity {
 
-    @AutoBundle(required = false)
+    @Arg(required = false)
     String fooName;
 
-    @AutoBundle(required = false)
+    @Arg(required = false)
     int[] fooIds;
 
-    @AutoBundle
+    @Arg
     ArrayList<CharSequence> fooList;
 
-    @AutoBundle
+    @Arg
     SparseArray<Parcelable> array;
 
     @Override

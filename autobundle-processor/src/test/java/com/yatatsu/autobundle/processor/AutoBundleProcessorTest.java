@@ -1,7 +1,7 @@
 package com.yatatsu.autobundle.processor;
 
 import com.google.testing.compile.JavaFileObjects;
-import com.yatatsu.autobundle.AutoBundle;
+import com.yatatsu.autobundle.Arg;
 import com.yatatsu.autobundle.processor.data.AllValidType;
 import com.yatatsu.autobundle.processor.data.DuplicateKey;
 import com.yatatsu.autobundle.processor.data.NotEmptyConstructorConverter;
@@ -40,7 +40,7 @@ public class AutoBundleProcessorTest {
     @Test
     public void testDuplicateKey() {
         expectedException.expect(RuntimeException.class);
-        expectedException.expectMessage(" is duplicated in " + AutoBundle.class);
+        expectedException.expectMessage(" is duplicated in " + Arg.class);
         assertGenerateCode(new DuplicateKey());
     }
 

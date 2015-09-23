@@ -3,7 +3,7 @@ package com.yatatsu.autobundle.processor;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
-import com.yatatsu.autobundle.AutoBundle;
+import com.yatatsu.autobundle.Arg;
 import com.yatatsu.autobundle.AutoBundleTarget;
 import com.yatatsu.autobundle.processor.exceptions.DuplicatedArgKeyException;
 import com.yatatsu.autobundle.processor.exceptions.UnsupportedClassException;
@@ -121,7 +121,7 @@ final class Validator {
             String key = arg.getArgKey();
             if (keySet.contains(key)) {
                 throw new DuplicatedArgKeyException(
-                        "key " + key  + " is duplicated in " + AutoBundle.class);
+                        "key " + key  + " is duplicated in " + Arg.class);
             }
             keySet.add(key);
         }
@@ -132,7 +132,7 @@ final class Validator {
         if (modifiers.contains(Modifier.PRIVATE) ||
                 modifiers.contains(Modifier.PROTECTED)) {
             throw new IllegalStateException(
-                    AutoBundle.class + " must not be with private/protected class.");
+                    Arg.class + " must not be with private/protected class.");
         }
     }
 

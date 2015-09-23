@@ -14,16 +14,16 @@ public class DuplicateKey implements SourceBase {
                         "\n" +
                         "import android.app.Activity;\n" +
                         "\n" +
-                        "import com.yatatsu.autobundle.AutoBundle;\n" +
+                        "import com.yatatsu.autobundle.Arg;\n" +
                         "import com.yatatsu.autobundle.AutoBundleTarget;\n" +
                         "\n" +
                         "@AutoBundleTarget\n" +
                         "public class ExampleActivity extends Activity {\n" +
                         "\n" +
-                        "@AutoBundle(key = \"key\")\n" +
+                        "@Arg(key = \"key\")\n" +
                         "String key1;\n" +
                         "\n" +
-                        "@AutoBundle(key = \"key\")\n" +
+                        "@Arg(key = \"key\")\n" +
                         "String key2;\n" +
                         "}\n";
         }

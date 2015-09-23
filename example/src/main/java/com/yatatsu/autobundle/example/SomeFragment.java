@@ -3,7 +3,7 @@ package com.yatatsu.autobundle.example;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
-import com.yatatsu.autobundle.AutoBundle;
+import com.yatatsu.autobundle.Arg;
 import com.yatatsu.autobundle.AutoBundleTarget;
 import com.yatatsu.autobundle.Converter;
 
@@ -12,16 +12,16 @@ import java.util.Date;
 @AutoBundleTarget
 public class SomeFragment extends Fragment {
 
-    @AutoBundle(key = "hey", required = false)
+    @Arg(key = "hey", required = false)
     int someId;
 
-    @AutoBundle
+    @Arg
     String myTitle;
 
-    @AutoBundle(converter = DateArgConverter.class)
+    @Arg(converter = DateArgConverter.class)
     Date targetDate;
 
-    @AutoBundle(converter = MessageConverter.class)
+    @Arg(converter = MessageConverter.class)
     String[] messages;
 
     @Override

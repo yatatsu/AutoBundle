@@ -1,7 +1,7 @@
 package com.yatatsu.autobundle.processor;
 
 
-import com.yatatsu.autobundle.AutoBundle;
+import com.yatatsu.autobundle.Arg;
 import com.yatatsu.autobundle.AutoBundleTarget;
 
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ final class BindingDetector {
                                                     boolean required) {
         List<AutoBundleBindingArg> fields = new ArrayList<>();
         for (Element enclosedElement : element.getEnclosedElements()) {
-            AutoBundle annotation = enclosedElement.getAnnotation(AutoBundle.class);
+            Arg annotation = enclosedElement.getAnnotation(Arg.class);
             if (annotation != null) {
                 AutoBundleBindingArg field =
                         new AutoBundleBindingArg((VariableElement) enclosedElement, annotation);

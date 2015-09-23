@@ -16,7 +16,7 @@ public class ValidFragment implements SourceBase {
                         "import android.os.Parcelable;\n" +
                         "import android.util.SparseArray;\n" +
                         "\n" +
-                        "import com.yatatsu.autobundle.AutoBundle;\n" +
+                        "import com.yatatsu.autobundle.Arg;\n" +
                         "import com.yatatsu.autobundle.AutoBundleTarget;\n" +
                         "import com.yatatsu.autobundle.Converter;\n" +
                         "\n" +
@@ -26,16 +26,16 @@ public class ValidFragment implements SourceBase {
                         "@AutoBundleTarget\n" +
                         "public class ExampleFragment extends Fragment {\n" +
                         "\n" +
-                        "@AutoBundle\n" +
+                        "@Arg\n" +
                         "int ids[];\n" +
                         "\n" +
-                        "@AutoBundle(required = false)\n" +
+                        "@Arg(required = false)\n" +
                         "ArrayList<CharSequence> messages;\n" +
                         "\n" +
-                        "@AutoBundle(key = \"models\")\n" +
+                        "@Arg(key = \"models\")\n" +
                         "SparseArray<Parcelable> sparseArray;\n" +
                         "\n" +
-                        "@AutoBundle(converter = DateArgConverter.class)\n" +
+                        "@Arg(converter = DateArgConverter.class)\n" +
                         "Date date;\n" +
                         "\n" +
                         "public static class DateArgConverter implements Converter<Date, Long> {\n" +
