@@ -1,11 +1,11 @@
 package com.yatatsu.autobundle.processor;
 
 import com.google.auto.service.AutoService;
-import com.yatatsu.autobundle.AutoBundleTarget;
+import com.yatatsu.autobundle.Arg;
 
 import java.io.IOException;
 import java.util.Collections;
-import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.processing.AbstractProcessor;
@@ -36,7 +36,7 @@ public class AutoBundleProcessor extends AbstractProcessor {
 
     @Override
     public Set<String> getSupportedAnnotationTypes() {
-        return Collections.singleton(AutoBundleTarget.class.getCanonicalName());
+        return Collections.singleton(Arg.class.getCanonicalName());
     }
 
     @Override
@@ -46,9 +46,9 @@ public class AutoBundleProcessor extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
-        List<AutoBundleBindingClass> classes =
+        Map<TypeElement, AutoBundleBindingClass> classes =
                 BindingDetector.bindingClasses(roundEnv, elementUtils);
-        for (AutoBundleBindingClass clazz : classes) {
+        for (AutoBundleBindingClass clazz : classes.values()) {
             AutoBundleWriter writer = new AutoBundleWriter(clazz);
             try {
                 writer.write(filer);

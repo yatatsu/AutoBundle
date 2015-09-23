@@ -4,12 +4,10 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.yatatsu.autobundle.Arg;
-import com.yatatsu.autobundle.AutoBundleTarget;
 import com.yatatsu.autobundle.Converter;
 
 import java.util.Date;
 
-@AutoBundleTarget
 public class SomeFragment extends Fragment {
 
     @Arg(key = "hey", required = false)

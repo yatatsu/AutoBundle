@@ -18,12 +18,10 @@ public class AllValidType implements SourceBase {
                 "import android.util.SparseArray;\n" +
                 "\n" +
                 "import com.yatatsu.autobundle.Arg;\n" +
-                "import com.yatatsu.autobundle.AutoBundleTarget;\n" +
                 "\n" +
                 "import java.io.Serializable;\n" +
                 "import java.util.ArrayList;\n" +
                 "\n" +
-                "@AutoBundleTarget\n" +
                 "public class ExampleActivity extends Activity {\n" +
                 "\n" +
                 "@Arg\n" +

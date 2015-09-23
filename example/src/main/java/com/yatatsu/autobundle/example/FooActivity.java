@@ -6,12 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.SparseArray;
 
 import com.yatatsu.autobundle.Arg;
-import com.yatatsu.autobundle.AutoBundleTarget;
 
 import java.util.ArrayList;
 
 
-@AutoBundleTarget
 public class FooActivity extends AppCompatActivity {
 
     @Arg(required = false)

@@ -1,7 +1,6 @@
 package com.yatatsu.autobundle.processor;
 
 import com.squareup.javapoet.ClassName;
-import com.yatatsu.autobundle.AutoBundleTarget;
 import com.yatatsu.autobundle.processor.exceptions.UnsupportedClassException;
 
 import java.util.ArrayList;
@@ -25,8 +24,7 @@ public class AutoBundleBindingClass {
                 return Intent;
             }
             throw new UnsupportedClassException(
-                    AutoBundleTarget.class
-                            + " must be end with 'Fragment', 'Activity', 'Receiver' or 'Service'."
+                    "AutoBundle must be end with 'Fragment', 'Activity', 'Receiver' or 'Service'."
                             + clazzName);
         }
     }
@@ -38,7 +36,8 @@ public class AutoBundleBindingClass {
     private final List<AutoBundleBindingArg> requiredArgs;
     private final List<AutoBundleBindingArg> notRequiredArgs;
 
-    public AutoBundleBindingClass(TypeElement typeElement, Elements elementsUtils) {
+    public AutoBundleBindingClass(TypeElement typeElement,
+                                  Elements elementsUtils) {
         this.targetType = ClassName.get(typeElement);
         Validator.checkAutoBundleTargetModifier(typeElement);
         this.packageName = BindingDetector.getPackageName(elementsUtils, typeElement);

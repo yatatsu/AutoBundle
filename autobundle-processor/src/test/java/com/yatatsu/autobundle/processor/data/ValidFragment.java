@@ -17,13 +17,11 @@ public class ValidFragment implements SourceBase {
                         "import android.util.SparseArray;\n" +
                         "\n" +
                         "import com.yatatsu.autobundle.Arg;\n" +
-                        "import com.yatatsu.autobundle.AutoBundleTarget;\n" +
                         "import com.yatatsu.autobundle.Converter;\n" +
                         "\n" +
                         "import java.util.ArrayList;\n" +
                         "import java.util.Date;\n" +
                         "\n" +
-                        "@AutoBundleTarget\n" +
                         "public class ExampleFragment extends Fragment {\n" +
                         "\n" +
                         "@Arg\n" +

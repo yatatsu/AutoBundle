@@ -4,7 +4,6 @@ import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.yatatsu.autobundle.Arg;
-import com.yatatsu.autobundle.AutoBundleTarget;
 import com.yatatsu.autobundle.processor.exceptions.DuplicatedArgKeyException;
 import com.yatatsu.autobundle.processor.exceptions.UnsupportedClassException;
 
@@ -107,11 +106,11 @@ final class Validator {
         Set<Modifier> modifiers = typeElement.getModifiers();
         if (modifiers.contains(Modifier.ABSTRACT)) {
             throw new UnsupportedClassException(
-                    AutoBundleTarget.class + " must be with concrete class.");
+                    "AutoBundle must be with concrete class.");
         } else if (typeElement.getModifiers().contains(Modifier.PRIVATE) ||
                 modifiers.contains(Modifier.PROTECTED)) {
             throw new UnsupportedClassException(
-                    AutoBundleTarget.class + " must not be with private/protected class.");
+                    "AutoBundle must not be with private/protected class.");
         }
     }
 

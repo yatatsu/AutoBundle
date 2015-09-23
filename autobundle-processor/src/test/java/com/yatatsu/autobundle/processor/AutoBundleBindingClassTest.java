@@ -1,6 +1,5 @@
 package com.yatatsu.autobundle.processor;
 
-import com.yatatsu.autobundle.AutoBundleTarget;
 import com.yatatsu.autobundle.processor.exceptions.UnsupportedClassException;
 
 import org.junit.Rule;
@@ -30,8 +29,8 @@ public class AutoBundleBindingClassTest {
     @Test
     public void invalidBindingClassName1() {
         expectedException.expect(UnsupportedClassException.class);
-        expectedException.expectMessage(AutoBundleTarget.class
-                + " must be end with 'Fragment', 'Activity', 'Receiver' or 'Service'.");
+        expectedException.expectMessage(
+                "AutoBundle must be end with 'Fragment', 'Activity', 'Receiver' or 'Service'.");
         AutoBundleBindingClass.BuilderType builderType =
                 AutoBundleBindingClass.BuilderType.byName("ActivityFoo");
     }
@@ -39,8 +38,8 @@ public class AutoBundleBindingClassTest {
     @Test
     public void invalidBindingClassName2() {
         expectedException.expect(UnsupportedClassException.class);
-        expectedException.expectMessage(AutoBundleTarget.class
-                + " must be end with 'Fragment', 'Activity', 'Receiver' or 'Service'.");
+        expectedException.expectMessage(
+                "AutoBundle must be end with 'Fragment', 'Activity', 'Receiver' or 'Service'.");
         AutoBundleBindingClass.BuilderType builderType =
                 AutoBundleBindingClass.BuilderType.byName("FragmentFoo");
     }
