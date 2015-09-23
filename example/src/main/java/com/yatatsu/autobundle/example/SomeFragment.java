@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.yatatsu.autobundle.Arg;
+import com.yatatsu.autobundle.AutoBundle;
 import com.yatatsu.autobundle.Converter;
 
 import java.util.Date;
@@ -25,7 +26,7 @@ public class SomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SomeFragmentAutoBundle.bind(this, getArguments());
+        AutoBundle.bind(this);
     }
 
     public static class DateArgConverter implements Converter<Date, Long> {

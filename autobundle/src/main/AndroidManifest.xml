@@ -1,0 +1,6 @@
+<manifest xmlns:tools="http://schemas.android.com/tools"
+    package="com.yatatsu.autobundle">
+
+    <application tools:ignore="AllowBackup" />
+
+</manifest>

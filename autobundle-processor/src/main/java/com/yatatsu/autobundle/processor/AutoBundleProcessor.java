@@ -4,8 +4,9 @@ import com.google.auto.service.AutoService;
 import com.yatatsu.autobundle.Arg;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Map;
+import java.util.List;
 import java.util.Set;
 
 import javax.annotation.processing.AbstractProcessor;
@@ -46,9 +47,17 @@ public class AutoBundleProcessor extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
-        Map<TypeElement, AutoBundleBindingClass> classes =
-                BindingDetector.bindingClasses(roundEnv, elementUtils);
-        for (AutoBundleBindingClass clazz : classes.values()) {
+        List<AutoBundleBindingClass> classes =
+                new ArrayList<>(BindingDetector.bindingClasses(roundEnv, elementUtils));
+        if (!classes.isEmpty()) {
+            try {
+                AutoBundleBinderWriter binderWriter = new AutoBundleBinderWriter(classes);
+                binderWriter.write(filer);
+            } catch (IOException e) {
+                messager.printMessage(Diagnostic.Kind.ERROR, e.getMessage());
+            }
+        }
+        for (AutoBundleBindingClass clazz : classes) {
             AutoBundleWriter writer = new AutoBundleWriter(clazz);
             try {
                 writer.write(filer);

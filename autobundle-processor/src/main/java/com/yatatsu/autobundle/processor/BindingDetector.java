@@ -4,9 +4,8 @@ package com.yatatsu.autobundle.processor;
 import com.yatatsu.autobundle.Arg;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.processing.RoundEnvironment;
@@ -17,16 +16,18 @@ import javax.lang.model.util.Elements;
 
 final class BindingDetector {
 
-    static Map<TypeElement, AutoBundleBindingClass> bindingClasses(RoundEnvironment env,
+    static List<AutoBundleBindingClass> bindingClasses(RoundEnvironment env,
                                                                    Elements elementUtils) {
-        Map<TypeElement, AutoBundleBindingClass> bindingClasses = new HashMap<>();
+        ArrayList<AutoBundleBindingClass> bindingClasses = new ArrayList<>();
+        Set<String> keySet = new HashSet<>();
         Set<? extends Element> elements = env.getElementsAnnotatedWith(Arg.class);
         for (Element element : elements) {
             TypeElement typeElement = (TypeElement) element.getEnclosingElement();
-            if (!bindingClasses.containsKey(typeElement)) {
+            if (!keySet.contains(typeElement.getSimpleName().toString())) {
                 AutoBundleBindingClass bindingClass =
                         new AutoBundleBindingClass(typeElement, elementUtils);
-                bindingClasses.put(typeElement, bindingClass);
+                bindingClasses.add(bindingClass);
+                keySet.add(typeElement.getSimpleName().toString());
             }
         }
         return bindingClasses;
