@@ -1,5 +1,6 @@
 package com.yatatsu.autobundle.processor;
 
+import com.yatatsu.autobundle.AutoBundleTarget;
 import com.yatatsu.autobundle.processor.exceptions.UnsupportedClassException;
 
 import java.util.ArrayList;
@@ -22,7 +23,10 @@ public class AutoBundleBindingClass {
                     clazzName.endsWith("Service")) {
                 return Intent;
             }
-            throw new UnsupportedClassException(clazzName + "is not supported.");
+            throw new UnsupportedClassException(
+                    AutoBundleTarget.class
+                            + " must be end with 'Fragment', 'Activity', 'Receiver' or 'Service'."
+                            + clazzName);
         }
     }
 

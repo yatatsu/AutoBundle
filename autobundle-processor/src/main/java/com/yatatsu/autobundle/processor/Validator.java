@@ -27,6 +27,35 @@ import javax.lang.model.element.VariableElement;
  */
 final class Validator {
 
+    static final List<TypeName> allowTypes
+            = Collections.unmodifiableList(new ArrayList<TypeName>() {
+        {
+            add(TypeName.BOOLEAN);
+            add(TypeName.BYTE);
+            add(TypeName.CHAR);
+            add(TypeName.DOUBLE);
+            add(TypeName.FLOAT);
+            add(TypeName.LONG);
+            add(TypeName.INT);
+            add(TypeName.SHORT);
+
+            add(ClassName.get("java.lang", "CharSequence"));
+            add(ClassName.get("java.lang", "String"));
+            add(ClassName.get("java.io", "Serializable"));
+            add(ClassName.get("android.os", "Bundle"));
+            add(ClassName.get("android.os", "IBinder"));
+            add(ClassName.get("android.os", "Parcelable"));
+
+            add(ParameterizedTypeName.get(ArrayList.class, Integer.class));
+            add(ParameterizedTypeName.get(ArrayList.class, String.class));
+            add(ParameterizedTypeName.get(ArrayList.class, CharSequence.class));
+            add(ParameterizedTypeName.get(ClassName.get("java.util", "ArrayList"),
+                    ClassName.get("android.os", "Parcelable")));
+            add(ParameterizedTypeName.get(ClassName.get("android.util", "SparseArray"),
+                    ClassName.get("android.os", "Parcelable")));
+        }
+    });
+
     static final List<String> allowConvertedArrayTypes =
             Collections.unmodifiableList(new ArrayList<String>() {
         {
@@ -42,7 +71,7 @@ final class Validator {
             add("String");
             add("Parcelable");
         }
-    }) ;
+    });
 
     static final List<TypeName> allowConvertedTypes =
             Collections.unmodifiableList(new ArrayList<TypeName>() {
@@ -66,6 +95,7 @@ final class Validator {
 
             add(ParameterizedTypeName.get(ArrayList.class, Integer.class));
             add(ParameterizedTypeName.get(ArrayList.class, String.class));
+            add(ParameterizedTypeName.get(ArrayList.class, CharSequence.class));
             add(ParameterizedTypeName.get(ClassName.get("java.util", "ArrayList"),
                     ClassName.get("android.os", "Parcelable")));
             add(ParameterizedTypeName.get(ClassName.get("android.util", "SparseArray"),
@@ -159,6 +189,19 @@ final class Validator {
         } else if (!allowConvertedTypes.contains(type)) {
             throw new UnsupportedClassException(type + " is not supported type.");
         }
+    }
+
+    static void checkNotSupportedClass(TypeName type) {
+        String className = type.toString();
+        if (className.endsWith("[]")) {
+            className = className.substring(0, className.length() - 2);
+        }
+        for (TypeName t : allowTypes) {
+            if (t.toString().equals(className)) {
+                return;
+            }
+        }
+        throw new UnsupportedClassException(type + " is not supported type.");
     }
 
     Validator() {

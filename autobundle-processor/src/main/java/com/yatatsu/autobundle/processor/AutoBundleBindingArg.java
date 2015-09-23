@@ -55,6 +55,8 @@ public class AutoBundleBindingArg {
         this.convertedType = convertedType;
         if (hasCustomConverter) {
             Validator.checkNotSupportedConvertClass(this.convertedType);
+        } else {
+            Validator.checkNotSupportedClass(argType);
         }
     }
 
