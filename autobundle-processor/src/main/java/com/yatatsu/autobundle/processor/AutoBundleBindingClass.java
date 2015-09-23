@@ -1,5 +1,6 @@
 package com.yatatsu.autobundle.processor;
 
+import com.squareup.javapoet.ClassName;
 import com.yatatsu.autobundle.AutoBundleTarget;
 import com.yatatsu.autobundle.processor.exceptions.UnsupportedClassException;
 
@@ -30,7 +31,7 @@ public class AutoBundleBindingClass {
         }
     }
 
-    private final TypeElement typeElement;
+    private final ClassName targetType;
     private final String packageName;
     private final String className;
     private final BuilderType builderType;
@@ -38,8 +39,8 @@ public class AutoBundleBindingClass {
     private final List<AutoBundleBindingArg> notRequiredArgs;
 
     public AutoBundleBindingClass(TypeElement typeElement, Elements elementsUtils) {
-        this.typeElement = typeElement;
-        Validator.checkAutoBundleTargetModifier(this.typeElement);
+        this.targetType = ClassName.get(typeElement);
+        Validator.checkAutoBundleTargetModifier(typeElement);
         this.packageName = BindingDetector.getPackageName(elementsUtils, typeElement);
         this.className = BindingDetector.getClassName(typeElement, this.packageName);
         this.builderType = BuilderType.byName(className);
@@ -52,8 +53,8 @@ public class AutoBundleBindingClass {
         Validator.checkDuplicatedArgsKey(args);
     }
 
-    public TypeElement getTypeElement() {
-        return typeElement;
+    public ClassName getTargetType() {
+        return targetType;
     }
 
     public String getPackageName() {

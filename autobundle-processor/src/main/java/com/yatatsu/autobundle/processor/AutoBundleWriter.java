@@ -173,7 +173,7 @@ public class AutoBundleWriter {
     private static List<MethodSpec> createFragmentBuildMethods(AutoBundleBindingClass target,
                                                                String fieldName) {
         List<MethodSpec> methodSpecs = new ArrayList<>(2);
-        ClassName targetClass = ClassName.get(target.getTypeElement());
+        ClassName targetClass = target.getTargetType();
         MethodSpec buildWithNoParam = MethodSpec.methodBuilder("build")
                 .addModifiers(Modifier.PUBLIC)
                 .returns(targetClass)
@@ -196,7 +196,6 @@ public class AutoBundleWriter {
     private static List<MethodSpec> createIntentBuildMethods(AutoBundleBindingClass target,
                                                              String fieldName) {
         List<MethodSpec> methodSpecs = new ArrayList<>(2);
-        ClassName targetClass = ClassName.get(target.getTypeElement());
         ClassName contextClass = ClassName.get("android.content", "Context");
         ClassName intentClass = ClassName.get("android.content", "Intent");
         MethodSpec buildWithContext = MethodSpec.methodBuilder("build")
@@ -204,7 +203,7 @@ public class AutoBundleWriter {
                 .addParameter(contextClass, "context")
                 .returns(intentClass)
                 .addStatement("$T intent = new $T(context, $T.class)",
-                        intentClass, intentClass, targetClass)
+                        intentClass, intentClass, target.getTargetType())
                 .addStatement("intent.putExtras($N)", fieldName)
                 .addStatement("return intent")
                 .build();
@@ -228,7 +227,7 @@ public class AutoBundleWriter {
         MethodSpec.Builder builder = MethodSpec.methodBuilder("bind")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .returns(void.class)
-                .addParameter(ClassName.get(target.getTypeElement()), "target")
+                .addParameter(target.getTargetType(), "target")
                 .addParameter(CLASS_BUNDLE, "source");
 
         for (AutoBundleBindingArg arg : args) {
@@ -263,7 +262,7 @@ public class AutoBundleWriter {
         MethodSpec.Builder builder = MethodSpec.methodBuilder("bind")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .returns(void.class)
-                .addParameter(ClassName.get(target.getTypeElement()), "target");
+                .addParameter(target.getTargetType(), "target");
 
         switch (target.getBuilderType()) {
             case Fragment:
@@ -287,7 +286,7 @@ public class AutoBundleWriter {
         MethodSpec.Builder builder = MethodSpec.methodBuilder("pack")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .returns(void.class)
-                .addParameter(ClassName.get(target.getTypeElement()), "source")
+                .addParameter(target.getTargetType(), "source")
                 .addParameter(CLASS_BUNDLE, "args");
 
         for (AutoBundleBindingArg arg : args) {
