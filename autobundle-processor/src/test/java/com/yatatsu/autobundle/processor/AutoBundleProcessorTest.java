@@ -3,6 +3,7 @@ package com.yatatsu.autobundle.processor;
 import com.google.testing.compile.JavaFileObjects;
 import com.yatatsu.autobundle.Arg;
 import com.yatatsu.autobundle.processor.data.AllValidType;
+import com.yatatsu.autobundle.processor.data.BinderDispatcherSource;
 import com.yatatsu.autobundle.processor.data.DuplicateKey;
 import com.yatatsu.autobundle.processor.data.NotEmptyConstructorConverter;
 import com.yatatsu.autobundle.processor.data.NotPublicConstructorConverter;
@@ -14,10 +15,14 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.tools.JavaFileObject;
 
 import static com.google.common.truth.Truth.assert_;
 import static com.google.testing.compile.JavaSourceSubjectFactory.javaSource;
+import static com.google.testing.compile.JavaSourcesSubjectFactory.javaSources;
 
 /**
  * {@link AutoBundleProcessor}
@@ -65,6 +70,17 @@ public class AutoBundleProcessorTest {
         assertGenerateCode(new NotSupportedFieldType());
     }
 
+    @Test
+    public void testBindingDispatcher() {
+        List<JavaFileObject> sources = new ArrayList<>();
+        BinderDispatcherSource base = new BinderDispatcherSource();
+        sources.add(createJavaFileObject(base.getTargetClassName(), base.getTargetSource()));
+        sources.add(createJavaFileObject(base.getTargetClassName2(), base.getTargetSource2()));
+        JavaFileObject expect = createJavaFileObject(
+                base.getExpectClassName(), base.getExpectSource());
+        assertJavaSources(sources, expect);
+    }
+
     private void assertGenerateCode(SourceBase sourceBase) {
         JavaFileObject source = createJavaFileObject(
                 sourceBase.getTargetClassName(), sourceBase.getTargetSource());
@@ -84,6 +100,17 @@ public class AutoBundleProcessorTest {
                 .compilesWithoutError()
                 .and()
                 .generatesSources(expected);
+    }
+
+    private void assertJavaSources(List<JavaFileObject> sources,
+                                   JavaFileObject expected,
+                                   JavaFileObject... rest) {
+        assert_().about(javaSources())
+                .that(sources)
+                .processedWith(new AutoBundleProcessor())
+                .compilesWithoutError()
+                .and()
+                .generatesSources(expected, rest);
     }
 
 }
