@@ -4,7 +4,7 @@ package com.yatatsu.autobundle;
 import android.content.Intent;
 import android.os.Bundle;
 
-public interface IAutoBundleBinder {
+public interface AutoBundleBinder {
     void bind(Object target, Bundle args);
     void bind(Object target, Intent intent);
     void bind(Object target);

@@ -16,10 +16,11 @@ import javax.lang.model.element.Modifier;
 public class AutoBundleBinderWriter {
 
     private final List<AutoBundleBindingClass> bindingClasses;
-    private static final String TARGET_CLASS_NAME = "AutoBundleBinder";
+    private static final String TARGET_CLASS_NAME = "AutoBundleBindingDispatcher";
     private static final String TARGET_PACKAGE_NAME = "com.yatatsu.autobundle";
+    private static final String TAG_FOR_LOG = "AutoBundle";
     private static final ClassName INTERFACE_NAME =
-            ClassName.get("com.yatatsu.autobundle", "IAutoBundleBinder");
+            ClassName.get("com.yatatsu.autobundle", "AutoBundleBinder");
     private static final ClassName CLASS_BUNDLE = ClassName.get("android.os", "Bundle");
     private static final ClassName CLASS_INTENT = ClassName.get("android.content", "Intent");
     private static final ClassName CLASS_LOG = ClassName.get("android.util", "Log");
@@ -60,7 +61,7 @@ public class AutoBundleBinderWriter {
                     .endControlFlow();
         }
         builder.addStatement("$T.w($S, $S + target.getClass())",
-                CLASS_LOG, TARGET_CLASS_NAME, "not found binding with");
+                CLASS_LOG, TAG_FOR_LOG, "not found binding with");
         return builder.build();
     }
 
@@ -85,7 +86,7 @@ public class AutoBundleBinderWriter {
                     .endControlFlow();
         }
         builder.addStatement("$T.w($S, $S + target.getClass())",
-                CLASS_LOG, TARGET_CLASS_NAME, "not found binding with");
+                CLASS_LOG, TAG_FOR_LOG, "not found binding with");
         return builder.build();
     }
 
@@ -109,7 +110,7 @@ public class AutoBundleBinderWriter {
                     .endControlFlow();
         }
         builder.addStatement("$T.w($S, $S + target.getClass())",
-                CLASS_LOG, TARGET_CLASS_NAME, "not found binding with");
+                CLASS_LOG, TAG_FOR_LOG, "not found binding with");
         return builder.build();
     }
 
@@ -131,7 +132,7 @@ public class AutoBundleBinderWriter {
                     .endControlFlow();
         }
         builder.addStatement("$T.w($S, $S + target.getClass())",
-                CLASS_LOG, TARGET_CLASS_NAME, "not found binding with");
+                CLASS_LOG, TAG_FOR_LOG, "not found binding with");
         return builder.build();
     }
 }

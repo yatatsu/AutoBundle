@@ -6,7 +6,7 @@ import android.os.Bundle;
 /**
  * fake for testing.
  */
-public interface IAutoBundleBinder {
+public interface AutoBundleBinder {
     void bind(Object target, Bundle args);
     void bind(Object target, Intent intent);
     void bind(Object target);
