@@ -55,13 +55,14 @@ public class AutoBundleBinderWriter {
             TypeName type = bindingClass.getTargetType();
             ClassName bindClassType =
                     ClassName.get(bindingClass.getPackageName(), bindingClass.getHelperClassName());
-            builder.beginControlFlow("if (target instanceof $T)", type)
+            builder.beginControlFlow("if (target.getClass().getCanonicalName()" +
+                    ".equals($T.class.getName()))", type)
                     .addStatement("$T.bind(($T)target, args)", bindClassType, type)
                     .addStatement("return")
                     .endControlFlow();
         }
         builder.addStatement("$T.w($S, $S + target.getClass())",
-                CLASS_LOG, TAG_FOR_LOG, "not found binding with");
+                CLASS_LOG, TAG_FOR_LOG, "not found binding with ");
         return builder.build();
     }
 
@@ -80,13 +81,14 @@ public class AutoBundleBinderWriter {
             TypeName type = bindingClass.getTargetType();
             ClassName bindClassType =
                     ClassName.get(bindingClass.getPackageName(), bindingClass.getHelperClassName());
-            builder.beginControlFlow("if (target instanceof $T)", type)
+            builder.beginControlFlow("if (target.getClass().getCanonicalName()" +
+                    ".equals($T.class.getName()))", type)
                     .addStatement("$T.bind(($T)target, intent)", bindClassType, type)
                     .addStatement("return")
                     .endControlFlow();
         }
         builder.addStatement("$T.w($S, $S + target.getClass())",
-                CLASS_LOG, TAG_FOR_LOG, "not found binding with");
+                CLASS_LOG, TAG_FOR_LOG, "not found binding with ");
         return builder.build();
     }
 
@@ -104,13 +106,14 @@ public class AutoBundleBinderWriter {
             TypeName type = bindingClass.getTargetType();
             ClassName bindClassType =
                     ClassName.get(bindingClass.getPackageName(), bindingClass.getHelperClassName());
-            builder.beginControlFlow("if (target instanceof $T)", type)
+            builder.beginControlFlow("if (target.getClass().getCanonicalName()" +
+                    ".equals($T.class.getName()))", type)
                     .addStatement("$T.bind(($T)target)", bindClassType, type)
                     .addStatement("return")
                     .endControlFlow();
         }
         builder.addStatement("$T.w($S, $S + target.getClass())",
-                CLASS_LOG, TAG_FOR_LOG, "not found binding with");
+                CLASS_LOG, TAG_FOR_LOG, "not found binding with ");
         return builder.build();
     }
 
@@ -126,13 +129,14 @@ public class AutoBundleBinderWriter {
             TypeName type = bindingClass.getTargetType();
             ClassName bindClassType =
                     ClassName.get(bindingClass.getPackageName(), bindingClass.getHelperClassName());
-            builder.beginControlFlow("if (target instanceof $T)", type)
+            builder.beginControlFlow("if (target.getClass().getCanonicalName()" +
+                    ".equals($T.class.getName()))", type)
                     .addStatement("$T.bind(($T)target, args)", bindClassType, type)
                     .addStatement("return")
                     .endControlFlow();
         }
         builder.addStatement("$T.w($S, $S + target.getClass())",
-                CLASS_LOG, TAG_FOR_LOG, "not found binding with");
+                CLASS_LOG, TAG_FOR_LOG, "not found binding with ");
         return builder.build();
     }
 }
