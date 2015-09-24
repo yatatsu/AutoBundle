@@ -1,15 +1,16 @@
 package com.yatatsu.autobundle.example;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.Date;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,40 +19,63 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        Button button1 = (Button) findViewById(R.id.button_activity);
+        button1.setOnClickListener(this);
+        Button button2 = (Button) findViewById(R.id.button_fragment);
+        button2.setOnClickListener(this);
+        Button button3 = (Button) findViewById(R.id.button_receiver);
+        button3.setOnClickListener(this);
+        Button button4 = (Button) findViewById(R.id.button_service);
+        button4.setOnClickListener(this);
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
-
-@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.button_activity:
+                startExampleActivity();
+                break;
+            case R.id.button_fragment:
+                startExampleFragment();
+                break;
+            case R.id.button_receiver:
+                startExampleReceiver();
+                break;
+            case R.id.button_service:
+                startExampleService();
+                break;
         }
+    }
 
-        return super.onOptionsItemSelected(item);
+    void startExampleActivity() {
+        ArrayList<CharSequence> messages = new ArrayList<>();
+        messages.add("hey");
+        messages.add("this is");
+        messages.add("messages");
+        Intent intent = ExampleActivityAutoBundle.createIntentBuilder("hello, example!")
+                .optionalName("optionalName")
+                .fooList(messages)
+                .build(this)
+                .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+    }
+
+    void startExampleFragment() {
+        ExampleFragment fragment = ExampleFragmentAutoBundle
+                .createFragmentBuilder("hello, example!", new Date())
+                .build();
+        fragment.show(getSupportFragmentManager(), "ExampleFragment");
+    }
+
+    void startExampleReceiver() {
+        startService(ExampleIntentServiceAutoBundle
+                .createIntentBuilder("hello, example!")
+                .build(this));
+    }
+
+    void startExampleService() {
+        sendBroadcast(ExampleBroadcastReceiverAutoBundle
+                .createIntentBuilder("hello, example!")
+                .build(this));
     }
 }

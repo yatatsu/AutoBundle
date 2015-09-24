@@ -1,7 +1,10 @@
 package com.yatatsu.autobundle.example;
 
+import android.app.Dialog;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 
 import com.yatatsu.autobundle.Arg;
 import com.yatatsu.autobundle.AutoBundle;
@@ -9,24 +12,28 @@ import com.yatatsu.autobundle.Converter;
 
 import java.util.Date;
 
-public class SomeFragment extends Fragment {
-
-    @Arg(key = "hey", required = false)
-    int someId;
+public class ExampleFragment extends DialogFragment {
 
     @Arg
-    String myTitle;
+    String title;
 
     @Arg(converter = DateArgConverter.class)
     Date targetDate;
-
-    @Arg(converter = MessageConverter.class)
-    String[] messages;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AutoBundle.bind(this);
+    }
+
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(title)
+                .setMessage("date is " + targetDate.toString());
+        // Create the AlertDialog object and return it
+        return builder.create();
     }
 
     public static class DateArgConverter implements Converter<Date, Long> {
@@ -39,19 +46,6 @@ public class SomeFragment extends Fragment {
         @Override
         public Date original(Long s) {
             return new Date(s);
-        }
-    }
-
-    public static class MessageConverter implements Converter<String[], String[]> {
-
-        @Override
-        public String[] convert(String[] o) {
-            return o;
-        }
-
-        @Override
-        public String[] original(String[] s) {
-            return s;
         }
     }
 }

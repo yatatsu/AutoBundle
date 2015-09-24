@@ -17,6 +17,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".ExampleActivity"
+            android:launchMode="singleTop" />
+
+        <receiver android:name=".ExampleBroadcastReceiver"/>
+        <service android:name=".ExampleIntentService" />
     </application>
 
 </manifest>
