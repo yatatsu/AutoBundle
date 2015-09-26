@@ -24,16 +24,43 @@ dependencies {
     testCompile files(Jvm.current().getToolsJar())
 }
 
-
-apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
 
 group = GROUP_ID
 version = ARTIFACT_VERSION
 
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+publishing {
+    publications {
+        MyPublication(MavenPublication) {
+            from components.java
+            groupId GROUP_ID
+            artifactId ARTIFACT_PROCESSOR
+            version ARTIFACT_VERSION
+        }
+    }
+}
+
 bintray {
     user = bintrayUser
     key = bintrayApiKey
+    publications = ['MyPublication']
     configurations = ['archives'] //When uploading configuration files
     pkg {
         repo = 'maven'
