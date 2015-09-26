@@ -17,7 +17,7 @@ import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 
 
-public class AutoBundleBindingArg {
+public class AutoBundleBindingField {
 
     private final String fieldName;
     private final String argKey;
@@ -27,8 +27,8 @@ public class AutoBundleBindingArg {
     private final boolean hasCustomConverter;
     private final TypeName convertedType;
 
-    public AutoBundleBindingArg(VariableElement element,
-                                Arg annotation) {
+    public AutoBundleBindingField(VariableElement element,
+                                  Arg annotation) {
         this.fieldName = element.toString();
         this.argKey = annotation.key().length() > 0 ? annotation.key() : this.fieldName;
         this.required = annotation.required();
