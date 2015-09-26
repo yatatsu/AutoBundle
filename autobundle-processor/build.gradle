@@ -1,10 +1,19 @@
+import org.gradle.internal.jvm.Jvm
+
 apply plugin: 'java'
 
 targetCompatibility = JavaVersion.VERSION_1_7
 sourceCompatibility = JavaVersion.VERSION_1_7
 
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java', '../autobundle/src/main/java']
+        }
+    }
+}
+
 dependencies {
-    compile project(':autobundle-annotation')
     compile 'com.google.auto.service:auto-service:1.0-rc2'
     compile 'com.squareup:javapoet:1.2.0'
 
@@ -12,5 +21,5 @@ dependencies {
     testCompile 'com.google.truth:truth:0.27'
     testCompile 'com.google.android:android:4.1.1.4'
     testCompile 'com.google.testing.compile:compile-testing:0.6'
-    testCompile files(org.gradle.internal.jvm.Jvm.current().getToolsJar())
+    testCompile files(Jvm.current().getToolsJar())
 }
