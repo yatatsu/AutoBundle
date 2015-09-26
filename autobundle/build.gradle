@@ -7,8 +7,7 @@ android {
     defaultConfig {
         minSdkVersion 1
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionName ARTIFACT_VERSION
         consumerProguardFiles 'autobundle-proguard-rules.pro'
     }
 
@@ -24,4 +23,80 @@ android {
             }
         }
     }
+}
+
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+group = GROUP_ID
+version = ARTIFACT_VERSION
+
+bintray {
+    user = bintrayUser
+    key = bintrayApiKey
+    configurations = ['archives'] //When uploading configuration files
+    pkg {
+        repo = 'maven'
+        name = ARTIFACT_CORE
+        desc = ARTIFACT_DESCRIPTION
+        websiteUrl = WEBSITE
+        issueTrackerUrl = ISSUE_TRACKER_URL
+        vcsUrl = GIT_URL
+        licenses = ['Apache-2.0']
+        labels = ['android']
+        publicDownloadNumbers = true
+    }
+}
+
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging 'aar'
+                name ARTIFACT_CORE
+                url WEBSITE
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id USER
+                        name USER_NAME
+                        email USER_MAIL
+                    }
+                }
+                scm {
+                    connection GIT_URL
+                    developerConnection GIT_URL
+                    url WEBSITE
+                }
+            }
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+task findConventions << {
+    println project.getConvention()
 }

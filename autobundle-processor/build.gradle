@@ -23,3 +23,27 @@ dependencies {
     testCompile 'com.google.testing.compile:compile-testing:0.6'
     testCompile files(Jvm.current().getToolsJar())
 }
+
+
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+group = GROUP_ID
+version = ARTIFACT_VERSION
+
+bintray {
+    user = bintrayUser
+    key = bintrayApiKey
+    configurations = ['archives'] //When uploading configuration files
+    pkg {
+        repo = 'maven'
+        name = ARTIFACT_PROCESSOR
+        desc = ARTIFACT_DESCRIPTION
+        websiteUrl = WEBSITE
+        issueTrackerUrl = ISSUE_TRACKER_URL
+        vcsUrl = GIT_URL
+        licenses = ['Apache-2.0']
+        labels = ['android']
+        publicDownloadNumbers = true
+    }
+}
