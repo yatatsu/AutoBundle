@@ -24,7 +24,9 @@ task clean(type: Delete) {
 }
 
 Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
+if (project.rootProject.file('local.properties').exists()) {
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+}
 ext {
     bintrayUser = properties.getProperty("bintray_user")
     bintrayApiKey = properties.getProperty("bintray_api_key")
