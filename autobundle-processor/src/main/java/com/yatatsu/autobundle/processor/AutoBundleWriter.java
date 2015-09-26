@@ -53,7 +53,7 @@ public class AutoBundleWriter {
             if (i > 0) {
                 builder.addCode(",");
             }
-            AutoBundleBindingArg arg = target.getRequiredArgs().get(i);
+            AutoBundleBindingField arg = target.getRequiredArgs().get(i);
             builder.addParameter(arg.getArgType(), arg.getArgKey())
                     .addCode("$N", arg.getArgKey());
         }
@@ -76,7 +76,7 @@ public class AutoBundleWriter {
                 .addModifiers(Modifier.PUBLIC)
                 .addStatement("this.$N = new $T()", fieldName, CLASS_BUNDLE);
 
-        for (AutoBundleBindingArg arg : target.getRequiredArgs()) {
+        for (AutoBundleBindingField arg : target.getRequiredArgs()) {
             String key = arg.getArgKey();
             TypeName type = arg.getArgType();
             builder.addParameter(type, key);
@@ -134,7 +134,7 @@ public class AutoBundleWriter {
     private static List<MethodSpec> createBuilderMethods(AutoBundleBindingClass target,
                                                          String fieldName) {
         List<MethodSpec> methodSpecs = new ArrayList<>();
-        for (AutoBundleBindingArg arg : target.getNotRequiredArgs()) {
+        for (AutoBundleBindingField arg : target.getNotRequiredArgs()) {
             String argKey = arg.getArgKey();
             TypeName argType = arg.getArgType();
 
@@ -220,7 +220,7 @@ public class AutoBundleWriter {
     }
 
     private static MethodSpec createBindWithSourceMethod(AutoBundleBindingClass target) {
-        List<AutoBundleBindingArg> args = new ArrayList<>();
+        List<AutoBundleBindingField> args = new ArrayList<>();
         args.addAll(target.getRequiredArgs());
         args.addAll(target.getNotRequiredArgs());
 
@@ -230,7 +230,7 @@ public class AutoBundleWriter {
                 .addParameter(target.getTargetType(), "target")
                 .addParameter(CLASS_BUNDLE, "source");
 
-        for (AutoBundleBindingArg arg : args) {
+        for (AutoBundleBindingField arg : args) {
             String key = arg.getArgKey();
             String fieldName = arg.getFieldName();
             builder.beginControlFlow("if (source.containsKey($S))", key);
@@ -279,7 +279,7 @@ public class AutoBundleWriter {
     }
 
     private static MethodSpec createPackMethod(AutoBundleBindingClass target) {
-        List<AutoBundleBindingArg> args = new ArrayList<>();
+        List<AutoBundleBindingField> args = new ArrayList<>();
         args.addAll(target.getRequiredArgs());
         args.addAll(target.getNotRequiredArgs());
 
@@ -289,7 +289,7 @@ public class AutoBundleWriter {
                 .addParameter(target.getTargetType(), "source")
                 .addParameter(CLASS_BUNDLE, "args");
 
-        for (AutoBundleBindingArg arg : args) {
+        for (AutoBundleBindingField arg : args) {
             String key = arg.getArgKey();
             String fieldName = arg.getFieldName();
             TypeName argType = arg.getArgType();

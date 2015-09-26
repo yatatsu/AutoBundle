@@ -33,14 +33,14 @@ final class BindingDetector {
         return bindingClasses;
     }
 
-    static List<AutoBundleBindingArg> findArgFields(Element element,
+    static List<AutoBundleBindingField> findArgFields(Element element,
                                                     boolean required) {
-        List<AutoBundleBindingArg> fields = new ArrayList<>();
+        List<AutoBundleBindingField> fields = new ArrayList<>();
         for (Element enclosedElement : element.getEnclosedElements()) {
             Arg annotation = enclosedElement.getAnnotation(Arg.class);
             if (annotation != null) {
-                AutoBundleBindingArg field =
-                        new AutoBundleBindingArg((VariableElement) enclosedElement, annotation);
+                AutoBundleBindingField field =
+                        new AutoBundleBindingField((VariableElement) enclosedElement, annotation);
                 if (!(required ^ field.isRequired())) {
                     fields.add(field);
                 }

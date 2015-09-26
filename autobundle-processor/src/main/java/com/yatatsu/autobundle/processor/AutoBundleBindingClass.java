@@ -33,8 +33,8 @@ public class AutoBundleBindingClass {
     private final String packageName;
     private final String className;
     private final BuilderType builderType;
-    private final List<AutoBundleBindingArg> requiredArgs;
-    private final List<AutoBundleBindingArg> notRequiredArgs;
+    private final List<AutoBundleBindingField> requiredArgs;
+    private final List<AutoBundleBindingField> notRequiredArgs;
 
     public AutoBundleBindingClass(TypeElement typeElement,
                                   Elements elementsUtils) {
@@ -46,7 +46,7 @@ public class AutoBundleBindingClass {
 
         this.requiredArgs = BindingDetector.findArgFields(typeElement, true);
         this.notRequiredArgs = BindingDetector.findArgFields(typeElement, false);
-        List<AutoBundleBindingArg> args = new ArrayList<>();
+        List<AutoBundleBindingField> args = new ArrayList<>();
         args.addAll(requiredArgs);
         args.addAll(notRequiredArgs);
         Validator.checkDuplicatedArgsKey(args);
@@ -68,11 +68,11 @@ public class AutoBundleBindingClass {
         return builderType;
     }
 
-    public List<AutoBundleBindingArg> getRequiredArgs() {
+    public List<AutoBundleBindingField> getRequiredArgs() {
         return requiredArgs;
     }
 
-    public List<AutoBundleBindingArg> getNotRequiredArgs() {
+    public List<AutoBundleBindingField> getNotRequiredArgs() {
         return notRequiredArgs;
     }
 

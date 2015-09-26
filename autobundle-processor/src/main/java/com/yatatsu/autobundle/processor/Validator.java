@@ -114,9 +114,9 @@ final class Validator {
         }
     }
 
-    static void checkDuplicatedArgsKey(List<AutoBundleBindingArg> args) {
+    static void checkDuplicatedArgsKey(List<AutoBundleBindingField> args) {
         Set<String> keySet = new HashSet<>();
-        for (AutoBundleBindingArg arg : args) {
+        for (AutoBundleBindingField arg : args) {
             String key = arg.getArgKey();
             if (keySet.contains(key)) {
                 throw new DuplicatedArgKeyException(
