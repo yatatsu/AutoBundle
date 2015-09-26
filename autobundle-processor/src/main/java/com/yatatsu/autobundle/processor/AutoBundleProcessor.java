@@ -18,6 +18,7 @@ import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
+import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
 
 @AutoService(Processor.class)
@@ -26,6 +27,7 @@ public class AutoBundleProcessor extends AbstractProcessor {
     private Filer filer;
     private Messager messager;
     private Elements elementUtils;
+    private Types typeUtils;
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
@@ -33,6 +35,7 @@ public class AutoBundleProcessor extends AbstractProcessor {
         filer = processingEnv.getFiler();
         messager = processingEnv.getMessager();
         elementUtils = processingEnv.getElementUtils();
+        typeUtils = processingEnv.getTypeUtils();
     }
 
     @Override
@@ -48,7 +51,7 @@ public class AutoBundleProcessor extends AbstractProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         List<AutoBundleBindingClass> classes =
-                new ArrayList<>(BindingDetector.bindingClasses(roundEnv, elementUtils));
+                new ArrayList<>(BindingDetector.bindingClasses(roundEnv, elementUtils, typeUtils));
         if (!classes.isEmpty()) {
             try {
                 AutoBundleBinderWriter binderWriter = new AutoBundleBinderWriter(classes);

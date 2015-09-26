@@ -10,6 +10,7 @@ import com.yatatsu.autobundle.processor.data.NotPublicConstructorConverter;
 import com.yatatsu.autobundle.processor.data.NotSupportedFieldType;
 import com.yatatsu.autobundle.processor.data.SourceBase;
 import com.yatatsu.autobundle.processor.data.ValidFragment;
+import com.yatatsu.autobundle.processor.data.WrongSuperClass;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -68,6 +69,14 @@ public class AutoBundleProcessorTest {
         expectedException.expect(RuntimeException.class);
         expectedException.expectMessage(" is not supported type.");
         assertGenerateCode(new NotSupportedFieldType());
+    }
+
+    @Test
+    public void testWrongSuperClass() {
+        expectedException.expect(RuntimeException.class);
+        expectedException.expectMessage("AutoBundle target class must be subtype of" +
+                " 'Fragment', 'Activity', 'Receiver' or 'Service'.");
+        assertGenerateCode(new WrongSuperClass());
     }
 
     @Test

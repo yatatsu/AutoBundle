@@ -102,6 +102,14 @@ final class Validator {
         }
     });
 
+    static void checkAutoBundleTargetClass(AutoBundleBindingClass.BuilderType type) {
+        if (type == AutoBundleBindingClass.BuilderType.None) {
+            throw new UnsupportedClassException(
+                    "AutoBundle target class must be subtype of" +
+                            " 'Fragment', 'Activity', 'Receiver' or 'Service'.");
+        }
+    }
+
     static void checkAutoBundleTargetModifier(TypeElement typeElement) {
         Set<Modifier> modifiers = typeElement.getModifiers();
         if (modifiers.contains(Modifier.ABSTRACT)) {

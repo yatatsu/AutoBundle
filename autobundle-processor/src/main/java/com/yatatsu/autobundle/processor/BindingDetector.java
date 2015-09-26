@@ -13,11 +13,13 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.util.Elements;
+import javax.lang.model.util.Types;
 
 final class BindingDetector {
 
     static List<AutoBundleBindingClass> bindingClasses(RoundEnvironment env,
-                                                                   Elements elementUtils) {
+                                                       Elements elementUtils,
+                                                       Types typeUtils) {
         ArrayList<AutoBundleBindingClass> bindingClasses = new ArrayList<>();
         Set<String> keySet = new HashSet<>();
         Set<? extends Element> elements = env.getElementsAnnotatedWith(Arg.class);
@@ -25,7 +27,7 @@ final class BindingDetector {
             TypeElement typeElement = (TypeElement) element.getEnclosingElement();
             if (!keySet.contains(typeElement.getSimpleName().toString())) {
                 AutoBundleBindingClass bindingClass =
-                        new AutoBundleBindingClass(typeElement, elementUtils);
+                        new AutoBundleBindingClass(typeElement, elementUtils, typeUtils);
                 bindingClasses.add(bindingClass);
                 keySet.add(typeElement.getSimpleName().toString());
             }
