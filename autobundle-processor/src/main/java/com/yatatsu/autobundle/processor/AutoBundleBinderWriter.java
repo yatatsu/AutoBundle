@@ -131,7 +131,7 @@ public class AutoBundleBinderWriter {
                     ClassName.get(bindingClass.getPackageName(), bindingClass.getHelperClassName());
             builder.beginControlFlow("if (target.getClass().getCanonicalName()" +
                     ".equals($T.class.getName()))", type)
-                    .addStatement("$T.bind(($T)target, args)", bindClassType, type)
+                    .addStatement("$T.pack(($T)target, args)", bindClassType, type)
                     .addStatement("return")
                     .endControlFlow();
         }

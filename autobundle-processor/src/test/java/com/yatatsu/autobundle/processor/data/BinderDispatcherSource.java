@@ -95,11 +95,11 @@ public class BinderDispatcherSource implements SourceBase {
                 "@Override\n" +
                 "public void pack(Object target, Bundle args) {\n" +
                 "if (target.getClass().getCanonicalName().equals(ExampleActivity.class.getName())) {\n" +
-                "ExampleActivityAutoBundle.bind((ExampleActivity)target, args);\n" +
+                "ExampleActivityAutoBundle.pack((ExampleActivity)target, args);\n" +
                 "return;\n" +
                 "}\n" +
                 "if (target.getClass().getCanonicalName().equals(ExampleFragment.class.getName())) {\n" +
-                "ExampleFragmentAutoBundle.bind((ExampleFragment)target, args);\n" +
+                "ExampleFragmentAutoBundle.pack((ExampleFragment)target, args);\n" +
                 "return;\n" +
                 "}\n" +
                 "Log.w(\"AutoBundle\", \"not found binding with \" + target.getClass());\n" +
