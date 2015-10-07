@@ -179,15 +179,15 @@ AutoBundle uses annotation processing, so you need to add android-apt plugin.
 ```
 buildscript {
     dependencies {
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.7'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
     }
 }
 
 apply plugin: 'android-apt'
 
 dependencies {
-    compile 'com.github.yatatsu:autobundle:0.1.5'
-    apt 'com.github.yatatsu:autobundle-processor:0.1.5'
+    compile 'com.github.yatatsu:autobundle:0.1.6'
+    apt 'com.github.yatatsu:autobundle-processor:0.1.6'
 }
 ```
 
