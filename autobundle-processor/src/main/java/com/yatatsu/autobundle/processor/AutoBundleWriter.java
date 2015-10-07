@@ -145,7 +145,7 @@ public class AutoBundleWriter {
 
             if (arg.hasCustomConverter()) {
                 TypeName converter = arg.getConverter();
-                TypeName converted = arg.getArgType();
+                TypeName converted = arg.getConvertedType();
                 String operationName = createOperationMethodName("put", converted);
                 builder.addStatement("$T $NConverter = new $T()", converter, argKey, converter)
                         .addStatement("$N.$N($S, $NConverter.convert($N))",
