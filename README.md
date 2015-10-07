@@ -3,6 +3,7 @@
 [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Build Status](https://travis-ci.org/yatatsu/AutoBundle.svg?branch=master)](https://travis-ci.org/yatatsu/AutoBundle)
 [ ![Download](https://api.bintray.com/packages/yatatsu/maven/autobundle/images/download.svg) ](https://bintray.com/yatatsu/maven/autobundle/_latestVersion)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-AutoBundle-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/2600)
 
 AutoBundle generates boilerplate code for field binding with ``android.os.Bundle``. 
 
@@ -185,8 +186,8 @@ buildscript {
 apply plugin: 'android-apt'
 
 dependencies {
-    compile 'com.github.yatatsu:autobundle:0.1.4'
-    apt 'com.github.yatatsu:autobundle-processor:0.1.4'
+    compile 'com.github.yatatsu:autobundle:0.1.5'
+    apt 'com.github.yatatsu:autobundle-processor:0.1.5'
 }
 ```
 
