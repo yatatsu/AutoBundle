@@ -29,11 +29,23 @@ public class ExampleFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            // restore from savedInstanceState.
+            AutoBundle.bind(this, savedInstanceState);
+        }
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(title)
                 .setMessage("date is " + targetDate.toString());
         // Create the AlertDialog object and return it
         return builder.create();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        title = String.format("%s!", title);
+        // store state
+        AutoBundle.pack(this, outState);
     }
 
     public static class DateArgConverter implements Converter<Date, Long> {
