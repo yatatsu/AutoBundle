@@ -1,6 +1,5 @@
 package com.yatatsu.autobundle.example;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -24,7 +23,6 @@ public class ExampleActivity extends AppCompatActivity {
     @Arg(required = false)
     ArrayList<CharSequence> fooList;
 
-    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +33,7 @@ public class ExampleActivity extends AppCompatActivity {
             AutoBundle.bind(this, savedInstanceState);
             Log.d("ExampleActivity", "savedInstanceState: " + savedInstanceState);
         } else {
-            AutoBundle.bind(this, getIntent());
+            AutoBundle.bind(this);
             Log.d("ExampleActivity", "intent: " + getIntent().getExtras());
         }
         setTitle(name);
@@ -45,7 +43,7 @@ public class ExampleActivity extends AppCompatActivity {
         }
         if (fooList != null) {
             for (CharSequence c : fooList) {
-                view.setText(view.getText() + "\n" + c.toString());
+                view.setText(String.format("%s,\n%s", view.getText(), c));
                 Log.d("ExampleActivity", "fooList: " + c);
             }
         }
