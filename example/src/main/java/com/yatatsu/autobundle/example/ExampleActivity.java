@@ -23,6 +23,9 @@ public class ExampleActivity extends AppCompatActivity {
     @Arg(required = false)
     ArrayList<CharSequence> fooList;
 
+    @Arg(required = false, converter = ExampleDataConverter.class)
+    ExampleData exampleData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +49,10 @@ public class ExampleActivity extends AppCompatActivity {
                 view.setText(String.format("%s,\n%s", view.getText(), c));
                 Log.d("ExampleActivity", "fooList: " + c);
             }
+        }
+        if (exampleData != null) {
+            view.setText(String.format("%s,\n%s", view.getText(), exampleData.message));
+            Log.d("ExampleActivity", "exampleData: " + exampleData.id + ", " + exampleData.message);
         }
     }
 
