@@ -88,7 +88,7 @@ public class ValidFragment implements SourceBase {
                         "}\n" +
                         "if (source.containsKey(\"date\")) {\n" +
                         "ExampleFragment.DateArgConverter dateConverter = new ExampleFragment.DateArgConverter();\n" +
-                        "target.date = dateConverter.original(source.getLong(\"date\"));\n" +
+                        "target.date = (Date) dateConverter.original(source.getLong(\"date\"));\n" +
                         "} else {\n" +
                         "throw new IllegalStateException(\"date is required, but not found in the bundle.\");\n" +
                         "}\n" +

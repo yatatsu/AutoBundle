@@ -233,6 +233,7 @@ public class AutoBundleWriter {
         for (AutoBundleBindingField arg : args) {
             String key = arg.getArgKey();
             String fieldName = arg.getFieldName();
+            TypeName argType = arg.getArgType();
             builder.beginControlFlow("if (source.containsKey($S))", key);
 
             if (arg.hasCustomConverter()) {
@@ -240,10 +241,10 @@ public class AutoBundleWriter {
                 TypeName converted = arg.getConvertedType();
                 String operationName = createOperationMethodName("get", converted);
                 builder.addStatement("$T $NConverter = new $T()", converter, key, converter)
-                        .addStatement("target.$N = $NConverter.original(source.$N($S))",
-                                fieldName, key, operationName, key);
+                        .addStatement("target.$N = ($T) $NConverter.original(source.$N($S))",
+                                fieldName, argType, key, operationName, key);
             } else {
-                String operationName = createOperationMethodName("get", arg.getArgType());
+                String operationName = createOperationMethodName("get", argType);
                 builder.addStatement("target.$N = source.$N($S)", fieldName, operationName, key);
             }
 
