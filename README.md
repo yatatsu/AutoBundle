@@ -27,7 +27,7 @@ public class ExampleFragment extends Fragment {
 }
 ```
 
-In caller section, you can use generated buidler.
+In caller section, you can use generated builder.
 
 ```
 ExampleFragment fragment = ExampleFragmentAutoBundle
@@ -120,7 +120,7 @@ ExampleFragment fragment = ExampleFragmentAutoBundle
 #### CustomConverter
 
 ``converter`` option provide custom converter for storing to bundle.
-You can specify class which impliments ``Converter<T, U>``.
+You can specify class which implements ``Converter<T, U>``.
 
 ```
 public class ExampleFragment extends Fragment {
