@@ -1,5 +1,6 @@
 package com.yatatsu.autobundle;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,6 +30,30 @@ public final class AutoBundle {
 
     private AutoBundle() {
         throw new AssertionError("no instances");
+    }
+
+    /**
+     * assign to target fields from {@link Activity#getIntent()}
+     * @param activity target activity which has {@link Arg} annotated fields.
+     */
+    public static void bind(Activity activity) {
+        bind(activity, activity.getIntent());
+    }
+
+    /**
+     * assign to target fields from {@link Fragment#getArguments()}.
+     *
+     * target may be {@link Fragment} or compat.
+     *
+     * @param target target Fragment which has {@link Arg} annotated fields.
+     */
+    public static void bind(Object target) {
+        AutoBundleBinder binder = findBinder();
+        if (binder != null) {
+            binder.bind(target);
+        } else {
+            Log.w(TAG, "AutoBundle cannot resolve binding with " + target.getClass());
+        }
     }
 
     /**
@@ -65,22 +90,6 @@ public final class AutoBundle {
         AutoBundleBinder binder = findBinder();
         if (binder != null) {
             binder.bind(target, intent);
-        } else {
-            Log.w(TAG, "AutoBundle cannot resolve binding with " + target.getClass());
-        }
-    }
-
-    /**
-     * assign to target fields from {@link Fragment#getArguments()}.
-     *
-     * target may be {@link Fragment} or compat.
-     *
-     * @param target target Fragment which has {@link Arg} annotated fields.
-     */
-    public static void bind(Object target) {
-        AutoBundleBinder binder = findBinder();
-        if (binder != null) {
-            binder.bind(target);
         } else {
             Log.w(TAG, "AutoBundle cannot resolve binding with " + target.getClass());
         }
