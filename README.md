@@ -37,7 +37,7 @@ ExampleFragment fragment = ExampleFragmentAutoBundle
 ```
 
 Helper class is named ``{YourClass}AutoBundle``.
-FragmentBuilder also has method ``build(T fragment)``,
+FragmentBuilder also has method ``build(Fragment fragment)``,
 so you can set bundle to existing instance.
 
 For ``Intent``, here is builder example.
@@ -79,8 +79,12 @@ public class ExampleFragment extends DialogFragment {
 
 Call ``AutoBundle#bind`` in ``onCreate`` and bind value to field with ``@Arg``.
 
-- In ``Intent`` case, call ``bind(T target, Intent intent)`` or ``bind(T target, Bundle bundle)``.
-- ``bind(T target)`` equals to ``bind(T target, target.getArguments())``.
+In ``Intent`` case, call these method.
+
+- ``bind(Object target, Intent intent)``
+- ``bind(Object target, Bundle bundle)``
+- ``bind(Activity target)`` (equals to ``bind(activity, activity.getIntent())``
+- ``bind(Object target)`` (equals to ``bind(fragment, fragment.getArguments())``
 
 ``AutoBundle`` use reflection at the first time, to find generated class ``AutoBundleBindingDispatcher``,
 and call internal binding method for each classes.
@@ -186,8 +190,8 @@ buildscript {
 apply plugin: 'android-apt'
 
 dependencies {
-    compile 'com.github.yatatsu:autobundle:0.1.6'
-    apt 'com.github.yatatsu:autobundle-processor:0.1.6'
+    compile 'com.github.yatatsu:autobundle:0.2.0'
+    apt 'com.github.yatatsu:autobundle-processor:0.2.0'
 }
 ```
 
