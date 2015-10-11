@@ -64,8 +64,10 @@ public class AutoBundleBindingClass {
         this.className = BindingDetector.getClassName(typeElement, this.packageName);
         this.builderType = BuilderType.byTypeName(typeElement, elementsUtils, typeUtils);
         Validator.checkAutoBundleTargetClass(builderType);
-        this.requiredArgs = BindingDetector.findArgFields(typeElement, true);
-        this.notRequiredArgs = BindingDetector.findArgFields(typeElement, false);
+        this.requiredArgs = BindingDetector
+                .findArgFields(typeElement, true, elementsUtils, typeUtils);
+        this.notRequiredArgs = BindingDetector
+                .findArgFields(typeElement, false, elementsUtils, typeUtils);
         List<AutoBundleBindingField> args = new ArrayList<>();
         args.addAll(requiredArgs);
         args.addAll(notRequiredArgs);

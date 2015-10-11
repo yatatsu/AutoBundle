@@ -77,7 +77,7 @@ public class ValidFragment implements SourceBase {
                         "\n" +
                         "public static void bind(ExampleFragment target, Bundle source) {\n" +
                         "if (source.containsKey(\"ids\")) {\n" +
-                        "target.ids = source.getIntArray(\"ids\");\n" +
+                        "target.ids = (int[]) source.getIntArray(\"ids\");\n" +
                         "} else {\n" +
                         "throw new IllegalStateException(\"ids is required, but not found in the bundle.\");\n" +
                         "}\n" +
@@ -93,7 +93,7 @@ public class ValidFragment implements SourceBase {
                         "throw new IllegalStateException(\"date is required, but not found in the bundle.\");\n" +
                         "}\n" +
                         "if (source.containsKey(\"messages\")) {\n" +
-                        "target.messages = source.getCharSequenceArrayList(\"messages\");\n" +
+                        "target.messages = (ArrayList<CharSequence>) source.getCharSequenceArrayList(\"messages\");\n" +
                         "}\n" +
                         "}\n" +
                         "\n" +

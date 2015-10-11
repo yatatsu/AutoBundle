@@ -146,107 +146,107 @@ public class AllValidType implements SourceBase {
                 "\n" +
                 "public static void bind(ExampleActivity target, Bundle source) {\n" +
                 "if (source.containsKey(\"booelean1\")) {\n" +
-                "target.booelean1 = source.getBoolean(\"booelean1\");\n" +
+                "target.booelean1 = (boolean) source.getBoolean(\"booelean1\");\n" +
                 "} else {\n" +
                 "throw new IllegalStateException(\"booelean1 is required, but not found in the bundle.\");\n" +
                 "}\n" +
                 "if (source.containsKey(\"booeleanArray1\")) {\n" +
-                "target.booeleanArray1 = source.getBooleanArray(\"booeleanArray1\");\n" +
+                "target.booeleanArray1 = (boolean[]) source.getBooleanArray(\"booeleanArray1\");\n" +
                 "} else {\n" +
                 "throw new IllegalStateException(\"booeleanArray1 is required, but not found in the bundle.\");\n" +
                 "}\n" +
                 "if (source.containsKey(\"byte1\")) {\n" +
-                "target.byte1 = source.getByte(\"byte1\");\n" +
+                "target.byte1 = (byte) source.getByte(\"byte1\");\n" +
                 "} else {\n" +
                 "throw new IllegalStateException(\"byte1 is required, but not found in the bundle.\");\n" +
                 "}\n" +
                 "if (source.containsKey(\"byteArray1\")) {\n" +
-                "target.byteArray1 = source.getByteArray(\"byteArray1\");\n" +
+                "target.byteArray1 = (byte[]) source.getByteArray(\"byteArray1\");\n" +
                 "} else {\n" +
                 "throw new IllegalStateException(\"byteArray1 is required, but not found in the bundle.\");\n" +
                 "}\n" +
                 "if (source.containsKey(\"char1\")) {\n" +
-                "target.char1 = source.getChar(\"char1\");\n" +
+                "target.char1 = (char) source.getChar(\"char1\");\n" +
                 "} else {\n" +
                 "throw new IllegalStateException(\"char1 is required, but not found in the bundle.\");\n" +
                 "}\n" +
                 "if (source.containsKey(\"charArray1\")) {\n" +
-                "target.charArray1 = source.getCharArray(\"charArray1\");\n" +
+                "target.charArray1 = (char[]) source.getCharArray(\"charArray1\");\n" +
                 "} else {\n" +
                 "throw new IllegalStateException(\"charArray1 is required, but not found in the bundle.\");\n" +
                 "}\n" +
                 "if (source.containsKey(\"charSequence1\")) {\n" +
-                "target.charSequence1 = source.getCharSequence(\"charSequence1\");\n" +
+                "target.charSequence1 = (CharSequence) source.getCharSequence(\"charSequence1\");\n" +
                 "} else {\n" +
                 "throw new IllegalStateException(\"charSequence1 is required, but not found in the bundle.\");\n" +
                 "}\n" +
                 "if (source.containsKey(\"charSequenceArray1\")) {\n" +
-                "target.charSequenceArray1 = source.getCharSequenceArray(\"charSequenceArray1\");\n" +
+                "target.charSequenceArray1 = (CharSequence[]) source.getCharSequenceArray(\"charSequenceArray1\");\n" +
                 "} else {\n" +
                 "throw new IllegalStateException(\"charSequenceArray1 is required, but not found in the bundle.\");\n" +
                 "}\n" +
                 "if (source.containsKey(\"double1\")) {\n" +
-                "target.double1 = source.getDouble(\"double1\");\n" +
+                "target.double1 = (double) source.getDouble(\"double1\");\n" +
                 "} else {\n" +
                 "throw new IllegalStateException(\"double1 is required, but not found in the bundle.\");\n" +
                 "}\n" +
                 "if (source.containsKey(\"doubleArray1\")) {\n" +
-                "target.doubleArray1 = source.getDoubleArray(\"doubleArray1\");\n" +
+                "target.doubleArray1 = (double[]) source.getDoubleArray(\"doubleArray1\");\n" +
                 "} else {\n" +
                 "throw new IllegalStateException(\"doubleArray1 is required, but not found in the bundle.\");\n" +
                 "}\n" +
                 "if (source.containsKey(\"float1\")) {\n" +
-                "target.float1 = source.getFloat(\"float1\");\n" +
+                "target.float1 = (float) source.getFloat(\"float1\");\n" +
                 "} else {\n" +
                 "throw new IllegalStateException(\"float1 is required, but not found in the bundle.\");\n" +
                 "}\n" +
                 "if (source.containsKey(\"floatArray1\")) {\n" +
-                "target.floatArray1 = source.getFloatArray(\"floatArray1\");\n" +
+                "target.floatArray1 = (float[]) source.getFloatArray(\"floatArray1\");\n" +
                 "} else {\n" +
                 "throw new IllegalStateException(\"floatArray1 is required, but not found in the bundle.\");\n" +
                 "}\n" +
                 "if (source.containsKey(\"int1\")) {\n" +
-                "target.int1 = source.getInt(\"int1\");\n" +
+                "target.int1 = (int) source.getInt(\"int1\");\n" +
                 "} else {\n" +
                 "throw new IllegalStateException(\"int1 is required, but not found in the bundle.\");\n" +
                 "}\n" +
                 "if (source.containsKey(\"intArray1\")) {\n" +
-                "target.intArray1 = source.getIntArray(\"intArray1\");\n" +
+                "target.intArray1 = (int[]) source.getIntArray(\"intArray1\");\n" +
                 "} else {\n" +
                 "throw new IllegalStateException(\"intArray1 is required, but not found in the bundle.\");\n" +
                 "}\n" +
                 "if (source.containsKey(\"long1\")) {\n" +
-                "target.long1 = source.getLong(\"long1\");\n" +
+                "target.long1 = (long) source.getLong(\"long1\");\n" +
                 "} else {\n" +
                 "throw new IllegalStateException(\"long1 is required, but not found in the bundle.\");\n" +
                 "}\n" +
                 "if (source.containsKey(\"longArray1\")) {\n" +
-                "target.longArray1 = source.getLongArray(\"longArray1\");\n" +
+                "target.longArray1 = (long[]) source.getLongArray(\"longArray1\");\n" +
                 "} else {\n" +
                 "throw new IllegalStateException(\"longArray1 is required, but not found in the bundle.\");\n" +
                 "}\n" +
                 "if (source.containsKey(\"short1\")) {\n" +
-                "target.short1 = source.getShort(\"short1\");\n" +
+                "target.short1 = (short) source.getShort(\"short1\");\n" +
                 "} else {\n" +
                 "throw new IllegalStateException(\"short1 is required, but not found in the bundle.\");\n" +
                 "}\n" +
                 "if (source.containsKey(\"shortArray1\")) {\n" +
-                "target.shortArray1 = source.getShortArray(\"shortArray1\");\n" +
+                "target.shortArray1 = (short[]) source.getShortArray(\"shortArray1\");\n" +
                 "} else {\n" +
                 "throw new IllegalStateException(\"shortArray1 is required, but not found in the bundle.\");\n" +
                 "}\n" +
                 "if (source.containsKey(\"string1\")) {\n" +
-                "target.string1 = source.getString(\"string1\");\n" +
+                "target.string1 = (String) source.getString(\"string1\");\n" +
                 "} else {\n" +
                 "throw new IllegalStateException(\"string1 is required, but not found in the bundle.\");\n" +
                 "}\n" +
                 "if (source.containsKey(\"stringArray1\")) {\n" +
-                "target.stringArray1 = source.getStringArray(\"stringArray1\");\n" +
+                "target.stringArray1 = (String[]) source.getStringArray(\"stringArray1\");\n" +
                 "} else {\n" +
                 "throw new IllegalStateException(\"stringArray1 is required, but not found in the bundle.\");\n" +
                 "}\n" +
                 "if (source.containsKey(\"parcelable\")) {\n" +
-                "target.parcelable = source.getParcelable(\"parcelable\");\n" +
+                "target.parcelable = (Parcelable) source.getParcelable(\"parcelable\");\n" +
                 "} else {\n" +
                 "throw new IllegalStateException(\"parcelable is required, but not found in the bundle.\");\n" +
                 "}\n" +
@@ -256,27 +256,27 @@ public class AllValidType implements SourceBase {
                 "throw new IllegalStateException(\"parcelableArray is required, but not found in the bundle.\");\n" +
                 "}\n" +
                 "if (source.containsKey(\"serializable1\")) {\n" +
-                "target.serializable1 = source.getSerializable(\"serializable1\");\n" +
+                "target.serializable1 = (Serializable) source.getSerializable(\"serializable1\");\n" +
                 "} else {\n" +
                 "throw new IllegalStateException(\"serializable1 is required, but not found in the bundle.\");\n" +
                 "}\n" +
                 "if (source.containsKey(\"bundle1\")) {\n" +
-                "target.bundle1 = source.getBundle(\"bundle1\");\n" +
+                "target.bundle1 = (Bundle) source.getBundle(\"bundle1\");\n" +
                 "} else {\n" +
                 "throw new IllegalStateException(\"bundle1 is required, but not found in the bundle.\");\n" +
                 "}\n" +
                 "if (source.containsKey(\"integerArrayList1\")) {\n" +
-                "target.integerArrayList1 = source.getIntegerArrayList(\"integerArrayList1\");\n" +
+                "target.integerArrayList1 = (ArrayList<Integer>) source.getIntegerArrayList(\"integerArrayList1\");\n" +
                 "} else {\n" +
                 "throw new IllegalStateException(\"integerArrayList1 is required, but not found in the bundle.\");\n" +
                 "}\n" +
                 "if (source.containsKey(\"stringArrayList1\")) {\n" +
-                "target.stringArrayList1 = source.getStringArrayList(\"stringArrayList1\");\n" +
+                "target.stringArrayList1 = (ArrayList<String>) source.getStringArrayList(\"stringArrayList1\");\n" +
                 "} else {\n" +
                 "throw new IllegalStateException(\"stringArrayList1 is required, but not found in the bundle.\");\n" +
                 "}\n" +
                 "if (source.containsKey(\"charSequenceArrayList1\")) {\n" +
-                "target.charSequenceArrayList1 = source.getCharSequenceArrayList(\"charSequenceArrayList1\");\n" +
+                "target.charSequenceArrayList1 = (ArrayList<CharSequence>) source.getCharSequenceArrayList(\"charSequenceArrayList1\");\n" +
                 "} else {\n" +
                 "throw new IllegalStateException(\"charSequenceArrayList1 is required, but not found in the bundle.\");\n" +
                 "}\n" +

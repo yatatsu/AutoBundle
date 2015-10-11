@@ -15,6 +15,8 @@ import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.MirroredTypeException;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
+import javax.lang.model.util.Elements;
+import javax.lang.model.util.Types;
 
 
 public class AutoBundleBindingField {
@@ -25,10 +27,12 @@ public class AutoBundleBindingField {
     private final TypeName argType;
     private final TypeName converter;
     private final boolean hasCustomConverter;
-    private final TypeName convertedType;
+    private final String operationName;
 
     public AutoBundleBindingField(VariableElement element,
-                                  Arg annotation) {
+                                  Arg annotation,
+                                  Elements elementUtils,
+                                  Types typeUtils) {
         this.fieldName = element.toString();
         this.argKey = annotation.key().length() > 0 ? annotation.key() : this.fieldName;
         this.required = annotation.required();
@@ -36,27 +40,32 @@ public class AutoBundleBindingField {
         Validator.checkAutoBundleFieldModifier(element);
 
         TypeName converter;
-        TypeName convertedType;
+        TypeName converted;
         try {
             Class clazz = annotation.converter();
             Validator.checkConverterClass(clazz);
             converter = TypeName.get(clazz);
-            convertedType = detectConvertedTypeNameByClass(clazz);
+            converted = detectConvertedTypeNameByClass(clazz);
         } catch (MirroredTypeException mte) {
             DeclaredType classTypeMirror = (DeclaredType) mte.getTypeMirror();
             TypeElement classTypeElement = (TypeElement) classTypeMirror.asElement();
             Validator.checkConverterClass(classTypeElement);
             converter = TypeName.get(classTypeMirror);
-            convertedType = detectConvertedTypeByTypeElement(classTypeElement);
+            converted = detectConvertedTypeByTypeElement(classTypeElement);
         }
         this.converter = converter;
         this.hasCustomConverter =
                 !this.converter.equals(ClassName.get("com.yatatsu.autobundle", "DefaultConverter"));
-        this.convertedType = convertedType;
         if (hasCustomConverter) {
-            Validator.checkNotSupportedConvertClass(this.convertedType);
+            operationName = BindingFieldHelper.getOperationName(converted, elementUtils, typeUtils);
         } else {
-            Validator.checkNotSupportedClass(argType);
+            operationName = BindingFieldHelper.getOperationName(argType, elementUtils, typeUtils);
+        }
+
+        if (hasCustomConverter) {
+            Validator.checkNotSupportedOperation(operationName, converted);
+        } else {
+            Validator.checkNotSupportedOperation(operationName, argType);
         }
     }
 
@@ -84,8 +93,14 @@ public class AutoBundleBindingField {
         return hasCustomConverter;
     }
 
-    public TypeName getConvertedType() {
-        return convertedType;
+    public String getOperationName(String operation) {
+        return operation + operationName;
+    }
+
+    public boolean noCast() {
+        return operationName.equals("ParcelableArrayList") ||
+                operationName.equals("ParcelableArray") ||
+                operationName.equals("SparseParcelableArray");
     }
 
     static TypeName detectConvertedTypeByTypeElement(TypeElement element) {

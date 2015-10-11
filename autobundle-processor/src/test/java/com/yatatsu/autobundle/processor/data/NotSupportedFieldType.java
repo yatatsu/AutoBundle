@@ -18,12 +18,10 @@ public class NotSupportedFieldType implements SourceBase {
                         "\n" +
                         "import com.yatatsu.autobundle.Arg;\n" +
                         "\n" +
-                        "import java.util.Date;\n" +
-                        "\n" +
                         "public class ExampleActivity extends Activity {\n" +
                         "\n" +
                         "@Arg\n" +
-                        "Date date;\n" +
+                        "Object data;\n" +
                         "\n" +
                         "}";
         }

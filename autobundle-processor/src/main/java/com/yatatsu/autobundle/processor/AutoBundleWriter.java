@@ -4,7 +4,6 @@ import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
-import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 
@@ -79,52 +78,19 @@ public class AutoBundleWriter {
         for (AutoBundleBindingField arg : target.getRequiredArgs()) {
             String key = arg.getArgKey();
             TypeName type = arg.getArgType();
+            String operationName = arg.getOperationName("put");
             builder.addParameter(type, key);
             if (arg.hasCustomConverter()) {
                 TypeName converter = arg.getConverter();
-                TypeName converted = arg.getConvertedType();
-                String operationName = createOperationMethodName("put", converted);
                 builder.addStatement("$T $NConverter = new $T()", converter, key, converter)
                         .addStatement("this.$N.$N($S, $NConverter.convert($N))",
                                 fieldName, operationName, key, key, key);
             } else {
-                String operationName = createOperationMethodName("put", type);
                 builder.addStatement("this.$N.$N($S, $N)", fieldName, operationName, key, key);
             }
         }
 
         return builder.build();
-    }
-
-    private static String createOperationMethodName(String operation, TypeName t) {
-        StringBuilder builder = new StringBuilder(operation);
-        ClassName sparseArrayClass = ClassName.get("android.util", "SparseArray");
-        ClassName parcelableClass = ClassName.get("android.os", "Parcelable");
-        ClassName arrayListClass = ClassName.get("java.util", "ArrayList");
-        if (t.equals(ParameterizedTypeName.get(ArrayList.class, String.class))) {
-            builder.append("StringArrayList");
-        } else if (t.equals(ParameterizedTypeName.get(ArrayList.class, Integer.class))) {
-            builder.append("IntegerArrayList");
-        } else if (t.equals(ParameterizedTypeName.get(ArrayList.class, CharSequence.class))){
-            builder.append("CharSequenceArrayList");
-        } else if (t.equals(ParameterizedTypeName.get(arrayListClass, parcelableClass))) {
-            builder.append("ParcelableArrayList");
-        } else if (t.equals(ParameterizedTypeName.get(sparseArrayClass, parcelableClass))) {
-            builder.append("SparseParcelableArray");
-        } else if (t.equals(ClassName.get("android.os", "IBinder"))) {
-            builder.append("Binder");
-        } else {
-            String clazzName = t.toString().substring(t.toString().lastIndexOf(".") + 1);
-            clazzName = Character.toUpperCase(clazzName.charAt(0)) + clazzName.substring(1);
-            if (clazzName.endsWith("[]")) {
-                clazzName = clazzName.substring(0, clazzName.length() - 2);
-                builder.append(clazzName);
-                builder.append("Array");
-            } else {
-                builder.append(clazzName);
-            }
-        }
-        return builder.toString();
     }
 
     private static FieldSpec createField(String fieldName) {
@@ -137,6 +103,7 @@ public class AutoBundleWriter {
         for (AutoBundleBindingField arg : target.getNotRequiredArgs()) {
             String argKey = arg.getArgKey();
             TypeName argType = arg.getArgType();
+            String operationName = arg.getOperationName("put");
 
             MethodSpec.Builder builder = MethodSpec.methodBuilder(argKey)
                     .addModifiers(Modifier.PUBLIC)
@@ -145,13 +112,10 @@ public class AutoBundleWriter {
 
             if (arg.hasCustomConverter()) {
                 TypeName converter = arg.getConverter();
-                TypeName converted = arg.getConvertedType();
-                String operationName = createOperationMethodName("put", converted);
                 builder.addStatement("$T $NConverter = new $T()", converter, argKey, converter)
                         .addStatement("$N.$N($S, $NConverter.convert($N))",
                                 fieldName, operationName, argKey, argKey, argKey);
             } else {
-                String operationName = createOperationMethodName("put", argType);
                 builder.addStatement("$N.$N($S, $N)", fieldName, operationName, argKey, argKey);
             }
 
@@ -234,18 +198,22 @@ public class AutoBundleWriter {
             String key = arg.getArgKey();
             String fieldName = arg.getFieldName();
             TypeName argType = arg.getArgType();
+            String operationName = arg.getOperationName("get");
             builder.beginControlFlow("if (source.containsKey($S))", key);
 
             if (arg.hasCustomConverter()) {
                 TypeName converter = arg.getConverter();
-                TypeName converted = arg.getConvertedType();
-                String operationName = createOperationMethodName("get", converted);
                 builder.addStatement("$T $NConverter = new $T()", converter, key, converter)
                         .addStatement("target.$N = ($T) $NConverter.original(source.$N($S))",
                                 fieldName, argType, key, operationName, key);
             } else {
-                String operationName = createOperationMethodName("get", argType);
-                builder.addStatement("target.$N = source.$N($S)", fieldName, operationName, key);
+                if (arg.noCast()) {
+                    builder.addStatement("target.$N = source.$N($S)",
+                            fieldName, operationName, key);
+                } else {
+                    builder.addStatement("target.$N = ($T) source.$N($S)",
+                            fieldName, argType, operationName, key);
+                }
             }
 
             if (arg.isRequired()) {
@@ -294,6 +262,7 @@ public class AutoBundleWriter {
             String key = arg.getArgKey();
             String fieldName = arg.getFieldName();
             TypeName argType = arg.getArgType();
+            String operationName = arg.getOperationName("put");
 
             if (!argType.isPrimitive()) {
                 String exceptionMessage = String.format("%s must not be null.", fieldName);
@@ -303,13 +272,10 @@ public class AutoBundleWriter {
             }
             if (arg.hasCustomConverter()) {
                 TypeName converter = arg.getConverter();
-                TypeName converted = arg.getConvertedType();
-                String operationName = createOperationMethodName("put", converted);
                 builder.addStatement("$T $NConverter = new $T()", converter, key, converter)
                         .addStatement("args.$N($S, $NConverter.convert(source.$N))",
                                 operationName, key, key, fieldName);
             } else {
-                String operationName = createOperationMethodName("put", argType);
                 builder.addStatement("args.$N($S, source.$N)", operationName, key, fieldName);
             }
         }
