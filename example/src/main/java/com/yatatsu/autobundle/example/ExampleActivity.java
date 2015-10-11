@@ -23,37 +23,51 @@ public class ExampleActivity extends AppCompatActivity {
     @Arg(required = false)
     ArrayList<CharSequence> fooList;
 
-    @Arg(required = false, converter = ExampleDataConverter.class)
+    @Arg(required = false, converter = ParcelableConverter.class)
     ExampleData exampleData;
+
+    @Arg(required = false)
+    ArrayList<Person> persons;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         TextView view = new TextView(this);
         setContentView(view);
-        view.setText("");
         if (savedInstanceState != null) {
             AutoBundle.bind(this, savedInstanceState);
-            Log.d("ExampleActivity", "savedInstanceState: " + savedInstanceState);
+            Log.d("ExampleActivity", "savedInstanceState: " + savedInstanceState.toString());
         } else {
             AutoBundle.bind(this);
             Log.d("ExampleActivity", "intent: " + getIntent().getExtras());
         }
         setTitle(name);
-        if (TextUtils.isEmpty(optionalName)) {
-            view.setText(optionalName);
-            Log.d("ExampleActivity", "optionalName: " + optionalName);
+        StringBuilder sb = new StringBuilder("bundle\n");
+        if (!TextUtils.isEmpty(optionalName)) {
+            sb.append("optionalName: ").append(optionalName).append("\n");
         }
         if (fooList != null) {
+            sb.append("fooList: ");
             for (CharSequence c : fooList) {
-                view.setText(String.format("%s,\n%s", view.getText(), c));
-                Log.d("ExampleActivity", "fooList: " + c);
+                sb.append(c).append(" ");
             }
+            sb.append("\n");
         }
         if (exampleData != null) {
-            view.setText(String.format("%s,\n%s", view.getText(), exampleData.message));
-            Log.d("ExampleActivity", "exampleData: " + exampleData.id + ", " + exampleData.message);
+            sb.append("exampleData: ");
+            sb.append("id: ").append(exampleData.id).append(" ");
+            sb.append("message: ").append(exampleData.message);
+            sb.append("\n");
         }
+        if (persons != null) {
+            sb.append("persons: ").append("\n");
+            for (Person p : persons) {
+                sb.append(p.name).append(",").append(p.age).append("\n");
+            }
+        }
+        String text = sb.toString();
+        view.setText(text);
+        Log.d("ExampleActivity", text);
     }
 
     @Override

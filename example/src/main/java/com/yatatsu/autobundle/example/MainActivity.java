@@ -55,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = ExampleActivityAutoBundle.createIntentBuilder("hello, example!")
                 .optionalName("optionalName")
                 .fooList(messages)
+                .exampleData(new ExampleData(100, "one hundred"))
+                .persons(Person.examples())
                 .build(this)
                 .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);

@@ -7,7 +7,7 @@ import com.yatatsu.autobundle.Converter;
 import org.parceler.Parcels;
 
 
-public final class ExampleDataConverter implements Converter<Object, Parcelable> {
+public final class ParcelableConverter implements Converter<Object, Parcelable> {
 
     @Override
     public Parcelable convert(Object o) {
