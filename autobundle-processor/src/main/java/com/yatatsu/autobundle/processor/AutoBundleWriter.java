@@ -110,6 +110,10 @@ public class AutoBundleWriter {
                     .addParameter(argType, argKey)
                     .returns(ClassName.get(target.getPackageName(), target.getBuilderClassName()));
 
+            final boolean checkNull = !arg.getArgType().isPrimitive();
+            if (checkNull) {
+                builder.beginControlFlow("if ($N != null)", argKey);
+            }
             if (arg.hasCustomConverter()) {
                 TypeName converter = arg.getConverter();
                 builder.addStatement("$T $NConverter = new $T()", converter, argKey, converter)
@@ -117,6 +121,9 @@ public class AutoBundleWriter {
                                 fieldName, operationName, argKey, argKey, argKey);
             } else {
                 builder.addStatement("$N.$N($S, $N)", fieldName, operationName, argKey, argKey);
+            }
+            if (checkNull) {
+                builder.endControlFlow();
             }
 
             builder.addStatement("return this");
@@ -259,26 +266,37 @@ public class AutoBundleWriter {
                 .addParameter(CLASS_BUNDLE, "args");
 
         for (AutoBundleBindingField arg : args) {
-            String key = arg.getArgKey();
             String fieldName = arg.getFieldName();
-            TypeName argType = arg.getArgType();
-            String operationName = arg.getOperationName("put");
-
-            if (!argType.isPrimitive()) {
-                String exceptionMessage = String.format("%s must not be null.", fieldName);
-                builder.beginControlFlow("if (source.$N == null)", fieldName)
-                        .addStatement("throw new IllegalStateException($S)", exceptionMessage)
-                        .endControlFlow();
-            }
-            if (arg.hasCustomConverter()) {
-                TypeName converter = arg.getConverter();
-                builder.addStatement("$T $NConverter = new $T()", converter, key, converter)
-                        .addStatement("args.$N($S, $NConverter.convert(source.$N))",
-                                operationName, key, key, fieldName);
+            if (!arg.getArgType().isPrimitive()) {
+                builder.beginControlFlow("if (source.$N != null)", fieldName);
+                addPackOperationStatement(builder, arg);
+                if (arg.isRequired()) {
+                    String exceptionMessage = String.format("%s must not be null.", fieldName);
+                    builder.nextControlFlow("else")
+                            .addStatement("throw new IllegalStateException($S)", exceptionMessage)
+                            .endControlFlow();
+                } else {
+                    builder.endControlFlow();
+                }
             } else {
-                builder.addStatement("args.$N($S, source.$N)", operationName, key, fieldName);
+                addPackOperationStatement(builder, arg);
             }
         }
         return builder.build();
+    }
+
+    private static void addPackOperationStatement(MethodSpec.Builder builder,
+                                                  AutoBundleBindingField arg) {
+        String key = arg.getArgKey();
+        String fieldName = arg.getFieldName();
+        String operationName = arg.getOperationName("put");
+        if (arg.hasCustomConverter()) {
+            TypeName converter = arg.getConverter();
+            builder.addStatement("$T $NConverter = new $T()", converter, key, converter)
+                    .addStatement("args.$N($S, $NConverter.convert(source.$N))",
+                            operationName, key, key, fieldName);
+        } else {
+            builder.addStatement("args.$N($S, source.$N)", operationName, key, fieldName);
+        }
     }
 }

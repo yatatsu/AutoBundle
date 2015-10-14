@@ -98,23 +98,25 @@ public class ValidFragment implements SourceBase {
                         "}\n" +
                         "\n" +
                         "public static void pack(ExampleFragment source, Bundle args) {\n" +
-                        "if (source.ids == null) {\n" +
+                        "if (source.ids != null) {\n" +
+                        "args.putIntArray(\"ids\", source.ids);\n" +
+                        "} else {\n" +
                         "throw new IllegalStateException(\"ids must not be null.\");\n" +
                         "}\n" +
-                        "args.putIntArray(\"ids\", source.ids);\n" +
-                        "if (source.sparseArray == null) {\n" +
+                        "if (source.sparseArray != null) {\n" +
+                        "args.putSparseParcelableArray(\"models\", source.sparseArray);\n" +
+                        "} else {\n" +
                         "throw new IllegalStateException(\"sparseArray must not be null.\");\n" +
                         "}\n" +
-                        "args.putSparseParcelableArray(\"models\", source.sparseArray);\n" +
-                        "if (source.date == null) {\n" +
-                        "throw new IllegalStateException(\"date must not be null.\");\n" +
-                        "}\n" +
+                        "if (source.date != null) {\n" +
                         "ExampleFragment.DateArgConverter dateConverter = new ExampleFragment.DateArgConverter();\n" +
                         "args.putLong(\"date\", dateConverter.convert(source.date));\n" +
-                        "if (source.messages == null) {\n" +
-                        "throw new IllegalStateException(\"messages must not be null.\");\n" +
+                        "} else {\n" +
+                        "throw new IllegalStateException(\"date must not be null.\");\n" +
                         "}\n" +
+                        "if (source.messages != null) {\n" +
                         "args.putCharSequenceArrayList(\"messages\", source.messages);\n" +
+                        "}\n" +
                         "}\n" +
                         "\n" +
                         "public static final class FragmentBuilder {\n" +
@@ -129,7 +131,9 @@ public class ValidFragment implements SourceBase {
                         "}\n" +
                         "\n" +
                         "public FragmentBuilder messages(ArrayList<CharSequence> messages) {\n" +
+                        "if (messages != null) {\n" +
                         "args.putCharSequenceArrayList(\"messages\", messages);\n" +
+                        "}\n" +
                         "return this;\n" +
                         "}\n" +
                         "\n" +

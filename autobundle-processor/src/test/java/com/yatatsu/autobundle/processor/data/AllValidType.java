@@ -22,13 +22,14 @@ public class AllValidType implements SourceBase {
                 "import java.io.Serializable;\n" +
                 "import java.util.ArrayList;\n" +
                 "\n" +
+                "\n" +
                 "public class ExampleActivity extends Activity {\n" +
                 "\n" +
                 "@Arg\n" +
-                "boolean booelean1;\n" +
+                "boolean boolean1;\n" +
                 "\n" +
                 "@Arg\n" +
-                "boolean[] booeleanArray1;\n" +
+                "boolean[] booleanArray1;\n" +
                 "\n" +
                 "@Arg\n" +
                 "byte byte1;\n" +
@@ -85,10 +86,10 @@ public class AllValidType implements SourceBase {
                 "String[] stringArray1;\n" +
                 "\n" +
                 "@Arg\n" +
-                "Parcelable parcelable;\n" +
+                "Parcelable parcelable1;\n" +
                 "\n" +
                 "@Arg\n" +
-                "Parcelable[] parcelableArray;\n" +
+                "Parcelable[] parcelableArray1;\n" +
                 "\n" +
                 "@Arg\n" +
                 "Serializable serializable1;\n" +
@@ -134,8 +135,8 @@ public class AllValidType implements SourceBase {
                 "import java.util.ArrayList;\n" +
                 "\n" +
                 "public final class ExampleActivityAutoBundle {\n" +
-                "public static IntentBuilder createIntentBuilder(boolean booelean1, boolean[] booeleanArray1, byte byte1, byte[] byteArray1, char char1, char[] charArray1, CharSequence charSequence1, CharSequence[] charSequenceArray1, double double1, double[] doubleArray1, float float1, float[] floatArray1, int int1, int[] intArray1, long long1, long[] longArray1, short short1, short[] shortArray1, String string1, String[] stringArray1, Parcelable parcelable, Parcelable[] parcelableArray, Serializable serializable1, Bundle bundle1, ArrayList<Integer> integerArrayList1, ArrayList<String> stringArrayList1, ArrayList<CharSequence> charSequenceArrayList1, ArrayList<Parcelable> parcelableArrayList1, SparseArray<Parcelable> parcelableSparseArray1) {\n" +
-                "return new IntentBuilder(booelean1,booeleanArray1,byte1,byteArray1,char1,charArray1,charSequence1,charSequenceArray1,double1,doubleArray1,float1,floatArray1,int1,intArray1,long1,longArray1,short1,shortArray1,string1,stringArray1,parcelable,parcelableArray,serializable1,bundle1,integerArrayList1,stringArrayList1,charSequenceArrayList1,parcelableArrayList1,parcelableSparseArray1);\n" +
+                "public static IntentBuilder createIntentBuilder(boolean boolean1, boolean[] booleanArray1, byte byte1, byte[] byteArray1, char char1, char[] charArray1, CharSequence charSequence1, CharSequence[] charSequenceArray1, double double1, double[] doubleArray1, float float1, float[] floatArray1, int int1, int[] intArray1, long long1, long[] longArray1, short short1, short[] shortArray1, String string1, String[] stringArray1, Parcelable parcelable1, Parcelable[] parcelableArray1, Serializable serializable1, Bundle bundle1, ArrayList<Integer> integerArrayList1, ArrayList<String> stringArrayList1, ArrayList<CharSequence> charSequenceArrayList1, ArrayList<Parcelable> parcelableArrayList1, SparseArray<Parcelable> parcelableSparseArray1) {\n" +
+                "return new IntentBuilder(boolean1,booleanArray1,byte1,byteArray1,char1,charArray1,charSequence1,charSequenceArray1,double1,doubleArray1,float1,floatArray1,int1,intArray1,long1,longArray1,short1,shortArray1,string1,stringArray1,parcelable1,parcelableArray1,serializable1,bundle1,integerArrayList1,stringArrayList1,charSequenceArrayList1,parcelableArrayList1,parcelableSparseArray1);\n" +
                 "}\n" +
                 "\n" +
                 "public static void bind(ExampleActivity target, Intent intent) {\n" +
@@ -145,15 +146,15 @@ public class AllValidType implements SourceBase {
                 "}\n" +
                 "\n" +
                 "public static void bind(ExampleActivity target, Bundle source) {\n" +
-                "if (source.containsKey(\"booelean1\")) {\n" +
-                "target.booelean1 = (boolean) source.getBoolean(\"booelean1\");\n" +
+                "if (source.containsKey(\"boolean1\")) {\n" +
+                "target.boolean1 = (boolean) source.getBoolean(\"boolean1\");\n" +
                 "} else {\n" +
-                "throw new IllegalStateException(\"booelean1 is required, but not found in the bundle.\");\n" +
+                "throw new IllegalStateException(\"boolean1 is required, but not found in the bundle.\");\n" +
                 "}\n" +
-                "if (source.containsKey(\"booeleanArray1\")) {\n" +
-                "target.booeleanArray1 = (boolean[]) source.getBooleanArray(\"booeleanArray1\");\n" +
+                "if (source.containsKey(\"booleanArray1\")) {\n" +
+                "target.booleanArray1 = (boolean[]) source.getBooleanArray(\"booleanArray1\");\n" +
                 "} else {\n" +
-                "throw new IllegalStateException(\"booeleanArray1 is required, but not found in the bundle.\");\n" +
+                "throw new IllegalStateException(\"booleanArray1 is required, but not found in the bundle.\");\n" +
                 "}\n" +
                 "if (source.containsKey(\"byte1\")) {\n" +
                 "target.byte1 = (byte) source.getByte(\"byte1\");\n" +
@@ -245,15 +246,15 @@ public class AllValidType implements SourceBase {
                 "} else {\n" +
                 "throw new IllegalStateException(\"stringArray1 is required, but not found in the bundle.\");\n" +
                 "}\n" +
-                "if (source.containsKey(\"parcelable\")) {\n" +
-                "target.parcelable = (Parcelable) source.getParcelable(\"parcelable\");\n" +
+                "if (source.containsKey(\"parcelable1\")) {\n" +
+                "target.parcelable1 = (Parcelable) source.getParcelable(\"parcelable1\");\n" +
                 "} else {\n" +
-                "throw new IllegalStateException(\"parcelable is required, but not found in the bundle.\");\n" +
+                "throw new IllegalStateException(\"parcelable1 is required, but not found in the bundle.\");\n" +
                 "}\n" +
-                "if (source.containsKey(\"parcelableArray\")) {\n" +
-                "target.parcelableArray = source.getParcelableArray(\"parcelableArray\");\n" +
+                "if (source.containsKey(\"parcelableArray1\")) {\n" +
+                "target.parcelableArray1 = source.getParcelableArray(\"parcelableArray1\");\n" +
                 "} else {\n" +
-                "throw new IllegalStateException(\"parcelableArray is required, but not found in the bundle.\");\n" +
+                "throw new IllegalStateException(\"parcelableArray1 is required, but not found in the bundle.\");\n" +
                 "}\n" +
                 "if (source.containsKey(\"serializable1\")) {\n" +
                 "target.serializable1 = (Serializable) source.getSerializable(\"serializable1\");\n" +
@@ -293,107 +294,128 @@ public class AllValidType implements SourceBase {
                 "}\n" +
                 "\n" +
                 "public static void pack(ExampleActivity source, Bundle args) {\n" +
-                "args.putBoolean(\"booelean1\", source.booelean1);\n" +
-                "if (source.booeleanArray1 == null) {\n" +
-                "throw new IllegalStateException(\"booeleanArray1 must not be null.\");\n" +
+                "args.putBoolean(\"boolean1\", source.boolean1);\n" +
+                "if (source.booleanArray1 != null) {\n" +
+                "args.putBooleanArray(\"booleanArray1\", source.booleanArray1);\n" +
+                "} else {\n" +
+                "throw new IllegalStateException(\"booleanArray1 must not be null.\");\n" +
                 "}\n" +
-                "args.putBooleanArray(\"booeleanArray1\", source.booeleanArray1);\n" +
                 "args.putByte(\"byte1\", source.byte1);\n" +
-                "if (source.byteArray1 == null) {\n" +
+                "if (source.byteArray1 != null) {\n" +
+                "args.putByteArray(\"byteArray1\", source.byteArray1);\n" +
+                "} else {\n" +
                 "throw new IllegalStateException(\"byteArray1 must not be null.\");\n" +
                 "}\n" +
-                "args.putByteArray(\"byteArray1\", source.byteArray1);\n" +
                 "args.putChar(\"char1\", source.char1);\n" +
-                "if (source.charArray1 == null) {\n" +
+                "if (source.charArray1 != null) {\n" +
+                "args.putCharArray(\"charArray1\", source.charArray1);\n" +
+                "} else {\n" +
                 "throw new IllegalStateException(\"charArray1 must not be null.\");\n" +
                 "}\n" +
-                "args.putCharArray(\"charArray1\", source.charArray1);\n" +
-                "if (source.charSequence1 == null) {\n" +
+                "if (source.charSequence1 != null) {\n" +
+                "args.putCharSequence(\"charSequence1\", source.charSequence1);\n" +
+                "} else {\n" +
                 "throw new IllegalStateException(\"charSequence1 must not be null.\");\n" +
                 "}\n" +
-                "args.putCharSequence(\"charSequence1\", source.charSequence1);\n" +
-                "if (source.charSequenceArray1 == null) {\n" +
+                "if (source.charSequenceArray1 != null) {\n" +
+                "args.putCharSequenceArray(\"charSequenceArray1\", source.charSequenceArray1);\n" +
+                "} else {\n" +
                 "throw new IllegalStateException(\"charSequenceArray1 must not be null.\");\n" +
                 "}\n" +
-                "args.putCharSequenceArray(\"charSequenceArray1\", source.charSequenceArray1);\n" +
                 "args.putDouble(\"double1\", source.double1);\n" +
-                "if (source.doubleArray1 == null) {\n" +
+                "if (source.doubleArray1 != null) {\n" +
+                "args.putDoubleArray(\"doubleArray1\", source.doubleArray1);\n" +
+                "} else {\n" +
                 "throw new IllegalStateException(\"doubleArray1 must not be null.\");\n" +
                 "}\n" +
-                "args.putDoubleArray(\"doubleArray1\", source.doubleArray1);\n" +
                 "args.putFloat(\"float1\", source.float1);\n" +
-                "if (source.floatArray1 == null) {\n" +
+                "if (source.floatArray1 != null) {\n" +
+                "args.putFloatArray(\"floatArray1\", source.floatArray1);\n" +
+                "} else {\n" +
                 "throw new IllegalStateException(\"floatArray1 must not be null.\");\n" +
                 "}\n" +
-                "args.putFloatArray(\"floatArray1\", source.floatArray1);\n" +
                 "args.putInt(\"int1\", source.int1);\n" +
-                "if (source.intArray1 == null) {\n" +
+                "if (source.intArray1 != null) {\n" +
+                "args.putIntArray(\"intArray1\", source.intArray1);\n" +
+                "} else {\n" +
                 "throw new IllegalStateException(\"intArray1 must not be null.\");\n" +
                 "}\n" +
-                "args.putIntArray(\"intArray1\", source.intArray1);\n" +
                 "args.putLong(\"long1\", source.long1);\n" +
-                "if (source.longArray1 == null) {\n" +
+                "if (source.longArray1 != null) {\n" +
+                "args.putLongArray(\"longArray1\", source.longArray1);\n" +
+                "} else {\n" +
                 "throw new IllegalStateException(\"longArray1 must not be null.\");\n" +
                 "}\n" +
-                "args.putLongArray(\"longArray1\", source.longArray1);\n" +
                 "args.putShort(\"short1\", source.short1);\n" +
-                "if (source.shortArray1 == null) {\n" +
+                "if (source.shortArray1 != null) {\n" +
+                "args.putShortArray(\"shortArray1\", source.shortArray1);\n" +
+                "} else {\n" +
                 "throw new IllegalStateException(\"shortArray1 must not be null.\");\n" +
                 "}\n" +
-                "args.putShortArray(\"shortArray1\", source.shortArray1);\n" +
-                "if (source.string1 == null) {\n" +
+                "if (source.string1 != null) {\n" +
+                "args.putString(\"string1\", source.string1);\n" +
+                "} else {\n" +
                 "throw new IllegalStateException(\"string1 must not be null.\");\n" +
                 "}\n" +
-                "args.putString(\"string1\", source.string1);\n" +
-                "if (source.stringArray1 == null) {\n" +
+                "if (source.stringArray1 != null) {\n" +
+                "args.putStringArray(\"stringArray1\", source.stringArray1);\n" +
+                "} else {\n" +
                 "throw new IllegalStateException(\"stringArray1 must not be null.\");\n" +
                 "}\n" +
-                "args.putStringArray(\"stringArray1\", source.stringArray1);\n" +
-                "if (source.parcelable == null) {\n" +
-                "throw new IllegalStateException(\"parcelable must not be null.\");\n" +
+                "if (source.parcelable1 != null) {\n" +
+                "args.putParcelable(\"parcelable1\", source.parcelable1);\n" +
+                "} else {\n" +
+                "throw new IllegalStateException(\"parcelable1 must not be null.\");\n" +
                 "}\n" +
-                "args.putParcelable(\"parcelable\", source.parcelable);\n" +
-                "if (source.parcelableArray == null) {\n" +
-                "throw new IllegalStateException(\"parcelableArray must not be null.\");\n" +
+                "if (source.parcelableArray1 != null) {\n" +
+                "args.putParcelableArray(\"parcelableArray1\", source.parcelableArray1);\n" +
+                "} else {\n" +
+                "throw new IllegalStateException(\"parcelableArray1 must not be null.\");\n" +
                 "}\n" +
-                "args.putParcelableArray(\"parcelableArray\", source.parcelableArray);\n" +
-                "if (source.serializable1 == null) {\n" +
+                "if (source.serializable1 != null) {\n" +
+                "args.putSerializable(\"serializable1\", source.serializable1);\n" +
+                "} else {\n" +
                 "throw new IllegalStateException(\"serializable1 must not be null.\");\n" +
                 "}\n" +
-                "args.putSerializable(\"serializable1\", source.serializable1);\n" +
-                "if (source.bundle1 == null) {\n" +
+                "if (source.bundle1 != null) {\n" +
+                "args.putBundle(\"bundle1\", source.bundle1);\n" +
+                "} else {\n" +
                 "throw new IllegalStateException(\"bundle1 must not be null.\");\n" +
                 "}\n" +
-                "args.putBundle(\"bundle1\", source.bundle1);\n" +
-                "if (source.integerArrayList1 == null) {\n" +
+                "if (source.integerArrayList1 != null) {\n" +
+                "args.putIntegerArrayList(\"integerArrayList1\", source.integerArrayList1);\n" +
+                "} else {\n" +
                 "throw new IllegalStateException(\"integerArrayList1 must not be null.\");\n" +
                 "}\n" +
-                "args.putIntegerArrayList(\"integerArrayList1\", source.integerArrayList1);\n" +
-                "if (source.stringArrayList1 == null) {\n" +
+                "if (source.stringArrayList1 != null) {\n" +
+                "args.putStringArrayList(\"stringArrayList1\", source.stringArrayList1);\n" +
+                "} else {\n" +
                 "throw new IllegalStateException(\"stringArrayList1 must not be null.\");\n" +
                 "}\n" +
-                "args.putStringArrayList(\"stringArrayList1\", source.stringArrayList1);\n" +
-                "if (source.charSequenceArrayList1 == null) {\n" +
+                "if (source.charSequenceArrayList1 != null) {\n" +
+                "args.putCharSequenceArrayList(\"charSequenceArrayList1\", source.charSequenceArrayList1);\n" +
+                "} else {\n" +
                 "throw new IllegalStateException(\"charSequenceArrayList1 must not be null.\");\n" +
                 "}\n" +
-                "args.putCharSequenceArrayList(\"charSequenceArrayList1\", source.charSequenceArrayList1);\n" +
-                "if (source.parcelableArrayList1 == null) {\n" +
+                "if (source.parcelableArrayList1 != null) {\n" +
+                "args.putParcelableArrayList(\"parcelableArrayList1\", source.parcelableArrayList1);\n" +
+                "} else {\n" +
                 "throw new IllegalStateException(\"parcelableArrayList1 must not be null.\");\n" +
                 "}\n" +
-                "args.putParcelableArrayList(\"parcelableArrayList1\", source.parcelableArrayList1);\n" +
-                "if (source.parcelableSparseArray1 == null) {\n" +
+                "if (source.parcelableSparseArray1 != null) {\n" +
+                "args.putSparseParcelableArray(\"parcelableSparseArray1\", source.parcelableSparseArray1);\n" +
+                "} else {\n" +
                 "throw new IllegalStateException(\"parcelableSparseArray1 must not be null.\");\n" +
                 "}\n" +
-                "args.putSparseParcelableArray(\"parcelableSparseArray1\", source.parcelableSparseArray1);\n" +
                 "}\n" +
                 "\n" +
                 "public static final class IntentBuilder {\n" +
                 "final Bundle args;\n" +
                 "\n" +
-                "public IntentBuilder(boolean booelean1, boolean[] booeleanArray1, byte byte1, byte[] byteArray1, char char1, char[] charArray1, CharSequence charSequence1, CharSequence[] charSequenceArray1, double double1, double[] doubleArray1, float float1, float[] floatArray1, int int1, int[] intArray1, long long1, long[] longArray1, short short1, short[] shortArray1, String string1, String[] stringArray1, Parcelable parcelable, Parcelable[] parcelableArray, Serializable serializable1, Bundle bundle1, ArrayList<Integer> integerArrayList1, ArrayList<String> stringArrayList1, ArrayList<CharSequence> charSequenceArrayList1, ArrayList<Parcelable> parcelableArrayList1, SparseArray<Parcelable> parcelableSparseArray1) {\n" +
+                "public IntentBuilder(boolean boolean1, boolean[] booleanArray1, byte byte1, byte[] byteArray1, char char1, char[] charArray1, CharSequence charSequence1, CharSequence[] charSequenceArray1, double double1, double[] doubleArray1, float float1, float[] floatArray1, int int1, int[] intArray1, long long1, long[] longArray1, short short1, short[] shortArray1, String string1, String[] stringArray1, Parcelable parcelable1, Parcelable[] parcelableArray1, Serializable serializable1, Bundle bundle1, ArrayList<Integer> integerArrayList1, ArrayList<String> stringArrayList1, ArrayList<CharSequence> charSequenceArrayList1, ArrayList<Parcelable> parcelableArrayList1, SparseArray<Parcelable> parcelableSparseArray1) {\n" +
                 "this.args = new Bundle();\n" +
-                "this.args.putBoolean(\"booelean1\", booelean1);\n" +
-                "this.args.putBooleanArray(\"booeleanArray1\", booeleanArray1);\n" +
+                "this.args.putBoolean(\"boolean1\", boolean1);\n" +
+                "this.args.putBooleanArray(\"booleanArray1\", booleanArray1);\n" +
                 "this.args.putByte(\"byte1\", byte1);\n" +
                 "this.args.putByteArray(\"byteArray1\", byteArray1);\n" +
                 "this.args.putChar(\"char1\", char1);\n" +
@@ -412,8 +434,8 @@ public class AllValidType implements SourceBase {
                 "this.args.putShortArray(\"shortArray1\", shortArray1);\n" +
                 "this.args.putString(\"string1\", string1);\n" +
                 "this.args.putStringArray(\"stringArray1\", stringArray1);\n" +
-                "this.args.putParcelable(\"parcelable\", parcelable);\n" +
-                "this.args.putParcelableArray(\"parcelableArray\", parcelableArray);\n" +
+                "this.args.putParcelable(\"parcelable1\", parcelable1);\n" +
+                "this.args.putParcelableArray(\"parcelableArray1\", parcelableArray1);\n" +
                 "this.args.putSerializable(\"serializable1\", serializable1);\n" +
                 "this.args.putBundle(\"bundle1\", bundle1);\n" +
                 "this.args.putIntegerArrayList(\"integerArrayList1\", integerArrayList1);\n" +
