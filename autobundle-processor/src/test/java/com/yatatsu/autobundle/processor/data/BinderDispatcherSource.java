@@ -52,7 +52,6 @@ public class BinderDispatcherSource implements SourceBase {
                 "\n" +
                 "import android.content.Intent;\n" +
                 "import android.os.Bundle;\n" +
-                "import android.util.Log;\n" +
                 "import com.yatatsu.autobundle.example.ExampleActivity;\n" +
                 "import com.yatatsu.autobundle.example.ExampleActivityAutoBundle;\n" +
                 "import com.yatatsu.autobundle.example.ExampleFragment;\n" +
@@ -71,7 +70,6 @@ public class BinderDispatcherSource implements SourceBase {
                 "ExampleFragmentAutoBundle.bind((ExampleFragment)target, args);\n" +
                 "return;\n" +
                 "}\n" +
-                "Log.w(\"AutoBundle\", \"not found binding with \" + target.getClass());\n" +
                 "}\n" +
                 "\n" +
                 "@Override\n" +
@@ -80,7 +78,6 @@ public class BinderDispatcherSource implements SourceBase {
                 "ExampleActivityAutoBundle.bind((ExampleActivity)target, intent);\n" +
                 "return;\n" +
                 "}\n" +
-                "Log.w(\"AutoBundle\", \"not found binding with \" + target.getClass());\n" +
                 "}\n" +
                 "\n" +
                 "@Override\n" +
@@ -89,7 +86,6 @@ public class BinderDispatcherSource implements SourceBase {
                 "ExampleFragmentAutoBundle.bind((ExampleFragment)target);\n" +
                 "return;\n" +
                 "}\n" +
-                "Log.w(\"AutoBundle\", \"not found binding with \" + target.getClass());\n" +
                 "}\n" +
                 "\n" +
                 "@Override\n" +
@@ -102,7 +98,6 @@ public class BinderDispatcherSource implements SourceBase {
                 "ExampleFragmentAutoBundle.pack((ExampleFragment)target, args);\n" +
                 "return;\n" +
                 "}\n" +
-                "Log.w(\"AutoBundle\", \"not found binding with \" + target.getClass());\n" +
                 "}\n" +
                 "}\n";
     }

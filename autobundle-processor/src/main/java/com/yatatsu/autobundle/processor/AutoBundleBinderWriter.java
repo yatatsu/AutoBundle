@@ -18,12 +18,10 @@ public class AutoBundleBinderWriter {
     private final List<AutoBundleBindingClass> bindingClasses;
     private static final String TARGET_CLASS_NAME = "AutoBundleBindingDispatcher";
     private static final String TARGET_PACKAGE_NAME = "com.yatatsu.autobundle";
-    private static final String TAG_FOR_LOG = "AutoBundle";
     private static final ClassName INTERFACE_NAME =
             ClassName.get("com.yatatsu.autobundle", "AutoBundleBinder");
     private static final ClassName CLASS_BUNDLE = ClassName.get("android.os", "Bundle");
     private static final ClassName CLASS_INTENT = ClassName.get("android.content", "Intent");
-    private static final ClassName CLASS_LOG = ClassName.get("android.util", "Log");
 
     public AutoBundleBinderWriter(List<AutoBundleBindingClass> bindingClasses) {
         this.bindingClasses = bindingClasses;
@@ -61,8 +59,6 @@ public class AutoBundleBinderWriter {
                     .addStatement("return")
                     .endControlFlow();
         }
-        builder.addStatement("$T.w($S, $S + target.getClass())",
-                CLASS_LOG, TAG_FOR_LOG, "not found binding with ");
         return builder.build();
     }
 
@@ -87,8 +83,6 @@ public class AutoBundleBinderWriter {
                     .addStatement("return")
                     .endControlFlow();
         }
-        builder.addStatement("$T.w($S, $S + target.getClass())",
-                CLASS_LOG, TAG_FOR_LOG, "not found binding with ");
         return builder.build();
     }
 
@@ -112,8 +106,6 @@ public class AutoBundleBinderWriter {
                     .addStatement("return")
                     .endControlFlow();
         }
-        builder.addStatement("$T.w($S, $S + target.getClass())",
-                CLASS_LOG, TAG_FOR_LOG, "not found binding with ");
         return builder.build();
     }
 
@@ -135,8 +127,6 @@ public class AutoBundleBinderWriter {
                     .addStatement("return")
                     .endControlFlow();
         }
-        builder.addStatement("$T.w($S, $S + target.getClass())",
-                CLASS_LOG, TAG_FOR_LOG, "not found binding with ");
         return builder.build();
     }
 }
