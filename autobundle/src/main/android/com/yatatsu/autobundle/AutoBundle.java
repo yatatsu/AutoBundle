@@ -45,7 +45,7 @@ public final class AutoBundle {
         try {
             findBinder().bind(target);
         } catch (Exception e) {
-            throw new RuntimeException("AutoBundle cannot bind with " + target.getClass());
+            throw new RuntimeException("AutoBundle cannot bind with " + target.getClass(), e);
         }
     }
 
@@ -64,7 +64,7 @@ public final class AutoBundle {
         try {
             findBinder().bind(target, args);
         } catch (Exception e) {
-            throw new RuntimeException("AutoBundle cannot bind with " + target.getClass());
+            throw new RuntimeException("AutoBundle cannot bind with " + target.getClass(), e);
         }
     }
 
@@ -82,7 +82,7 @@ public final class AutoBundle {
         try {
             findBinder().bind(target, intent);
         } catch (Exception e) {
-            throw new RuntimeException("AutoBundle cannot bind with " + target.getClass());
+            throw new RuntimeException("AutoBundle cannot bind with " + target.getClass(), e);
         }
     }
 
@@ -99,9 +99,9 @@ public final class AutoBundle {
      */
     public static void pack(Object source, Bundle args) {
         try {
-            findBinder().bind(source, args);
+            findBinder().pack(source, args);
         } catch (Exception e) {
-            throw new RuntimeException("AutoBundle cannot bind with " + source.getClass());
+            throw new RuntimeException("AutoBundle cannot bind with " + source.getClass(), e);
         }
     }
 
