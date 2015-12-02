@@ -6,27 +6,27 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.yatatsu.autobundle.Arg;
 import com.yatatsu.autobundle.AutoBundle;
+import com.yatatsu.autobundle.AutoBundleField;
 
 import java.util.ArrayList;
 
 
 public class ExampleActivity extends AppCompatActivity {
 
-    @Arg
+    @AutoBundleField
     String name;
 
-    @Arg(required = false)
+    @AutoBundleField(required = false)
     String optionalName;
 
-    @Arg(required = false)
+    @AutoBundleField(required = false)
     ArrayList<CharSequence> fooList;
 
-    @Arg(required = false, converter = ParcelableConverter.class)
+    @AutoBundleField(required = false, converter = ParcelableConverter.class)
     ExampleData exampleData;
 
-    @Arg(required = false)
+    @AutoBundleField(required = false)
     ArrayList<Person> persons;
 
     @Override

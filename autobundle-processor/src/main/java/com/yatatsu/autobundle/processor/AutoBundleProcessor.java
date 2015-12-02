@@ -1,7 +1,7 @@
 package com.yatatsu.autobundle.processor;
 
 import com.google.auto.service.AutoService;
-import com.yatatsu.autobundle.Arg;
+import com.yatatsu.autobundle.AutoBundleField;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ public class AutoBundleProcessor extends AbstractProcessor {
 
     @Override
     public Set<String> getSupportedAnnotationTypes() {
-        return Collections.singleton(Arg.class.getCanonicalName());
+        return Collections.singleton(AutoBundleField.class.getCanonicalName());
     }
 
     @Override

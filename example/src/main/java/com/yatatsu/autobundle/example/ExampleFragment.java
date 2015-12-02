@@ -6,18 +6,18 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 
-import com.yatatsu.autobundle.Arg;
 import com.yatatsu.autobundle.AutoBundle;
-import com.yatatsu.autobundle.Converter;
+import com.yatatsu.autobundle.AutoBundleConverter;
+import com.yatatsu.autobundle.AutoBundleField;
 
 import java.util.Date;
 
 public class ExampleFragment extends DialogFragment {
 
-    @Arg
+    @AutoBundleField
     String title;
 
-    @Arg(converter = DateArgConverter.class)
+    @AutoBundleField(converter = DateArgConverter.class)
     Date targetDate;
 
     @Override
@@ -48,7 +48,7 @@ public class ExampleFragment extends DialogFragment {
         AutoBundle.pack(this, outState);
     }
 
-    public static class DateArgConverter implements Converter<Date, Long> {
+    public static class DateArgConverter implements AutoBundleConverter<Date, Long> {
 
         @Override
         public Long convert(Date o) {

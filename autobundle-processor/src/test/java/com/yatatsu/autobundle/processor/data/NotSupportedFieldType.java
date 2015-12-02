@@ -16,11 +16,11 @@ public class NotSupportedFieldType implements SourceBase {
                         "\n" +
                         "import android.app.Activity;\n" +
                         "\n" +
-                        "import com.yatatsu.autobundle.Arg;\n" +
+                        "import com.yatatsu.autobundle.AutoBundleField;\n" +
                         "\n" +
                         "public class ExampleActivity extends Activity {\n" +
                         "\n" +
-                        "@Arg\n" +
+                        "@AutoBundleField\n" +
                         "Object data;\n" +
                         "\n" +
                         "}";

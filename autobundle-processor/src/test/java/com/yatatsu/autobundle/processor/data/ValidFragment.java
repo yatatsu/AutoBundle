@@ -16,27 +16,27 @@ public class ValidFragment implements SourceBase {
                         "import android.os.Parcelable;\n" +
                         "import android.util.SparseArray;\n" +
                         "\n" +
-                        "import com.yatatsu.autobundle.Arg;\n" +
-                        "import com.yatatsu.autobundle.Converter;\n" +
+                        "import com.yatatsu.autobundle.AutoBundleField;\n" +
+                        "import com.yatatsu.autobundle.AutoBundleConverter;\n" +
                         "\n" +
                         "import java.util.ArrayList;\n" +
                         "import java.util.Date;\n" +
                         "\n" +
                         "public class ExampleFragment extends Fragment {\n" +
                         "\n" +
-                        "@Arg\n" +
+                        "@AutoBundleField\n" +
                         "int ids[];\n" +
                         "\n" +
-                        "@Arg(required = false)\n" +
+                        "@AutoBundleField(required = false)\n" +
                         "ArrayList<CharSequence> messages;\n" +
                         "\n" +
-                        "@Arg(key = \"models\")\n" +
+                        "@AutoBundleField(key = \"models\")\n" +
                         "SparseArray<Parcelable> sparseArray;\n" +
                         "\n" +
-                        "@Arg(converter = DateArgConverter.class)\n" +
+                        "@AutoBundleField(converter = DateArgConverter.class)\n" +
                         "Date date;\n" +
                         "\n" +
-                        "public static class DateArgConverter implements Converter<Date, Long> {\n" +
+                        "public static class DateArgConverter implements AutoBundleConverter<Date, Long> {\n" +
                         "@Override\n" +
                         "public Long convert(Date o) {\n" +
                         "return o.getTime();\n" +

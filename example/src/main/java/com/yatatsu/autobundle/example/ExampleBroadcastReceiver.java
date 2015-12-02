@@ -5,12 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.yatatsu.autobundle.Arg;
 import com.yatatsu.autobundle.AutoBundle;
+import com.yatatsu.autobundle.AutoBundleField;
 
 public class ExampleBroadcastReceiver extends BroadcastReceiver {
 
-    @Arg
+    @AutoBundleField
     String message;
 
     @Override

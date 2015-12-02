@@ -2,12 +2,12 @@ package com.yatatsu.autobundle.example;
 
 import android.os.Parcelable;
 
-import com.yatatsu.autobundle.Converter;
+import com.yatatsu.autobundle.AutoBundleConverter;
 
 import org.parceler.Parcels;
 
 
-public final class ParcelableConverter implements Converter<Object, Parcelable> {
+public final class ParcelableConverter implements AutoBundleConverter<Object, Parcelable> {
 
     @Override
     public Parcelable convert(Object o) {

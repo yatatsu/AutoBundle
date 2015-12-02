@@ -11,12 +11,12 @@ public class WrongSuperClass implements SourceBase {
     public String getTargetSource() {
         return "package com.yatatsu.autobundle.example;\n" +
                 "\n" +
-                "import com.yatatsu.autobundle.Arg;\n" +
+                "import com.yatatsu.autobundle.AutoBundleField;\n" +
                 "\n" +
                 "\n" +
                 "public class ExampleActivity {\n" +
                 "\n" +
-                "@Arg\n" +
+                "@AutoBundleField\n" +
                 "String name;\n" +
                 "}\n";
     }

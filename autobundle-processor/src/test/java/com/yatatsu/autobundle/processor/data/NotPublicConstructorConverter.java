@@ -14,17 +14,17 @@ public class NotPublicConstructorConverter implements SourceBase {
                         "\n" +
                         "import android.app.Activity;\n" +
                         "\n" +
-                        "import com.yatatsu.autobundle.Arg;\n" +
-                        "import com.yatatsu.autobundle.Converter;\n" +
+                        "import com.yatatsu.autobundle.AutoBundleField;\n" +
+                        "import com.yatatsu.autobundle.AutoBundleConverter;\n" +
                         "\n" +
                         "import java.util.Date;\n" +
                         "\n" +
                         "public class ExampleActivity extends Activity {\n" +
                         "\n" +
-                        "@Arg(converter = DateArgConverter.class)\n" +
+                        "@AutoBundleField(converter = DateArgConverter.class)\n" +
                         "Date date;\n" +
                         "\n" +
-                        "public static class DateArgConverter implements Converter<Date, Long> {\n" +
+                        "public static class DateArgConverter implements AutoBundleConverter<Date, Long> {\n" +
                         "\n" +
                         "private DateArgConverter() {}\n" +
                         "\n" +

@@ -1,6 +1,6 @@
 package com.yatatsu.autobundle;
 
-public class DefaultConverter implements Converter<Object, Object> {
+public class DefaultAutoBundleConverter implements AutoBundleConverter<Object, Object> {
 
     @Override
     public Object convert(Object o) {

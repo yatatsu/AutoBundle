@@ -1,7 +1,7 @@
 package com.yatatsu.autobundle.processor;
 
 
-import com.yatatsu.autobundle.Arg;
+import com.yatatsu.autobundle.AutoBundleField;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -22,7 +22,7 @@ final class BindingDetector {
                                                        Types typeUtils) {
         ArrayList<AutoBundleBindingClass> bindingClasses = new ArrayList<>();
         Set<String> keySet = new HashSet<>();
-        Set<? extends Element> elements = env.getElementsAnnotatedWith(Arg.class);
+        Set<? extends Element> elements = env.getElementsAnnotatedWith(AutoBundleField.class);
         for (Element element : elements) {
             TypeElement typeElement = (TypeElement) element.getEnclosingElement();
             if (!keySet.contains(typeElement.getSimpleName().toString())) {
@@ -41,7 +41,7 @@ final class BindingDetector {
                                                       Types typeUtils) {
         List<AutoBundleBindingField> fields = new ArrayList<>();
         for (Element enclosedElement : element.getEnclosedElements()) {
-            Arg annotation = enclosedElement.getAnnotation(Arg.class);
+            AutoBundleField annotation = enclosedElement.getAnnotation(AutoBundleField.class);
             if (annotation != null) {
                 AutoBundleBindingField field =
                         new AutoBundleBindingField((VariableElement) enclosedElement,

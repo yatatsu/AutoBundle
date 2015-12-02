@@ -19,10 +19,10 @@ public class BinderDispatcherSource implements SourceBase {
                 "\n" +
                 "import android.app.Activity;\n" +
                 "\n" +
-                "import com.yatatsu.autobundle.Arg;\n" +
+                "import com.yatatsu.autobundle.AutoBundleField;\n" +
                 "\n" +
                 "public class ExampleActivity extends Activity {\n" +
-                "@Arg\n" +
+                "@AutoBundleField\n" +
                 "int exampleId;\n" +
                 "}\n";
     }
@@ -32,11 +32,11 @@ public class BinderDispatcherSource implements SourceBase {
                 "\n" +
                 "import android.app.Fragment;\n" +
                 "\n" +
-                "import com.yatatsu.autobundle.Arg;\n" +
+                "import com.yatatsu.autobundle.AutoBundleField;\n" +
                 "\n" +
                 "\n" +
                 "public class ExampleFragment extends Fragment {\n" +
-                "@Arg\n" +
+                "@AutoBundleField\n" +
                 "String name;\n" +
                 "}\n";
     }

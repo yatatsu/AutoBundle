@@ -2,8 +2,8 @@ package com.yatatsu.autobundle.processor;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.TypeName;
-import com.yatatsu.autobundle.Arg;
-import com.yatatsu.autobundle.Converter;
+import com.yatatsu.autobundle.AutoBundleConverter;
+import com.yatatsu.autobundle.AutoBundleField;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -30,7 +30,7 @@ public class AutoBundleBindingField {
     private final String operationName;
 
     public AutoBundleBindingField(VariableElement element,
-                                  Arg annotation,
+                                  AutoBundleField annotation,
                                   Elements elementUtils,
                                   Types typeUtils) {
         this.fieldName = element.toString();
@@ -55,7 +55,7 @@ public class AutoBundleBindingField {
         }
         this.converter = converter;
         this.hasCustomConverter =
-                !this.converter.equals(ClassName.get("com.yatatsu.autobundle", "DefaultConverter"));
+                !this.converter.equals(ClassName.get("com.yatatsu.autobundle", "DefaultAutoBundleConverter"));
         if (hasCustomConverter) {
             operationName = BindingFieldHelper.getOperationName(converted, elementUtils, typeUtils);
         } else {
@@ -119,7 +119,7 @@ public class AutoBundleBindingField {
                 for (TypeMirror in : targetType.getInterfaces()) {
                     DeclaredType inType = (DeclaredType) in;
                     if (inType.asElement().getSimpleName().toString()
-                            .equals(Converter.class.getSimpleName())) {
+                            .equals(AutoBundleConverter.class.getSimpleName())) {
                         return inType.getTypeArguments();
                     }
                 }
@@ -145,7 +145,7 @@ public class AutoBundleBindingField {
     }
 
     static Type[] getConverterGenericsTypesByClass(Class clazz) {
-        Type type = Converter.class;
+        Type type = AutoBundleConverter.class;
         Class targetClass = clazz;
         while (targetClass != null) {
             for (Type in : targetClass.getGenericInterfaces()) {
