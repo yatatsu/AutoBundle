@@ -1,4 +1,8 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'com.novoda.bintray-release'
+
+def metadata = rootProject.ext.metadata
 
 android {
     compileSdkVersion 23
@@ -7,7 +11,7 @@ android {
     defaultConfig {
         minSdkVersion 1
         targetSdkVersion 23
-        versionName ARTIFACT_VERSION
+        versionName metadata.version
         consumerProguardFiles 'autobundle-proguard-rules.pro'
     }
 
@@ -17,86 +21,16 @@ android {
     }
 
     sourceSets {
-        main {
-            java {
-                srcDirs = ['src/main/java', 'src/main/android']
-            }
-        }
+        main.java.srcDirs = ['src/main/java', 'src/main/android']
     }
 }
 
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
-
-group = GROUP_ID
-version = ARTIFACT_VERSION
-
-bintray {
-    user = bintrayUser
-    key = bintrayApiKey
-    configurations = ['archives'] //When uploading configuration files
-    pkg {
-        repo = 'maven'
-        name = ARTIFACT_CORE
-        desc = ARTIFACT_DESCRIPTION
-        websiteUrl = WEBSITE
-        issueTrackerUrl = ISSUE_TRACKER_URL
-        vcsUrl = GIT_URL
-        licenses = ['Apache-2.0']
-        labels = ['android']
-        publicDownloadNumbers = true
-    }
-}
-
-install {
-    repositories.mavenInstaller {
-        pom {
-            project {
-                packaging 'aar'
-                name ARTIFACT_CORE
-                url WEBSITE
-                licenses {
-                    license {
-                        name 'The Apache Software License, Version 2.0'
-                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    }
-                }
-                developers {
-                    developer {
-                        id USER
-                        name USER_NAME
-                        email USER_MAIL
-                    }
-                }
-                scm {
-                    connection GIT_URL
-                    developerConnection GIT_URL
-                    url WEBSITE
-                }
-            }
-        }
-    }
-}
-
-task sourcesJar(type: Jar) {
-    classifier = 'sources'
-    from android.sourceSets.main.java.srcDirs
-}
-
-task javadoc(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-artifacts {
-    archives javadocJar
-    archives sourcesJar
-}
-
-task findConventions << {
-    println project.getConvention()
+publish {
+    groupId = metadata.groupId
+    artifactId = 'autobundle'
+    desc = metadata.desc
+    publishVersion = metadata.version
+    website = metadata.website
+    repository = metadata.repository
+    licences = metadata.licences
 }
