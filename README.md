@@ -5,24 +5,31 @@
 [ ![Download](https://api.bintray.com/packages/yatatsu/maven/autobundle/images/download.svg) ](https://bintray.com/yatatsu/maven/autobundle/_latestVersion)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-AutoBundle-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/2600)
 
-AutoBundle generates boilerplate code for field binding with ``android.os.Bundle``. 
+AutoBundle generates boilerplate code for field binding with ``android.os.Bundle``.
 
 ## Usage
 
 ### 1. Generate builder method
 
-Here is example for Fragment.
+AutoBundle supports these classes.
+
+- `Activity`
+- `Fragment`
+- `BroadcastReceiver`
+- `Service`
+
+Here is example for Fragment. First, declare the field with `@AutoBundleField`.
 
 ```
 public class ExampleFragment extends Fragment {
-    // field with @Arg, must not be private/protected.
-    @Arg
+    // field with @AutoBundleField, must not be private/protected.
+    @AutoBundleField
     String title;
 
-    @Arg
+    @AutoBundleField
     int exampleId;
 
-    @Arg(required = false) // default is true
+    @AutoBundleField(required = false) // default is true
     int optionalId;
 }
 ```
@@ -50,7 +57,6 @@ Intent intent = ExampleActivityAutoBundle.createIntentBuilder("hello, example!")
         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 ```
 
-AutoBundle supports ``Activity``, ``BroadcastReceiver``, ``Service``.
 Builder class has both methods ``build(Context context)``, ``build(Intent intent)``.
 
 ### 2. Bind annotated fields
@@ -59,14 +65,14 @@ In target class,
 
 ```ExampleFragment.java
 public class ExampleFragment extends DialogFragment {
-    // field with @Arg, must not be private/protected.
-    @Arg
+    // field with @AutoBundleField, must not be private/protected.
+    @AutoBundleField
     String title;
 
-    @Arg
+    @AutoBundleField
     int exampleId;
 
-    @Arg(required = false) // default is true
+    @AutoBundleField(required = false) // default is true
     int optionalId;
 
     @Override
@@ -77,7 +83,7 @@ public class ExampleFragment extends DialogFragment {
 }
 ```
 
-Call ``AutoBundle#bind`` in ``onCreate`` and bind value to field with ``@Arg``.
+Call ``AutoBundle#bind`` in ``onCreate`` and bind value to field with ``@AutoBundleField``.
 
 In ``Intent`` case, call these method.
 
@@ -98,7 +104,7 @@ and call internal binding method for each classes.
 You cannot define duplicate key in one class.
 
 ```
-@Arg(key = "exampleId")
+@AutoBundleField(key = "exampleId")
 int id;
 ```
 
@@ -108,7 +114,7 @@ int id;
 If ``false``, Builder class has method which named key name, instead as contructor argument.
 
 ```
-@Arg(required = false)
+@AutoBundleField(required = false)
 int optionalId;
 ```
 
@@ -124,12 +130,12 @@ ExampleFragment fragment = ExampleFragmentAutoBundle
 #### CustomConverter
 
 ``converter`` option provide custom converter for storing to bundle.
-You can specify class which implements ``Converter<T, U>``.
+You can specify class which implements ``AutoBundleConverter<T, U>``.
 
 ```
 public class ExampleFragment extends Fragment {
 
-    @Arg(converter = DateArgConverter.class)
+    @AutoBundleField(converter = DateArgConverter.class)
     Date targetDate;
 
     @Override
@@ -138,7 +144,7 @@ public class ExampleFragment extends Fragment {
         AutoBundle.bind(this);
     }
 
-    public static class DateArgConverter implements Converter<Date, Long> {
+    public static class DateArgConverter implements AutoBundleConverter<Date, Long> {
 
         @Override
         public Long convert(Date o) {
@@ -168,6 +174,8 @@ public void onSaveInstanceState(Bundle outState) {
 ``pack(Object object, Bundle bundle)`` stores field value to bundle.
 For example, store in ``onSaveInstanceState`` and restore in ``onCreate``.
 
+For more infomation or usage, see the sample application!
+
 ### Principle
 
 Both Fragment and Intent are able to pass value by storing Bundle.
@@ -190,8 +198,8 @@ buildscript {
 apply plugin: 'android-apt'
 
 dependencies {
-    compile 'com.github.yatatsu:autobundle:0.4.1'
-    apt 'com.github.yatatsu:autobundle-processor:0.4.1'
+    compile 'com.github.yatatsu:autobundle:1.0.0-beta1'
+    apt 'com.github.yatatsu:autobundle-processor:1.0.0-beta1'
 }
 ```
 
