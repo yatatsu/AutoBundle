@@ -82,10 +82,6 @@ public class AutoBundleBindingClass {
         return packageName;
     }
 
-    public String getClassName() {
-        return className;
-    }
-
     public BuilderType getBuilderType() {
         return builderType;
     }
