@@ -105,7 +105,7 @@ final class Validator {
     }
 
     static void checkNotSupportedOperation(String operation, TypeName typeName) {
-        if (operation == null || operation.isEmpty()) {
+        if (operation == null || operation.length() == 0) {
             throw new UnsupportedClassException(typeName + " is not supported type.");
         }
     }
