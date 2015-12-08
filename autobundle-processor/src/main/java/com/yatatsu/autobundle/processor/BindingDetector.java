@@ -46,7 +46,7 @@ final class BindingDetector {
                 AutoBundleBindingField field =
                         new AutoBundleBindingField((VariableElement) enclosedElement,
                                 annotation, elementUtils, typeUtils);
-                if (!(required ^ field.isRequired())) {
+                if (required == field.isRequired()) {
                     fields.add(field);
                 }
             }
