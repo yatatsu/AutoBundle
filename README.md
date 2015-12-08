@@ -181,7 +181,7 @@ For more infomation or usage, see the sample application!
 Both Fragment and Intent are able to pass value by storing Bundle.
 
 There is a good pattern, known as "createIntent" or "newInstance".
-Static method in called class (e.x. Fragment, Activity) promised the expected data will be passed.
+Static method in called class (e.g. Fragment, Activity) promised the expected data will be passed.
 AutBundle provide this pattern as builder method instead of "createIntent".
 
 ## Download
