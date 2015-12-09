@@ -11,7 +11,7 @@ android {
     defaultConfig {
         minSdkVersion 1
         targetSdkVersion 23
-        versionName metadata.version
+        versionName "${metadata.version}"
         consumerProguardFiles 'autobundle-proguard-rules.pro'
     }
 
