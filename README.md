@@ -198,8 +198,8 @@ buildscript {
 apply plugin: 'android-apt'
 
 dependencies {
-    compile 'com.github.yatatsu:autobundle:1.0.0-beta1'
-    apt 'com.github.yatatsu:autobundle-processor:1.0.0-beta1'
+    compile 'com.github.yatatsu:autobundle:1.0.0'
+    apt 'com.github.yatatsu:autobundle-processor:1.0.0'
 }
 ```
 
