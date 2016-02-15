@@ -12,5 +12,6 @@ android:
 
 jdk:
   - oraclejdk7
+  - oraclejdk8
 
-script: ./gradlew check
+script: ./gradlew clean check
