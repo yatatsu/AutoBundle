@@ -40,9 +40,12 @@ public class AutoBundleWriter {
                 .writeTo(filer);
     }
 
+    private static ClassName getBuilderClassName(AutoBundleBindingClass target) {
+        return ClassName.get(target.getHelperClassName(), target.getBuilderClassName());
+    }
+
     private static MethodSpec createCallBuilderMethod(AutoBundleBindingClass target) {
-        ClassName builderClass =
-                ClassName.get(target.getPackageName(), target.getBuilderClassName());
+        ClassName builderClass = getBuilderClassName(target);
         MethodSpec.Builder builder =
                 MethodSpec.methodBuilder("create" + target.getBuilderType().name() + "Builder")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
@@ -108,7 +111,7 @@ public class AutoBundleWriter {
             MethodSpec.Builder builder = MethodSpec.methodBuilder(argKey)
                     .addModifiers(Modifier.PUBLIC)
                     .addParameter(argType, argKey)
-                    .returns(ClassName.get(target.getPackageName(), target.getBuilderClassName()));
+                    .returns(getBuilderClassName(target));
 
             final boolean checkNull = !arg.getArgType().isPrimitive();
             if (checkNull) {

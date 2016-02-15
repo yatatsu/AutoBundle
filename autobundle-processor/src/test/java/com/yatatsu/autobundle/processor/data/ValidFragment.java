@@ -67,8 +67,8 @@ public class ValidFragment implements SourceBase {
                         "import java.util.Date;\n" +
                         "\n" +
                         "public final class ExampleFragmentAutoBundle {\n" +
-                        "public static FragmentBuilder createFragmentBuilder(int[] ids, SparseArray<Parcelable> models, Date date) {\n" +
-                        "return new FragmentBuilder(ids,models,date);\n" +
+                        "public static ExampleFragmentAutoBundle.FragmentBuilder createFragmentBuilder(int[] ids, SparseArray<Parcelable> models, Date date) {\n" +
+                        "return new ExampleFragmentAutoBundle.FragmentBuilder(ids,models,date);\n" +
                         "}\n" +
                         "\n" +
                         "public static void bind(ExampleFragment target) {\n" +
@@ -130,7 +130,7 @@ public class ValidFragment implements SourceBase {
                         "this.args.putLong(\"date\", dateConverter.convert(date));\n" +
                         "}\n" +
                         "\n" +
-                        "public FragmentBuilder messages(ArrayList<CharSequence> messages) {\n" +
+                        "public ExampleFragmentAutoBundle.FragmentBuilder messages(ArrayList<CharSequence> messages) {\n" +
                         "if (messages != null) {\n" +
                         "args.putCharSequenceArrayList(\"messages\", messages);\n" +
                         "}\n" +
