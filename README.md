@@ -20,7 +20,7 @@ AutoBundle supports these classes.
 
 Here is example for Fragment. First, declare the field with `@AutoBundleField`.
 
-```
+```java
 public class ExampleFragment extends Fragment {
     // field with @AutoBundleField, must not be private/protected.
     @AutoBundleField
@@ -36,7 +36,7 @@ public class ExampleFragment extends Fragment {
 
 In caller section, you can use generated builder.
 
-```
+```java
 ExampleFragment fragment = ExampleFragmentAutoBundle
         .createFragmentBuilder("hello, example!", 1)
         .optionalId(2) // here is optional
@@ -49,7 +49,7 @@ so you can set bundle to existing instance.
 
 For ``Intent``, here is builder example.
 
-```
+```java
 Intent intent = ExampleActivityAutoBundle.createIntentBuilder("hello, example!")
         .optionalName("optionalName")
         .fooList(messages)
@@ -63,7 +63,8 @@ Builder class has both methods ``build(Context context)``, ``build(Intent intent
 
 In target class,
 
-```ExampleFragment.java
+```java
+//ExampleFragment.java
 public class ExampleFragment extends DialogFragment {
     // field with @AutoBundleField, must not be private/protected.
     @AutoBundleField
@@ -103,7 +104,7 @@ and call internal binding method for each classes.
 ``key`` is key for ``Bundle``. Default is field name.
 You cannot define duplicate key in one class.
 
-```
+```java
 @AutoBundleField(key = "exampleId")
 int id;
 ```
@@ -113,14 +114,14 @@ int id;
 ``required`` option is true by default.
 If ``false``, Builder class has method which named key name, instead as contructor argument.
 
-```
+```java
 @AutoBundleField(required = false)
 int optionalId;
 ```
 
 then,
 
-```
+```java
 ExampleFragment fragment = ExampleFragmentAutoBundle
         .createFragmentBuilder()
         .optionalId(2)
@@ -132,7 +133,7 @@ ExampleFragment fragment = ExampleFragmentAutoBundle
 ``converter`` option provide custom converter for storing to bundle.
 You can specify class which implements ``AutoBundleConverter<T, U>``.
 
-```
+```java
 public class ExampleFragment extends Fragment {
 
     @AutoBundleField(converter = DateArgConverter.class)
@@ -163,7 +164,7 @@ public class ExampleFragment extends Fragment {
 
 AutoBundle bindings are also useful as restoring value in ``onSaveInstanceState(Bundle outState)``.
 
-```
+```java
 @Override
 public void onSaveInstanceState(Bundle outState) {
     super.onSaveInstanceState(outState);
@@ -188,7 +189,7 @@ AutBundle provide this pattern as builder method instead of "createIntent".
 
 AutoBundle uses annotation processing, so you need to add android-apt plugin.
 
-```
+```groovy
 buildscript {
     dependencies {
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
