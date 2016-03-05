@@ -54,12 +54,11 @@ final class Validator {
         }
     }
 
-    static void checkAutoBundleFieldModifier(VariableElement element) {
+    static void checkAutoBundleFieldModifier(VariableElement element, boolean hasGetterSetter) {
         Set<Modifier> modifiers = element.getModifiers();
-        if (modifiers.contains(Modifier.PRIVATE) ||
-                modifiers.contains(Modifier.PROTECTED)) {
+        if (modifiers.contains(Modifier.PRIVATE) && !hasGetterSetter) {
             throw new IllegalStateException(
-                    AutoBundleField.class + " must not be with private/protected class.");
+                    AutoBundleField.class + " does not support private field without setter/getter.");
         }
     }
 

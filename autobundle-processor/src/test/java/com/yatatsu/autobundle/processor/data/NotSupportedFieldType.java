@@ -1,8 +1,6 @@
 package com.yatatsu.autobundle.processor.data;
 
-/**
-* Created by kitagawatatsuya on 2015/09/23.
-*/
+
 public class NotSupportedFieldType implements SourceBase {
 
         @Override
