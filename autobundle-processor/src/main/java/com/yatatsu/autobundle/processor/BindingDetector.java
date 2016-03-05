@@ -72,7 +72,7 @@ final class BindingDetector {
             AutoBundleGetter annotation = element.getAnnotation(AutoBundleGetter.class);
             if (annotation != null) {
                 // annotated getter
-                if (argKeyName.equals(annotation.keyName())) {
+                if (argKeyName.equals(annotation.key())) {
                     // check modifier
                     if (element.getModifiers().contains(Modifier.PRIVATE)) {
                         throw new UnsupportedClassException("@AutoBundleGetter must not be private");
@@ -109,7 +109,7 @@ final class BindingDetector {
             AutoBundleSetter annotation = element.getAnnotation(AutoBundleSetter.class);
             if (annotation != null) {
                 // annotated setter
-                if (argKeyName.equals(annotation.keyName())) {
+                if (argKeyName.equals(annotation.key())) {
                     // check modifier
                     if (element.getModifiers().contains(Modifier.PRIVATE)) {
                         throw new UnsupportedClassException("@AutoBundleSetter must not be private");

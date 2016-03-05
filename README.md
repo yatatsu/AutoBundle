@@ -92,36 +92,9 @@ In ``Intent`` case, call these method.
 - ``bind(Activity target)`` (equals to ``bind(activity, activity.getIntent())``
 - ``bind(Object target)`` (equals to ``bind(fragment, fragment.getArguments())``
 
-### Advanced
+## Advanced
 
-#### Getter/Setter
-
-You can use getter/setter for fields. 
-The method named `get/set{keyName}` As a default,
-But you can specify with `@AutoBundleGetter` and `@AutoBundleSetter`.
-
-```java
-@AutoBundleField
-private String userId;
-
-// get{keyName} use as default.
-// no need for @AutoBundleGetter 
-public String getUserId() {
-    return userId;
-}
-
-@AutoBundleGetter(keyName = "userId")
-public String getId() {
-   return userId;
-}
-
-@AutoBundleSetter(keyName = "userId")
-public void setId(String id) {
-   this.userId = id;
-}
-```
-
-#### Set key name
+### Set key name
 
 ``key`` is key for ``Bundle``. Default is field name.
 You cannot define duplicate key in one class.
@@ -131,7 +104,7 @@ You cannot define duplicate key in one class.
 int id;
 ```
 
-#### Required
+### Required
 
 ``required`` option is true by default.
 If ``false``, Builder class has method which named key name, instead as contructor argument.
@@ -150,7 +123,34 @@ ExampleFragment fragment = ExampleFragmentAutoBundle
         .build();
 ```
 
-#### CustomConverter
+### Getter/Setter
+
+You can use getter/setter for fields. 
+The method named `get/set{key}` As a default,
+But you can specify with `@AutoBundleGetter` and `@AutoBundleSetter`.
+
+```java
+@AutoBundleField
+private String userId;
+
+// get{key} use as default.
+// no need for @AutoBundleGetter 
+public String getUserId() {
+    return userId;
+}
+
+@AutoBundleGetter(key = "userId")
+public String getId() {
+   return userId;
+}
+
+@AutoBundleSetter(key = "userId")
+public void setId(String id) {
+   this.userId = id;
+}
+```
+
+### CustomConverter
 
 ``converter`` option provide custom converter for storing to bundle.
 You can specify class which implements ``AutoBundleConverter<T, U>``.
@@ -182,7 +182,7 @@ public class ExampleFragment extends Fragment {
 }
 ```
 
-#### Restore from bundle
+### Restore from bundle
 
 AutoBundle bindings are also useful as restoring value in ``onSaveInstanceState(Bundle outState)``.
 
@@ -199,7 +199,7 @@ For example, store in ``onSaveInstanceState`` and restore in ``onCreate``.
 
 For more information or usage, see the sample application!
 
-### Principle
+## Principle
 
 Both Fragment and Intent are able to pass value by storing Bundle.
 
