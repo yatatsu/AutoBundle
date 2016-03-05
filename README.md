@@ -64,7 +64,6 @@ Builder class has both methods ``build(Context context)``, ``build(Intent intent
 In target class,
 
 ```java
-//ExampleFragment.java
 public class ExampleFragment extends DialogFragment {
     // field with @AutoBundleField, must not be private/protected.
     @AutoBundleField
@@ -79,12 +78,12 @@ public class ExampleFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AutoBundle.bind(this);
+        ExampleFragmentAutoBundle.bind(this);
     }
 }
 ```
 
-Call ``AutoBundle#bind`` in ``onCreate`` and bind value to field with ``@AutoBundleField``.
+Call ``**AutoBundle#bind`` in ``onCreate`` and bind value to field with ``@AutoBundleField``.
 
 In ``Intent`` case, call these method.
 
@@ -92,10 +91,6 @@ In ``Intent`` case, call these method.
 - ``bind(Object target, Bundle bundle)``
 - ``bind(Activity target)`` (equals to ``bind(activity, activity.getIntent())``
 - ``bind(Object target)`` (equals to ``bind(fragment, fragment.getArguments())``
-
-``AutoBundle`` use reflection at the first time, to find generated class ``AutoBundleBindingDispatcher``,
-and call internal binding method for each classes.
-(This idea from [sockeqwe/FragmentArgs](https://github.com/sockeqwe/fragmentargs).)
 
 ### Advanced
 
@@ -169,7 +164,7 @@ public class ExampleFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AutoBundle.bind(this);
+        ExampleFragmentAutoBundle.bind(this);
     }
 
     public static class DateArgConverter implements AutoBundleConverter<Date, Long> {
@@ -195,7 +190,7 @@ AutoBundle bindings are also useful as restoring value in ``onSaveInstanceState(
 @Override
 public void onSaveInstanceState(Bundle outState) {
     super.onSaveInstanceState(outState);
-    AutoBundle.pack(this, outState);
+    ExampleFragmentAutoBundle.pack(this, outState);
 }
 ```
 

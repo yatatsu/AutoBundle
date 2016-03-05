@@ -4,7 +4,6 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.util.Log;
 
-import com.yatatsu.autobundle.AutoBundle;
 import com.yatatsu.autobundle.AutoBundleField;
 
 
@@ -19,7 +18,7 @@ public class ExampleIntentService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        AutoBundle.bind(this, intent);
+        ExampleIntentServiceAutoBundle.bind(this, intent);
         Log.d("ExampleIntentService", "message: " + string);
     }
 }

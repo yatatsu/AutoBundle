@@ -3,7 +3,6 @@ package com.yatatsu.autobundle.processor;
 import com.google.testing.compile.JavaFileObjects;
 import com.yatatsu.autobundle.AutoBundleField;
 import com.yatatsu.autobundle.processor.data.AllValidType;
-import com.yatatsu.autobundle.processor.data.BinderDispatcherSource;
 import com.yatatsu.autobundle.processor.data.DuplicateKey;
 import com.yatatsu.autobundle.processor.data.NotEmptyConstructorConverter;
 import com.yatatsu.autobundle.processor.data.NotPublicConstructorConverter;
@@ -19,7 +18,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.tools.JavaFileObject;
@@ -101,17 +99,6 @@ public class AutoBundleProcessorTest {
         expectedException.expect(RuntimeException.class);
         expectedException.expectMessage(" does not support private field without setter/getter.");
         assertGenerateCode(new PrivateFieldWithoutGetterSetter());
-    }
-
-    @Test
-    public void testBindingDispatcher() {
-        List<JavaFileObject> sources = new ArrayList<>();
-        BinderDispatcherSource base = new BinderDispatcherSource();
-        sources.add(createJavaFileObject(base.getTargetClassName(), base.getTargetSource()));
-        sources.add(createJavaFileObject(base.getTargetClassName2(), base.getTargetSource2()));
-        JavaFileObject expect = createJavaFileObject(
-                base.getExpectClassName(), base.getExpectSource());
-        assertJavaSources(sources, expect);
     }
 
     private void assertGenerateCode(SourceBase sourceBase) {
