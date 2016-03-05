@@ -208,21 +208,36 @@ public class AutoBundleWriter {
             String key = arg.getArgKey();
             String fieldName = arg.getFieldName();
             TypeName argType = arg.getArgType();
-            String operationName = arg.getOperationName("get");
+            String setterName = arg.getSetterName();
+            String opName = arg.getOperationName("get");
             builder.beginControlFlow("if (source.containsKey($S))", key);
 
             if (arg.hasCustomConverter()) {
                 TypeName converter = arg.getConverter();
-                builder.addStatement("$T $NConverter = new $T()", converter, key, converter)
-                        .addStatement("target.$N = ($T) $NConverter.original(source.$N($S))",
-                                fieldName, argType, key, operationName, key);
+                builder.addStatement("$T $NConverter = new $T()", converter, key, converter);
+                if (arg.hasSetter()) {
+                    builder.addStatement("target.$N( ($T) $NConverter.original(source.$N($S) )",
+                            setterName, argType, key, opName, key);
+                } else {
+                    builder.addStatement("target.$N = ($T) $NConverter.original(source.$N($S))",
+                            fieldName, argType, key, opName, key);
+                }
+
             } else {
                 if (arg.noCast()) {
-                    builder.addStatement("target.$N = source.$N($S)",
-                            fieldName, operationName, key);
+                    if (arg.hasSetter()) {
+                        builder.addStatement("target.$N(source.$N($S))", setterName, opName, key);
+                    } else {
+                        builder.addStatement("target.$N = source.$N($S)", fieldName, opName, key);
+                    }
                 } else {
-                    builder.addStatement("target.$N = ($T) source.$N($S)",
-                            fieldName, argType, operationName, key);
+                    if (arg.hasSetter()) {
+                        builder.addStatement("target.$N( ($T) source.$N($S) )",
+                                setterName, argType, opName, key);
+                    } else {
+                        builder.addStatement("target.$N = ($T) source.$N($S)",
+                                fieldName, argType, opName, key);
+                    }
                 }
             }
 
@@ -271,7 +286,9 @@ public class AutoBundleWriter {
         for (AutoBundleBindingField arg : args) {
             String fieldName = arg.getFieldName();
             if (!arg.getArgType().isPrimitive()) {
-                builder.beginControlFlow("if (source.$N != null)", fieldName);
+
+                String getter = arg.hasGetter() ? arg.getGetterName() + "()" : fieldName;
+                builder.beginControlFlow("if (source.$N != null)", getter);
                 addPackOperationStatement(builder, arg);
                 if (arg.isRequired()) {
                     String exceptionMessage = String.format("%s must not be null.", fieldName);
@@ -293,13 +310,14 @@ public class AutoBundleWriter {
         String key = arg.getArgKey();
         String fieldName = arg.getFieldName();
         String operationName = arg.getOperationName("put");
+        String getter = arg.hasGetter() ? arg.getGetterName() + "()" : fieldName;
         if (arg.hasCustomConverter()) {
             TypeName converter = arg.getConverter();
             builder.addStatement("$T $NConverter = new $T()", converter, key, converter)
                     .addStatement("args.$N($S, $NConverter.convert(source.$N))",
-                            operationName, key, key, fieldName);
+                            operationName, key, key, getter);
         } else {
-            builder.addStatement("args.$N($S, source.$N)", operationName, key, fieldName);
+            builder.addStatement("args.$N($S, source.$N)", operationName, key, getter);
         }
     }
 }

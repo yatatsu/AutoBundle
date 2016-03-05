@@ -99,6 +99,33 @@ and call internal binding method for each classes.
 
 ### Advanced
 
+#### Getter/Setter
+
+You can use getter/setter for fields. 
+The method named `get/set{keyName}` As a default,
+But you can specify with `@AutoBundleGetter` and `@AutoBundleSetter`.
+
+```java
+@AutoBundleField
+private String userId;
+
+// get{keyName} use as default.
+// no need for @AutoBundleGetter 
+public String getUserId() {
+    return userId;
+}
+
+@AutoBundleGetter(keyName = "userId")
+public String getId() {
+   return userId;
+}
+
+@AutoBundleSetter(keyName = "userId")
+public void setId(String id) {
+   this.userId = id;
+}
+```
+
 #### Set key name
 
 ``key`` is key for ``Bundle``. Default is field name.
@@ -175,7 +202,7 @@ public void onSaveInstanceState(Bundle outState) {
 ``pack(Object object, Bundle bundle)`` stores field value to bundle.
 For example, store in ``onSaveInstanceState`` and restore in ``onCreate``.
 
-For more infomation or usage, see the sample application!
+For more information or usage, see the sample application!
 
 ### Principle
 

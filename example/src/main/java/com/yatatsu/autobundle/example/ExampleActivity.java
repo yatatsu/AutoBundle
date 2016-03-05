@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import com.yatatsu.autobundle.AutoBundle;
 import com.yatatsu.autobundle.AutoBundleField;
+import com.yatatsu.autobundle.AutoBundleGetter;
+import com.yatatsu.autobundle.AutoBundleSetter;
 
 import java.util.ArrayList;
 
@@ -28,6 +30,24 @@ public class ExampleActivity extends AppCompatActivity {
 
     @AutoBundleField(required = false)
     ArrayList<Person> persons;
+
+    String getName() {
+        return name;
+    }
+
+    void setName(String name) {
+        this.name = name;
+    }
+
+    @AutoBundleSetter(keyName = "optionalName")
+    protected void setAltName(String name) {
+        this.optionalName = name;
+    }
+
+    @AutoBundleGetter(keyName = "optionalName")
+    public String getAltName() {
+        return optionalName;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

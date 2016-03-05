@@ -8,6 +8,9 @@ import com.yatatsu.autobundle.processor.data.DuplicateKey;
 import com.yatatsu.autobundle.processor.data.NotEmptyConstructorConverter;
 import com.yatatsu.autobundle.processor.data.NotPublicConstructorConverter;
 import com.yatatsu.autobundle.processor.data.NotSupportedFieldType;
+import com.yatatsu.autobundle.processor.data.PrivateAnnotatedGetter;
+import com.yatatsu.autobundle.processor.data.PrivateAnnotatedSetter;
+import com.yatatsu.autobundle.processor.data.PrivateFieldWithoutGetterSetter;
 import com.yatatsu.autobundle.processor.data.SourceBase;
 import com.yatatsu.autobundle.processor.data.ValidFragment;
 import com.yatatsu.autobundle.processor.data.WrongSuperClass;
@@ -77,6 +80,27 @@ public class AutoBundleProcessorTest {
         expectedException.expectMessage("AutoBundle target class must be subtype of" +
                 " 'Fragment', 'Activity', 'Receiver' or 'Service'.");
         assertGenerateCode(new WrongSuperClass());
+    }
+
+    @Test
+    public void testPrivateAnnotatedGetter() {
+        expectedException.expect(RuntimeException.class);
+        expectedException.expectMessage("@AutoBundleGetter must not be private");
+        assertGenerateCode(new PrivateAnnotatedGetter());
+    }
+
+    @Test
+    public void testPrivateAnnotatedSetter() {
+        expectedException.expect(RuntimeException.class);
+        expectedException.expectMessage("@AutoBundleSetter must not be private");
+        assertGenerateCode(new PrivateAnnotatedSetter());
+    }
+
+    @Test
+    public void testPrivateFieldWithoutGetterAndSetter() {
+        expectedException.expect(RuntimeException.class);
+        expectedException.expectMessage(" does not support private field without setter/getter.");
+        assertGenerateCode(new PrivateFieldWithoutGetterSetter());
     }
 
     @Test

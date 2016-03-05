@@ -28,16 +28,22 @@ public class AutoBundleBindingField {
     private final TypeName converter;
     private final boolean hasCustomConverter;
     private final String operationName;
+    private String getterName;
+    private String setterName;
 
     public AutoBundleBindingField(VariableElement element,
                                   AutoBundleField annotation,
                                   Elements elementUtils,
-                                  Types typeUtils) {
+                                  Types typeUtils,
+                                  String getterName,
+                                  String setterName) {
         this.fieldName = element.toString();
         this.argKey = annotation.key().length() > 0 ? annotation.key() : this.fieldName;
         this.required = annotation.required();
         this.argType = TypeName.get(element.asType());
-        Validator.checkAutoBundleFieldModifier(element);
+        this.getterName = getterName;
+        this.setterName = setterName;
+        Validator.checkAutoBundleFieldModifier(element, hasGetter() && hasSetter());
 
         TypeName converter;
         TypeName converted;
@@ -95,6 +101,22 @@ public class AutoBundleBindingField {
 
     public String getOperationName(String operation) {
         return operation + operationName;
+    }
+
+    public String getGetterName() {
+        return getterName;
+    }
+
+    public boolean hasGetter() {
+        return getterName != null && getterName.length() > 0;
+    }
+
+    public String getSetterName() {
+        return setterName;
+    }
+
+    public boolean hasSetter() {
+        return setterName != null && setterName.length() > 0;
     }
 
     public boolean noCast() {
