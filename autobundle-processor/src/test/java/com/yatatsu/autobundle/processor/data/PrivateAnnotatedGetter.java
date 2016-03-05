@@ -22,7 +22,7 @@ public class PrivateAnnotatedGetter implements SourceBase {
                 "@AutoBundleField(key = \"itemName\")\n" +
                 "private String name;\n" +
                 "\n" +
-                "@AutoBundleGetter(keyName = \"itemName\")\n" +
+                "@AutoBundleGetter(key = \"itemName\")\n" +
                 "private String getName() {\n" +
                 "return name;\n" +
                 "}\n" +

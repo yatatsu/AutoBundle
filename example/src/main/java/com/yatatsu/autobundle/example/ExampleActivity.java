@@ -38,12 +38,12 @@ public class ExampleActivity extends AppCompatActivity {
         this.name = name;
     }
 
-    @AutoBundleSetter(keyName = "optionalName")
+    @AutoBundleSetter(key = "optionalName")
     protected void setAltName(String name) {
         this.optionalName = name;
     }
 
-    @AutoBundleGetter(keyName = "optionalName")
+    @AutoBundleGetter(key = "optionalName")
     public String getAltName() {
         return optionalName;
     }

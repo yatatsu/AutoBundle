@@ -22,7 +22,7 @@ public class PrivateAnnotatedSetter implements SourceBase {
                 "@AutoBundleField(key = \"itemName\")\n" +
                 "private String name;\n" +
                 "\n" +
-                "@AutoBundleSetter(keyName = \"itemName\")\n" +
+                "@AutoBundleSetter(key = \"itemName\")\n" +
                 "private void setName(String name) {\n" +
                 "this.name = name; \n" +
                 "}\n" +
