@@ -5,12 +5,12 @@ apply plugin: 'com.novoda.bintray-release'
 def metadata = rootProject.ext.metadata
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion rootProject.ext.sdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
         minSdkVersion 1
-        targetSdkVersion 23
+        targetSdkVersion rootProject.ext.sdkVersion
         versionName "${metadata.version}"
         consumerProguardFiles 'autobundle-proguard-rules.pro'
     }
@@ -19,6 +19,11 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
+}
+
+dependencies {
+    compile project(':autobundle-annotations')
+    provided project(':autobundle-dispatcher')
 }
 
 publish {

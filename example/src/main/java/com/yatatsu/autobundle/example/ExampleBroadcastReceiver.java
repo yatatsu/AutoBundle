@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.yatatsu.autobundle.AutoBundle;
 import com.yatatsu.autobundle.AutoBundleField;
 
 public class ExampleBroadcastReceiver extends BroadcastReceiver {
@@ -14,7 +15,7 @@ public class ExampleBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        ExampleBroadcastReceiverAutoBundle.bind(this, intent);
+        AutoBundle.bind(this, intent);
         Log.d("BroadcastReceiver", "message: " + message);
     }
 }

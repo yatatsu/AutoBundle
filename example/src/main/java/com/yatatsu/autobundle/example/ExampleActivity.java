@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.yatatsu.autobundle.AutoBundle;
 import com.yatatsu.autobundle.AutoBundleField;
 import com.yatatsu.autobundle.AutoBundleGetter;
 import com.yatatsu.autobundle.AutoBundleSetter;
@@ -54,10 +55,10 @@ public class ExampleActivity extends AppCompatActivity {
         TextView view = new TextView(this);
         setContentView(view);
         if (savedInstanceState != null) {
-            ExampleActivityAutoBundle.bind(this, savedInstanceState);
+            AutoBundle.bind(this, savedInstanceState);
             Log.d("ExampleActivity", "savedInstanceState: " + savedInstanceState.toString());
         } else {
-            ExampleActivityAutoBundle.bind(this, getIntent());
+            AutoBundle.bind(this, getIntent());
             Log.d("ExampleActivity", "intent: " + getIntent().getExtras());
         }
         setTitle(name);
@@ -92,7 +93,7 @@ public class ExampleActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        ExampleActivityAutoBundle.pack(this, outState);
+        AutoBundle.pack(this, outState);
         Log.d("ExampleActivity", "outState: " + outState);
     }
 }

@@ -1,1 +1,1 @@
-include ':example', ':autobundle-processor', ':autobundle'
+include ':example', ':autobundle-processor', ':autobundle', ':autobundle-annotations', ':autobundle-dispatcher'
