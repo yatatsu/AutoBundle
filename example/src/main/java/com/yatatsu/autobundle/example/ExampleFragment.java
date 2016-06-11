@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 
+import com.yatatsu.autobundle.AutoBundle;
 import com.yatatsu.autobundle.AutoBundleConverter;
 import com.yatatsu.autobundle.AutoBundleField;
 
@@ -30,7 +31,7 @@ public class ExampleFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             // restore from savedInstanceState.
-            ExampleFragmentAutoBundle.bind(this, savedInstanceState);
+            AutoBundle.bind(this, savedInstanceState);
         }
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(title)
@@ -44,7 +45,7 @@ public class ExampleFragment extends DialogFragment {
         super.onSaveInstanceState(outState);
         title = String.format("%s!", title);
         // store state
-        ExampleFragmentAutoBundle.pack(this, outState);
+        AutoBundle.pack(this, outState);
     }
 
     public static class DateArgConverter implements AutoBundleConverter<Date, Long> {

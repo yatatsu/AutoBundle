@@ -52,6 +52,14 @@ public class AutoBundleProcessor extends AbstractProcessor {
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         List<AutoBundleBindingClass> classes =
                 new ArrayList<>(BindingDetector.bindingClasses(roundEnv, elementUtils, typeUtils));
+        if (!classes.isEmpty()) {
+            try {
+                AutoBundleBinderWriter binderWriter = new AutoBundleBinderWriter(classes);
+                binderWriter.write(filer);
+            } catch (IOException e) {
+                messager.printMessage(Diagnostic.Kind.ERROR, e.getMessage());
+            }
+        }
         for (AutoBundleBindingClass clazz : classes) {
             AutoBundleWriter writer = new AutoBundleWriter(clazz);
             try {
