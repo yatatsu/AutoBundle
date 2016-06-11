@@ -61,16 +61,16 @@ Builder class has both methods ``build(Context context)``, ``build(Intent intent
 
 ### 2. Bind annotated fields
 
-In target class,
+In target class, Call binding method in ``onCreate``.
 
 ```java
 public class ExampleFragment extends DialogFragment {
     // field with @AutoBundleField, must not be private/protected.
     @AutoBundleField
-    String title;
+	String title;
 
     @AutoBundleField
-    int exampleId;
+	int exampleId;
 
     @AutoBundleField(required = false) // default is true
     int optionalId;
@@ -78,19 +78,33 @@ public class ExampleFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ExampleFragmentAutoBundle.bind(this);
+        ExampleFragmentAutoBundle.bind(this, getArguments());
+		// `AutoBundle` is providing easier interface. 
+		// This code is equals to above.
+		AutoBundle.bind(this);
     }
 }
 ```
 
-Call ``**AutoBundle#bind`` in ``onCreate`` and bind value to field with ``@AutoBundleField``.
-
-In ``Intent`` case, call these method.
-
 - ``bind(Object target, Intent intent)``
 - ``bind(Object target, Bundle bundle)``
-- ``bind(Activity target)`` (equals to ``bind(activity, activity.getIntent())``
-- ``bind(Object target)`` (equals to ``bind(fragment, fragment.getArguments())``
+- ``bind(Activity target)`` (equals to ``bind(activity, activity.getIntent())``)
+- ``bind(Object target)`` (equals to ``bind(fragment, fragment.getArguments())``)
+
+### 3. Store annotated fields
+
+AutoBundle bindings are also useful as restoring value in ``onSaveInstanceState(Bundle outState)``.
+
+```java
+@Override
+public void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    ExampleFragmentAutoBundle.pack(this, outState);
+}
+```
+
+``pack(Object object, Bundle bundle)`` stores field value to bundle.
+For example, store in ``onSaveInstanceState`` and restore in ``onCreate``.
 
 ## Advanced
 
@@ -181,21 +195,6 @@ public class ExampleFragment extends Fragment {
      }
 }
 ```
-
-### Restore from bundle
-
-AutoBundle bindings are also useful as restoring value in ``onSaveInstanceState(Bundle outState)``.
-
-```java
-@Override
-public void onSaveInstanceState(Bundle outState) {
-    super.onSaveInstanceState(outState);
-    ExampleFragmentAutoBundle.pack(this, outState);
-}
-```
-
-``pack(Object object, Bundle bundle)`` stores field value to bundle.
-For example, store in ``onSaveInstanceState`` and restore in ``onCreate``.
 
 For more information or usage, see the sample application!
 
