@@ -45,12 +45,11 @@ public class AutoBundleBinderWriter {
         .addParameter(CLASS_BUNDLE, "args")
         .returns(void.class);
 
-    builder.addStatement("final String className = target.getClass().getCanonicalName()");
     for (AutoBundleBindingClass bindingClass : classes) {
       TypeName type = bindingClass.getTargetType();
       ClassName bindClassType =
           ClassName.get(bindingClass.getPackageName(), bindingClass.getHelperClassName());
-      builder.beginControlFlow("if (className.equals($T.class.getName()))", type)
+      builder.beginControlFlow("if (target instanceof $T)", type)
           .addStatement("$T.bind(($T)target, args)", bindClassType, type)
           .addStatement("return")
           .endControlFlow();
@@ -65,7 +64,6 @@ public class AutoBundleBinderWriter {
         .addParameter(CLASS_INTENT, "intent")
         .returns(void.class);
 
-    builder.addStatement("final String className = target.getClass().getCanonicalName()");
     for (AutoBundleBindingClass bindingClass : classes) {
       if (bindingClass.getBuilderType() != AutoBundleBindingClass.BuilderType.Intent) {
         continue;
@@ -73,7 +71,7 @@ public class AutoBundleBinderWriter {
       TypeName type = bindingClass.getTargetType();
       ClassName bindClassType =
           ClassName.get(bindingClass.getPackageName(), bindingClass.getHelperClassName());
-      builder.beginControlFlow("if (className.equals($T.class.getName()))", type)
+      builder.beginControlFlow("if (target instanceof $T)", type)
           .addStatement("$T.bind(($T)target, intent)", bindClassType, type)
           .addStatement("return")
           .endControlFlow();
@@ -87,7 +85,6 @@ public class AutoBundleBinderWriter {
         .addParameter(Object.class, "target")
         .returns(void.class);
 
-    builder.addStatement("final String className = target.getClass().getCanonicalName()");
     for (AutoBundleBindingClass bindingClass : classes) {
       if (bindingClass.getBuilderType() != AutoBundleBindingClass.BuilderType.Fragment) {
         continue;
@@ -95,7 +92,7 @@ public class AutoBundleBinderWriter {
       TypeName type = bindingClass.getTargetType();
       ClassName bindClassType =
           ClassName.get(bindingClass.getPackageName(), bindingClass.getHelperClassName());
-      builder.beginControlFlow("if (className.equals($T.class.getName()))", type)
+      builder.beginControlFlow("if (target instanceof $T)", type)
           .addStatement("$T.bind(($T)target)", bindClassType, type)
           .addStatement("return")
           .endControlFlow();
@@ -110,12 +107,11 @@ public class AutoBundleBinderWriter {
         .addParameter(CLASS_BUNDLE, "args")
         .returns(void.class);
 
-    builder.addStatement("final String className = target.getClass().getCanonicalName()");
     for (AutoBundleBindingClass bindingClass : classes) {
       TypeName type = bindingClass.getTargetType();
       ClassName bindClassType =
           ClassName.get(bindingClass.getPackageName(), bindingClass.getHelperClassName());
-      builder.beginControlFlow("if (className.equals($T.class.getName()))", type)
+      builder.beginControlFlow("if (target instanceof $T)", type)
           .addStatement("$T.pack(($T)target, args)", bindClassType, type)
           .addStatement("return")
           .endControlFlow();
