@@ -31,6 +31,9 @@ public class ExampleActivity extends AppCompatActivity {
     @AutoBundleField(required = false)
     ArrayList<Person> persons;
 
+    @AutoBundleField(required = false, converter = ParcelableConverter.class)
+    ExampleData exampleData2;
+
     String getName() {
         return name;
     }
@@ -47,6 +50,14 @@ public class ExampleActivity extends AppCompatActivity {
     @AutoBundleGetter(key = "optionalName")
     public String getAltName() {
         return optionalName;
+    }
+
+    public void setExampleData2(ExampleData exampleData2) {
+        this.exampleData2 = exampleData2;
+    }
+
+    public ExampleData getExampleData2() {
+        return exampleData2;
     }
 
     @Override
