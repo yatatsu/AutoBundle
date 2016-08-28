@@ -86,7 +86,7 @@ public class AutoBundleWriter {
             if (arg.hasCustomConverter()) {
                 TypeName converter = arg.getConverter();
                 builder.addStatement("$T $NConverter = new $T()", converter, key, converter)
-                        .addStatement("this.$N.$N($S, $NConverter.convert($N))",
+                        .addStatement("this.$N.$N($S, $NConverter.convert($N) )",
                                 fieldName, operationName, key, key, key);
             } else {
                 builder.addStatement("this.$N.$N($S, $N)", fieldName, operationName, key, key);
@@ -120,7 +120,7 @@ public class AutoBundleWriter {
             if (arg.hasCustomConverter()) {
                 TypeName converter = arg.getConverter();
                 builder.addStatement("$T $NConverter = new $T()", converter, argKey, converter)
-                        .addStatement("$N.$N($S, $NConverter.convert($N))",
+                        .addStatement("$N.$N($S, $NConverter.convert($N) )",
                                 fieldName, operationName, argKey, argKey, argKey);
             } else {
                 builder.addStatement("$N.$N($S, $N)", fieldName, operationName, argKey, argKey);
@@ -216,17 +216,17 @@ public class AutoBundleWriter {
                 TypeName converter = arg.getConverter();
                 builder.addStatement("$T $NConverter = new $T()", converter, key, converter);
                 if (arg.hasSetter()) {
-                    builder.addStatement("target.$N( ($T) $NConverter.original(source.$N($S) )",
+                    builder.addStatement("target.$N( ($T) $NConverter.original( source.$N($S) ) )",
                             setterName, argType, key, opName, key);
                 } else {
-                    builder.addStatement("target.$N = ($T) $NConverter.original(source.$N($S))",
+                    builder.addStatement("target.$N = ($T) $NConverter.original( source.$N($S) )",
                             fieldName, argType, key, opName, key);
                 }
 
             } else {
                 if (arg.noCast()) {
                     if (arg.hasSetter()) {
-                        builder.addStatement("target.$N(source.$N($S))", setterName, opName, key);
+                        builder.addStatement("target.$N( source.$N($S) )", setterName, opName, key);
                     } else {
                         builder.addStatement("target.$N = source.$N($S)", fieldName, opName, key);
                     }
@@ -314,7 +314,7 @@ public class AutoBundleWriter {
         if (arg.hasCustomConverter()) {
             TypeName converter = arg.getConverter();
             builder.addStatement("$T $NConverter = new $T()", converter, key, converter)
-                    .addStatement("args.$N($S, $NConverter.convert(source.$N))",
+                    .addStatement("args.$N($S, $NConverter.convert(source.$N) )",
                             operationName, key, key, getter);
         } else {
             builder.addStatement("args.$N($S, source.$N)", operationName, key, getter);
