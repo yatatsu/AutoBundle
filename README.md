@@ -215,7 +215,7 @@ dependencies {
 }
 ```
 
-If your gradle plugin >= 2.2, use `android-apt` plugin.
+If your gradle plugin < 2.2, use `android-apt` plugin.
 
 ```groovy
 buildscript {
