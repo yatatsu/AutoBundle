@@ -208,7 +208,14 @@ AutBundle provide this pattern as builder method instead of "createIntent".
 
 ## Download
 
-AutoBundle uses annotation processing, so you need to add android-apt plugin.
+```groovy
+dependencies {
+    compile 'com.github.yatatsu:autobundle:3.1.1'
+    annotationProcessor 'com.github.yatatsu:autobundle-processor:3.1.1'
+}
+```
+
+If your gradle plugin >= 2.2, use `android-apt` plugin.
 
 ```groovy
 buildscript {
