@@ -1,116 +1,134 @@
 package com.yatatsu.autobundle.processor;
 
 import com.google.testing.compile.JavaFileObjects;
-import com.yatatsu.autobundle.AutoBundleField;
-import com.yatatsu.autobundle.processor.data.AllValidType;
-import com.yatatsu.autobundle.processor.data.DuplicateKey;
-import com.yatatsu.autobundle.processor.data.NotEmptyConstructorConverter;
-import com.yatatsu.autobundle.processor.data.NotPublicConstructorConverter;
-import com.yatatsu.autobundle.processor.data.NotSupportedFieldType;
-import com.yatatsu.autobundle.processor.data.PrivateAnnotatedGetter;
-import com.yatatsu.autobundle.processor.data.PrivateAnnotatedSetter;
-import com.yatatsu.autobundle.processor.data.PrivateFieldWithoutGetterSetter;
-import com.yatatsu.autobundle.processor.data.SourceBase;
-import com.yatatsu.autobundle.processor.data.ValidFragment;
-import com.yatatsu.autobundle.processor.data.WrongSuperClass;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
-
-import java.util.List;
 
 import javax.tools.JavaFileObject;
 
 import static com.google.common.truth.Truth.assert_;
 import static com.google.testing.compile.JavaSourceSubjectFactory.javaSource;
-import static com.google.testing.compile.JavaSourcesSubjectFactory.javaSources;
 
 /**
  * {@link AutoBundleProcessor}
  */
 public class AutoBundleProcessorTest {
 
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
-
     @Test
-    public void testProcessorAllValidType() {
-        assertGenerateCode(new AllValidType());
-    }
+    public void testProcessorAllValidType() throws Exception {
+        JavaFileObject source = JavaFileObjects.forResource("AllType.java");
 
-    @Test
-    public void testProcessorFragment() {
-        assertGenerateCode(new ValidFragment());
+        assert_().about(javaSource())
+                .that(source)
+                .processedWith(new AutoBundleProcessor())
+                .compilesWithoutError();
     }
 
     @Test
-    public void testDuplicateKey() {
-        expectedException.expect(RuntimeException.class);
-        expectedException.expectMessage(" is duplicated in " + AutoBundleField.class);
-        assertGenerateCode(new DuplicateKey());
+    public void testProcessorFragment() throws Exception {
+        JavaFileObject source = JavaFileObjects.forResource("ValidFragment.java");
+
+        assert_().about(javaSource())
+                .that(source)
+                .processedWith(new AutoBundleProcessor())
+                .compilesWithoutError();
     }
 
     @Test
-    public void testNotPublicConstructorConverter() {
-        expectedException.expect(RuntimeException.class);
-        expectedException.expectMessage(" must have public empty constructor.");
-        assertGenerateCode(new NotPublicConstructorConverter());
+    public void testDuplicateKey() throws Exception {
+        JavaFileObject source = JavaFileObjects.forResource("DuplicateKey.java");
+
+        assert_().about(javaSource())
+                .that(source)
+                .processedWith(new AutoBundleProcessor())
+                .failsToCompile()
+                .withErrorCount(1)
+                .withErrorContaining("is duplicated in interface com.yatatsu.autobundle.AutoBundleField");
     }
 
     @Test
-    public void testNotEmptyConstructorConverter() {
-        expectedException.expect(RuntimeException.class);
-        expectedException.expectMessage(" must have public empty constructor.");
-        assertGenerateCode(new NotEmptyConstructorConverter());
+    public void testNotPublicConstructorConverter() throws Exception {
+        JavaFileObject source = JavaFileObjects.forResource("NotPublicConstructorConverter.java");
+
+        assert_().about(javaSource())
+                .that(source)
+                .processedWith(new AutoBundleProcessor())
+                .failsToCompile()
+                .withErrorCount(1)
+                .withErrorContaining(" must have public empty constructor.");
     }
 
     @Test
-    public void testNotSupportedFieldType() {
-        expectedException.expect(RuntimeException.class);
-        expectedException.expectMessage(" is not supported type.");
-        assertGenerateCode(new NotSupportedFieldType());
+    public void testNotEmptyConstructorConverter() throws Exception {
+        JavaFileObject source = JavaFileObjects.forResource("NotEmptyConstructorConverter.java");
+
+        assert_().about(javaSource())
+                .that(source)
+                .processedWith(new AutoBundleProcessor())
+                .failsToCompile()
+                .withErrorCount(1)
+                .withErrorContaining(" must have public empty constructor.");
     }
 
     @Test
-    public void testWrongSuperClass() {
-        expectedException.expect(RuntimeException.class);
-        expectedException.expectMessage("AutoBundle target class must be subtype of" +
-                " 'Fragment', 'Activity', 'Receiver' or 'Service'.");
-        assertGenerateCode(new WrongSuperClass());
+    public void testNotSupportedFieldType() throws Exception {
+        JavaFileObject source = JavaFileObjects.forResource("UnsupportedTypeField.java");
+
+        assert_().about(javaSource())
+                .that(source)
+                .processedWith(new AutoBundleProcessor())
+                .failsToCompile()
+                .withErrorCount(1)
+                .withErrorContaining(" is not supported type.");
     }
 
     @Test
-    public void testPrivateAnnotatedGetter() {
-        expectedException.expect(RuntimeException.class);
-        expectedException.expectMessage("@AutoBundleGetter must not be private");
-        assertGenerateCode(new PrivateAnnotatedGetter());
+    public void testWrongSuperClass() throws Exception {
+        JavaFileObject source = JavaFileObjects.forResource("UnsupportedSubtype.java");
+
+        assert_().about(javaSource())
+                .that(source)
+                .processedWith(new AutoBundleProcessor())
+                .failsToCompile()
+                .withErrorCount(1)
+                .withErrorContaining("AutoBundle target class must be subtype of" +
+                        " 'Fragment', 'Activity', 'Receiver' or 'Service'.");
     }
 
     @Test
-    public void testPrivateAnnotatedSetter() {
-        expectedException.expect(RuntimeException.class);
-        expectedException.expectMessage("@AutoBundleSetter must not be private");
-        assertGenerateCode(new PrivateAnnotatedSetter());
+    public void testPrivateAnnotatedGetter() throws Exception {
+        JavaFileObject source = JavaFileObjects.forResource("PrivateAnnotatedGetter.java");
+
+        assert_().about(javaSource())
+                .that(source)
+                .processedWith(new AutoBundleProcessor())
+                .failsToCompile()
+                .withErrorCount(1)
+                .withErrorContaining("@AutoBundleGetter must not be private");
     }
 
     @Test
-    public void testPrivateFieldWithoutGetterAndSetter() {
-        expectedException.expect(RuntimeException.class);
-        expectedException.expectMessage(" does not support private field without setter/getter.");
-        assertGenerateCode(new PrivateFieldWithoutGetterSetter());
+    public void testPrivateAnnotatedSetter() throws Exception {
+        JavaFileObject source = JavaFileObjects.forResource("PrivateAnnotatedSetter.java");
+
+        assert_().about(javaSource())
+                .that(source)
+                .processedWith(new AutoBundleProcessor())
+                .failsToCompile()
+                .withErrorCount(1)
+                .withErrorContaining("@AutoBundleSetter must not be private");
     }
 
-    private void assertGenerateCode(SourceBase sourceBase) {
-        JavaFileObject source = createJavaFileObject(
-                sourceBase.getTargetClassName(), sourceBase.getTargetSource());
-        JavaFileObject expect = createJavaFileObject(
-                sourceBase.getExpectClassName(), sourceBase.getExpectSource());
-        assertJavaSource(source, expect);
-    }
+    @Test
+    public void testPrivateFieldWithoutGetterAndSetter() throws Exception {
+        JavaFileObject source = JavaFileObjects.forResource("PrivateFieldWithoutGetterSetter.java");
 
-    private JavaFileObject createJavaFileObject(String className, String source) {
-        return JavaFileObjects.forSourceString(className, source);
+        assert_().about(javaSource())
+                .that(source)
+                .processedWith(new AutoBundleProcessor())
+                .failsToCompile()
+                .withErrorCount(1)
+                .withErrorContaining(" does not support private field without setter/getter.");
     }
 
     private void assertJavaSource(JavaFileObject source, JavaFileObject expected) {
@@ -120,17 +138,6 @@ public class AutoBundleProcessorTest {
                 .compilesWithoutError()
                 .and()
                 .generatesSources(expected);
-    }
-
-    private void assertJavaSources(List<JavaFileObject> sources,
-                                   JavaFileObject expected,
-                                   JavaFileObject... rest) {
-        assert_().about(javaSources())
-                .that(sources)
-                .processedWith(new AutoBundleProcessor())
-                .compilesWithoutError()
-                .and()
-                .generatesSources(expected, rest);
     }
 
 }

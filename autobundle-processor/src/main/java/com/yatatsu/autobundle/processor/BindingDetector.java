@@ -4,7 +4,7 @@ package com.yatatsu.autobundle.processor;
 import com.yatatsu.autobundle.AutoBundleField;
 import com.yatatsu.autobundle.AutoBundleGetter;
 import com.yatatsu.autobundle.AutoBundleSetter;
-import com.yatatsu.autobundle.processor.exceptions.UnsupportedClassException;
+import com.yatatsu.autobundle.processor.exceptions.ProcessingException;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -75,7 +75,7 @@ final class BindingDetector {
                 if (argKeyName.equals(annotation.key())) {
                     // check modifier
                     if (element.getModifiers().contains(Modifier.PRIVATE)) {
-                        throw new UnsupportedClassException("@AutoBundleGetter must not be private");
+                        throw new ProcessingException("@AutoBundleGetter must not be private");
                     }
                     return methodName;
                 }
@@ -112,7 +112,7 @@ final class BindingDetector {
                 if (argKeyName.equals(annotation.key())) {
                     // check modifier
                     if (element.getModifiers().contains(Modifier.PRIVATE)) {
-                        throw new UnsupportedClassException("@AutoBundleSetter must not be private");
+                        throw new ProcessingException("@AutoBundleSetter must not be private");
                     }
                     return methodName;
                 }
