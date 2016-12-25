@@ -2,8 +2,7 @@ package com.yatatsu.autobundle.processor;
 
 import com.squareup.javapoet.TypeName;
 import com.yatatsu.autobundle.AutoBundleField;
-import com.yatatsu.autobundle.processor.exceptions.DuplicatedArgKeyException;
-import com.yatatsu.autobundle.processor.exceptions.UnsupportedClassException;
+import com.yatatsu.autobundle.processor.exceptions.ProcessingException;
 
 import java.lang.reflect.Constructor;
 import java.util.HashSet;
@@ -24,7 +23,7 @@ final class Validator {
 
     static void checkAutoBundleTargetClass(AutoBundleBindingClass.BuilderType type) {
         if (type == AutoBundleBindingClass.BuilderType.None) {
-            throw new UnsupportedClassException(
+            throw new ProcessingException(
                     "AutoBundle target class must be subtype of" +
                             " 'Fragment', 'Activity', 'Receiver' or 'Service'.");
         }
@@ -33,11 +32,11 @@ final class Validator {
     static void checkAutoBundleTargetModifier(TypeElement typeElement) {
         Set<Modifier> modifiers = typeElement.getModifiers();
         if (modifiers.contains(Modifier.ABSTRACT)) {
-            throw new UnsupportedClassException(
+            throw new ProcessingException(
                     "AutoBundle must be with concrete class.");
         } else if (typeElement.getModifiers().contains(Modifier.PRIVATE) ||
                 modifiers.contains(Modifier.PROTECTED)) {
-            throw new UnsupportedClassException(
+            throw new ProcessingException(
                     "AutoBundle must not be with private/protected class.");
         }
     }
@@ -47,7 +46,7 @@ final class Validator {
         for (AutoBundleBindingField arg : args) {
             String key = arg.getArgKey();
             if (keySet.contains(key)) {
-                throw new DuplicatedArgKeyException(
+                throw new ProcessingException(
                         "key " + key  + " is duplicated in " + AutoBundleField.class);
             }
             keySet.add(key);
@@ -57,7 +56,7 @@ final class Validator {
     static void checkAutoBundleFieldModifier(VariableElement element, boolean hasGetterSetter) {
         Set<Modifier> modifiers = element.getModifiers();
         if (modifiers.contains(Modifier.PRIVATE) && !hasGetterSetter) {
-            throw new IllegalStateException(
+            throw new ProcessingException(
                     AutoBundleField.class + " does not support private field without setter/getter.");
         }
     }
@@ -77,13 +76,13 @@ final class Validator {
             }
         }
         if (!existEmptyConstructor) {
-            throw new IllegalStateException(clazz + " must have public empty constructor.");
+            throw new ProcessingException(clazz + " must have public empty constructor.");
         }
     }
 
     static void checkConverterClass(TypeElement element) {
         if (!element.getModifiers().contains(Modifier.PUBLIC)) {
-            throw new IllegalStateException(element.toString() + " must be public.");
+            throw new ProcessingException(element.toString() + " must be public.");
         }
 
         boolean existEmptyConstructor = false;
@@ -99,13 +98,13 @@ final class Validator {
             }
         }
         if (!existEmptyConstructor) {
-            throw new IllegalStateException(element + " must have public empty constructor.");
+            throw new ProcessingException(element + " must have public empty constructor.");
         }
     }
 
     static void checkNotSupportedOperation(String operation, TypeName typeName) {
         if (operation == null || operation.length() == 0) {
-            throw new UnsupportedClassException(typeName + " is not supported type.");
+            throw new ProcessingException(typeName + " is not supported type.");
         }
     }
 

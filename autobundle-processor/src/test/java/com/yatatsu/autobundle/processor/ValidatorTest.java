@@ -1,7 +1,7 @@
 package com.yatatsu.autobundle.processor;
 
 import com.squareup.javapoet.TypeName;
-import com.yatatsu.autobundle.processor.exceptions.UnsupportedClassException;
+import com.yatatsu.autobundle.processor.exceptions.ProcessingException;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -17,7 +17,7 @@ public class ValidatorTest {
 
     @Test
     public void invalidBuilderType() {
-        expectedException.expect(UnsupportedClassException.class);
+        expectedException.expect(ProcessingException.class);
         expectedException.expectMessage("AutoBundle target class must be subtype of" +
                 " 'Fragment', 'Activity', 'Receiver' or 'Service'.");
         Validator.checkAutoBundleTargetClass(AutoBundleBindingClass.BuilderType.None);
@@ -25,7 +25,7 @@ public class ValidatorTest {
 
     @Test
     public void invalidSupportedClass() {
-        expectedException.expect(UnsupportedClassException.class);
+        expectedException.expect(ProcessingException.class);
         expectedException.expectMessage(" is not supported type.");
         Validator.checkNotSupportedOperation(null, TypeName.BOOLEAN);
     }
