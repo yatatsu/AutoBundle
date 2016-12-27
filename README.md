@@ -198,6 +198,8 @@ public class ExampleFragment extends Fragment {
 
 For more information or usage, see the sample application!
 
+(See `example/` and generated codes are under `example/build`.) 
+
 ## Principle
 
 Both Fragment and Intent are able to pass value by storing Bundle.
