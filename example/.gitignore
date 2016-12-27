@@ -1,1 +1,21 @@
-/build
+build/*
+
+# generated codes
+!build/generated
+build/generated/*
+!build/generated/source
+build/generated/source/*
+!build/generated/source/apt
+build/generated/source/apt/*
+!build/generated/source/apt/debug
+build/generated/source/apt/debug/*
+!build/generated/source/apt/debug/com
+build/generated/source/apt/debug/com/*
+!build/generated/source/apt/debug/com/yatatsu
+build/generated/source/apt/debug/com/yatatsu/*
+!build/generated/source/apt/debug/com/yatatsu/autobundle
+build/generated/source/apt/debug/com/yatatsu/autobundle/*
+!build/generated/source/apt/debug/com/yatatsu/autobundle/example
+build/generated/source/apt/debug/com/yatatsu/autobundle/example/*
+!/build/generated/source/apt/debug/com/yatatsu/autobundle/example/*AutoBundle.java
+!/build/generated/source/apt/debug/com/yatatsu/autobundle/AutoBundleBindingDispatcher.java
