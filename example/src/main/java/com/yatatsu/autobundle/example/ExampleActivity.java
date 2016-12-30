@@ -1,6 +1,7 @@
 package com.yatatsu.autobundle.example;
 
 import android.os.Bundle;
+import android.support.annotation.IntDef;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -11,10 +12,25 @@ import com.yatatsu.autobundle.AutoBundleField;
 import com.yatatsu.autobundle.AutoBundleGetter;
 import com.yatatsu.autobundle.AutoBundleSetter;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 
 
 public class ExampleActivity extends AppCompatActivity {
+
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({ TYPE_A, TYPE_B, TYPE_C})
+    public @interface IntType {}
+    public static final int TYPE_A = 1;
+    public static final int TYPE_B = 2;
+    public static final int TYPE_C = 3;
+
+    @ExampleActivity.IntType
+    @AutoBundleField(required = false) int type1 = TYPE_A;
+
+    @ExampleActivity.IntType
+    @AutoBundleField int type2;
 
     @AutoBundleField
     String name;

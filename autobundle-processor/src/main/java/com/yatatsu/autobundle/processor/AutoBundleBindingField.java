@@ -28,8 +28,9 @@ public class AutoBundleBindingField {
     private final TypeName converter;
     private final boolean hasCustomConverter;
     private final String operationName;
-    private String getterName;
-    private String setterName;
+    private final String getterName;
+    private final String setterName;
+    private final List<ClassName> annotations;
 
     public AutoBundleBindingField(VariableElement element,
                                   AutoBundleField annotation,
@@ -43,6 +44,7 @@ public class AutoBundleBindingField {
         this.argType = TypeName.get(element.asType());
         this.getterName = getterName;
         this.setterName = setterName;
+        this.annotations = BindingFieldHelper.getAnnotationsForField(element);
         Validator.checkAutoBundleFieldModifier(element, hasGetter() && hasSetter());
 
         TypeName converter;
@@ -123,6 +125,14 @@ public class AutoBundleBindingField {
         return operationName.equals("ParcelableArrayList") ||
                 operationName.equals("ParcelableArray") ||
                 operationName.equals("SparseParcelableArray");
+    }
+
+    public List<ClassName> getAnnotations() {
+        return annotations;
+    }
+
+    public boolean hasAnnotations() {
+        return !annotations.isEmpty();
     }
 
     static TypeName detectConvertedTypeByTypeElement(TypeElement element) {

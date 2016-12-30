@@ -8,8 +8,9 @@ import java.lang.String;
 import java.util.ArrayList;
 
 public final class ExampleActivityAutoBundle {
-  public static ExampleActivityAutoBundle.IntentBuilder createIntentBuilder(String name) {
-    return new ExampleActivityAutoBundle.IntentBuilder(name);
+  public static ExampleActivityAutoBundle.IntentBuilder createIntentBuilder(@ExampleActivity.IntType int type2,
+      String name) {
+    return new ExampleActivityAutoBundle.IntentBuilder(type2,name);
   }
 
   public static void bind(ExampleActivity target, Intent intent) {
@@ -19,10 +20,18 @@ public final class ExampleActivityAutoBundle {
   }
 
   public static void bind(ExampleActivity target, Bundle source) {
+    if (source.containsKey("type2")) {
+      target.type2 = (int) source.getInt("type2");
+    } else {
+      throw new IllegalStateException("type2 is required, but not found in the bundle.");
+    }
     if (source.containsKey("name")) {
       target.setName( (String) source.getString("name") );
     } else {
       throw new IllegalStateException("name is required, but not found in the bundle.");
+    }
+    if (source.containsKey("type1")) {
+      target.type1 = (int) source.getInt("type1");
     }
     if (source.containsKey("optionalName")) {
       target.setAltName( (String) source.getString("optionalName") );
@@ -44,11 +53,13 @@ public final class ExampleActivityAutoBundle {
   }
 
   public static void pack(ExampleActivity source, Bundle args) {
+    args.putInt("type2", source.type2);
     if (source.getName() != null) {
       args.putString("name", source.getName());
     } else {
       throw new IllegalStateException("name must not be null.");
     }
+    args.putInt("type1", source.type1);
     if (source.getAltName() != null) {
       args.putString("optionalName", source.getAltName());
     }
@@ -71,9 +82,15 @@ public final class ExampleActivityAutoBundle {
   public static final class IntentBuilder {
     final Bundle args;
 
-    public IntentBuilder(String name) {
+    public IntentBuilder(@ExampleActivity.IntType int type2, String name) {
       this.args = new Bundle();
+      this.args.putInt("type2", type2);
       this.args.putString("name", name);
+    }
+
+    public ExampleActivityAutoBundle.IntentBuilder type1(@ExampleActivity.IntType int type1) {
+      args.putInt("type1", type1);
+      return this;
     }
 
     public ExampleActivityAutoBundle.IntentBuilder optionalName(String optionalName) {

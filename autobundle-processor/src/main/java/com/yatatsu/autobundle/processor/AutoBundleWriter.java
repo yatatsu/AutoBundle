@@ -4,6 +4,7 @@ import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 
@@ -56,7 +57,14 @@ public class AutoBundleWriter {
                 builder.addCode(",");
             }
             AutoBundleBindingField arg = target.getRequiredArgs().get(i);
-            builder.addParameter(arg.getArgType(), arg.getArgKey())
+            ParameterSpec.Builder paramBuilder = ParameterSpec.builder(arg.getArgType(),
+                    arg.getArgKey());
+            if (arg.hasAnnotations()) {
+                for (ClassName annotation : arg.getAnnotations()) {
+                    paramBuilder.addAnnotation(annotation);
+                }
+            }
+            builder.addParameter(paramBuilder.build())
                     .addCode("$N", arg.getArgKey());
         }
         return builder.addCode(");\n").build();
@@ -82,7 +90,13 @@ public class AutoBundleWriter {
             String key = arg.getArgKey();
             TypeName type = arg.getArgType();
             String operationName = arg.getOperationName("put");
-            builder.addParameter(type, key);
+            ParameterSpec.Builder paramBuilder = ParameterSpec.builder(type, key);
+            if (arg.hasAnnotations()) {
+                for (ClassName annotation : arg.getAnnotations()) {
+                    paramBuilder.addAnnotation(annotation);
+                }
+            }
+            builder.addParameter(paramBuilder.build());
             if (arg.hasCustomConverter()) {
                 TypeName converter = arg.getConverter();
                 builder.addStatement("$T $NConverter = new $T()", converter, key, converter)
@@ -108,9 +122,15 @@ public class AutoBundleWriter {
             TypeName argType = arg.getArgType();
             String operationName = arg.getOperationName("put");
 
+            ParameterSpec.Builder paramBuilder = ParameterSpec.builder(argType, argKey);
+            if (arg.hasAnnotations()) {
+                for (ClassName annotation : arg.getAnnotations()) {
+                    paramBuilder.addAnnotation(annotation);
+                }
+            }
             MethodSpec.Builder builder = MethodSpec.methodBuilder(argKey)
                     .addModifiers(Modifier.PUBLIC)
-                    .addParameter(argType, argKey)
+                    .addParameter(paramBuilder.build())
                     .returns(getBuilderClassName(target));
 
             final boolean checkNull = !arg.getArgType().isPrimitive();

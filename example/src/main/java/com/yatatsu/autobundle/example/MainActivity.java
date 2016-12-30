@@ -52,7 +52,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         messages.add("hey");
         messages.add("this is");
         messages.add("messages");
-        Intent intent = ExampleActivityAutoBundle.createIntentBuilder("hello, example!")
+        Intent intent = ExampleActivityAutoBundle
+                .createIntentBuilder(ExampleActivity.TYPE_A, "hello, example!")
                 .optionalName("optionalName")
                 .fooList(messages)
                 .exampleData(new ExampleData(100, "one hundred"))
