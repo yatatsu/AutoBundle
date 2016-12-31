@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 
 /**
  * Injection helper.
@@ -21,7 +22,7 @@ public class AutoBundle {
      * assign to target fields from {@link Activity#getIntent()}
      * @param activity target activity which has {@link AutoBundleField} annotated fields.
      */
-    public static void bind(Activity activity) {
+    public static void bind(@NonNull Activity activity) {
         bind(activity, activity.getIntent());
     }
 
@@ -32,7 +33,7 @@ public class AutoBundle {
      *
      * @param target target Fragment which has {@link AutoBundleField} annotated fields.
      */
-    public static void bind(Object target) {
+    public static void bind(@NonNull Object target) {
         try {
             dispatcher.bind(target);
         } catch (Exception e) {
@@ -51,7 +52,7 @@ public class AutoBundle {
      * @param target target which has {@link AutoBundleField} annotated fields.
      * @param args source bundle.
      */
-    public static void bind(Object target, Bundle args) {
+    public static void bind(@NonNull Object target, @NonNull Bundle args) {
         try {
             dispatcher.bind(target, args);
         } catch (Exception e) {
@@ -69,7 +70,7 @@ public class AutoBundle {
      * @param target target which has {@link AutoBundleField} annotated fields.
      * @param intent source bundle.
      */
-    public static void bind(Object target, Intent intent) {
+    public static void bind(@NonNull Object target, @NonNull Intent intent) {
         try {
             dispatcher.bind(target, intent);
         } catch (Exception e) {
@@ -88,7 +89,7 @@ public class AutoBundle {
      * @param source source instance which has {@link AutoBundleField} annotated fields.
      * @param args target bundle.
      */
-    public static void pack(Object source, Bundle args) {
+    public static void pack(@NonNull Object source, @NonNull Bundle args) {
         try {
             dispatcher.pack(source, args);
         } catch (Exception e) {
