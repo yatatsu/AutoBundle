@@ -24,8 +24,10 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:25.1.0'
-    compile 'com.android.support:design:25.1.0'
+    compile "com.android.support:support-v4:${supportLibraryVersion}"
+    compile "com.android.support:support-annotations:${supportLibraryVersion}"
+    compile "com.android.support:appcompat-v7:${supportLibraryVersion}"
+    compile "com.android.support:design:${supportLibraryVersion}"
 
     compile project(':autobundle')
     annotationProcessor project(':autobundle-processor')

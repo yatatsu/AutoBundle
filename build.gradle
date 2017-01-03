@@ -2,6 +2,18 @@
 
 apply from: project.file('metadata.gradle')
 
+final androidSdkPath = System.getenv('ANDROID_HOME') ?: {
+    final localProp = new Properties()
+    try {
+        localProp.load(new FileInputStream("${rootProject.projectDir}/local.properties"))
+    } catch (IOException ignore) {}
+    localProp['sdk.dir'] ?: {
+        throw new RuntimeException("Android sdk not found")
+    }()
+}()
+
+final m2Repository = "${androidSdkPath}/extras/android/m2repository"
+
 buildscript {
     repositories {
         jcenter()
@@ -13,6 +25,7 @@ buildscript {
 }
 
 ext {
+    androidJar = fileTree(dir: "${androidSdkPath}/platforms/android-25/", include:  "android.jar")
     sdkVersion = 25
     buildToolsVersion = '25.0.2'
     supportLibraryVersion = '25.1.0'
@@ -20,6 +33,9 @@ ext {
 
 allprojects {
     repositories {
+        maven {
+            url m2Repository
+        }
         jcenter()
     }
 }
