@@ -79,6 +79,12 @@ class BindingFieldHelper {
         if (fieldTypes.containsKey(target)) {
             return fieldTypes.get(target);
         }
+        if (target.isBoxedPrimitive()) {
+            TypeName unboxed = target.unbox();
+            if (fieldTypes.containsKey(unboxed)) {
+                return fieldTypes.get(unboxed);
+            }
+        }
 
         // Array
         TypeMirror parcelable = elements.getTypeElement("android.os.Parcelable").asType();

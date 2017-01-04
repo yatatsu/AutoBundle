@@ -50,6 +50,12 @@ public class ExampleActivity extends AppCompatActivity {
     @AutoBundleField(required = false, converter = ParcelableConverter.class)
     ExampleData exampleData2;
 
+    @AutoBundleField(required = false)
+    Integer integerField;
+
+    @AutoBundleField(required = false)
+    Boolean booleanField;
+
     String getName() {
         return name;
     }

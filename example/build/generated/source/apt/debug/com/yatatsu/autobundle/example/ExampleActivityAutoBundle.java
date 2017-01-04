@@ -3,7 +3,9 @@ package com.yatatsu.autobundle.example;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import java.lang.Boolean;
 import java.lang.CharSequence;
+import java.lang.Integer;
 import java.lang.String;
 import java.util.ArrayList;
 
@@ -50,6 +52,12 @@ public final class ExampleActivityAutoBundle {
       ParcelableConverter exampleData2Converter = new ParcelableConverter();
       target.setExampleData2( (ExampleData) exampleData2Converter.original( source.getParcelable("exampleData2") ) );
     }
+    if (source.containsKey("integerField")) {
+      target.integerField = (Integer) source.getInt("integerField");
+    }
+    if (source.containsKey("booleanField")) {
+      target.booleanField = (Boolean) source.getBoolean("booleanField");
+    }
   }
 
   public static void pack(ExampleActivity source, Bundle args) {
@@ -76,6 +84,12 @@ public final class ExampleActivityAutoBundle {
     if (source.getExampleData2() != null) {
       ParcelableConverter exampleData2Converter = new ParcelableConverter();
       args.putParcelable("exampleData2", exampleData2Converter.convert(source.getExampleData2()) );
+    }
+    if (source.integerField != null) {
+      args.putInt("integerField", source.integerField);
+    }
+    if (source.booleanField != null) {
+      args.putBoolean("booleanField", source.booleanField);
     }
   }
 
@@ -126,6 +140,20 @@ public final class ExampleActivityAutoBundle {
       if (exampleData2 != null) {
         ParcelableConverter exampleData2Converter = new ParcelableConverter();
         args.putParcelable("exampleData2", exampleData2Converter.convert(exampleData2) );
+      }
+      return this;
+    }
+
+    public ExampleActivityAutoBundle.IntentBuilder integerField(Integer integerField) {
+      if (integerField != null) {
+        args.putInt("integerField", integerField);
+      }
+      return this;
+    }
+
+    public ExampleActivityAutoBundle.IntentBuilder booleanField(Boolean booleanField) {
+      if (booleanField != null) {
+        args.putBoolean("booleanField", booleanField);
       }
       return this;
     }
