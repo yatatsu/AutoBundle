@@ -2,6 +2,7 @@ package com.yatatsu.autobundle;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import com.yatatsu.autobundle.example.ExampleActivity;
 import com.yatatsu.autobundle.example.ExampleActivityAutoBundle;
 import com.yatatsu.autobundle.example.ExampleBroadcastReceiver;
@@ -13,7 +14,7 @@ import com.yatatsu.autobundle.example.ExampleIntentServiceAutoBundle;
 import java.lang.Object;
 
 public final class AutoBundleBindingDispatcher {
-  public void bind(Object target, Bundle args) {
+  public void bind(@NonNull Object target, @NonNull Bundle args) {
     if (target instanceof ExampleActivity) {
       ExampleActivityAutoBundle.bind((ExampleActivity)target, args);
       return;
@@ -32,7 +33,7 @@ public final class AutoBundleBindingDispatcher {
     }
   }
 
-  public void bind(Object target, Intent intent) {
+  public void bind(@NonNull Object target, @NonNull Intent intent) {
     if (target instanceof ExampleActivity) {
       ExampleActivityAutoBundle.bind((ExampleActivity)target, intent);
       return;
@@ -47,14 +48,14 @@ public final class AutoBundleBindingDispatcher {
     }
   }
 
-  public void bind(Object target) {
+  public void bind(@NonNull Object target) {
     if (target instanceof ExampleFragment) {
       ExampleFragmentAutoBundle.bind((ExampleFragment)target);
       return;
     }
   }
 
-  public void pack(Object target, Bundle args) {
+  public void pack(@NonNull Object target, @NonNull Bundle args) {
     if (target instanceof ExampleActivity) {
       ExampleActivityAutoBundle.pack((ExampleActivity)target, args);
       return;
