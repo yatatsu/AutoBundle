@@ -79,6 +79,12 @@ class BindingFieldHelper {
         if (fieldTypes.containsKey(target)) {
             return fieldTypes.get(target);
         }
+        if (target.isBoxedPrimitive()) {
+            TypeName unboxed = target.unbox();
+            if (fieldTypes.containsKey(unboxed)) {
+                return fieldTypes.get(unboxed);
+            }
+        }
 
         // Array
         TypeMirror parcelable = elements.getTypeElement("android.os.Parcelable").asType();
@@ -139,6 +145,12 @@ class BindingFieldHelper {
         }
 
         return null;
+    }
+
+    static boolean hasNullableAnnotation(Element fieldElement) {
+        return fieldElement.getAnnotationMirrors().stream()
+                .map(am -> am.getAnnotationType().asElement())
+                .anyMatch(e -> e.getSimpleName().toString().equals("Nullable"));
     }
 
     static List<ClassName> getAnnotationsForField(Element fieldElement) {
