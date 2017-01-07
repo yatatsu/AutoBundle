@@ -40,7 +40,8 @@ class AutoBundleBindingField {
                            String setterName) {
         this.fieldName = element.toString();
         this.argKey = annotation.key().length() > 0 ? annotation.key() : this.fieldName;
-        this.required = annotation.required();
+        // @Nullable makes `required` to false
+        this.required = annotation.required() && !BindingFieldHelper.hasNullableAnnotation(element);
         this.argType = TypeName.get(element.asType());
         this.getterName = getterName;
         this.setterName = setterName;

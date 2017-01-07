@@ -11,6 +11,8 @@ import com.yatatsu.autobundle.example.ExampleFragment;
 import com.yatatsu.autobundle.example.ExampleFragmentAutoBundle;
 import com.yatatsu.autobundle.example.ExampleIntentService;
 import com.yatatsu.autobundle.example.ExampleIntentServiceAutoBundle;
+import com.yatatsu.autobundle.example.NullableExampleActivity;
+import com.yatatsu.autobundle.example.NullableExampleActivityAutoBundle;
 import java.lang.Object;
 
 public final class AutoBundleBindingDispatcher {
@@ -31,6 +33,10 @@ public final class AutoBundleBindingDispatcher {
       ExampleIntentServiceAutoBundle.bind((ExampleIntentService)target, args);
       return;
     }
+    if (target instanceof NullableExampleActivity) {
+      NullableExampleActivityAutoBundle.bind((NullableExampleActivity)target, args);
+      return;
+    }
   }
 
   public void bind(@NonNull Object target, @NonNull Intent intent) {
@@ -44,6 +50,10 @@ public final class AutoBundleBindingDispatcher {
     }
     if (target instanceof ExampleIntentService) {
       ExampleIntentServiceAutoBundle.bind((ExampleIntentService)target, intent);
+      return;
+    }
+    if (target instanceof NullableExampleActivity) {
+      NullableExampleActivityAutoBundle.bind((NullableExampleActivity)target, intent);
       return;
     }
   }
@@ -70,6 +80,10 @@ public final class AutoBundleBindingDispatcher {
     }
     if (target instanceof ExampleIntentService) {
       ExampleIntentServiceAutoBundle.pack((ExampleIntentService)target, args);
+      return;
+    }
+    if (target instanceof NullableExampleActivity) {
+      NullableExampleActivityAutoBundle.pack((NullableExampleActivity)target, args);
       return;
     }
   }

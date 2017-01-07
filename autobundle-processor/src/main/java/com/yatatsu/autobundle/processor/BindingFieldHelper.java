@@ -147,6 +147,12 @@ class BindingFieldHelper {
         return null;
     }
 
+    static boolean hasNullableAnnotation(Element fieldElement) {
+        return fieldElement.getAnnotationMirrors().stream()
+                .map(am -> am.getAnnotationType().asElement())
+                .anyMatch(e -> e.getSimpleName().toString().equals("Nullable"));
+    }
+
     static List<ClassName> getAnnotationsForField(Element fieldElement) {
         return fieldElement.getAnnotationMirrors().stream()
                 .map(am -> am.getAnnotationType().asElement())
