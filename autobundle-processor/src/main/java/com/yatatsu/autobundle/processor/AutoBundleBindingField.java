@@ -19,7 +19,7 @@ import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 
 
-public class AutoBundleBindingField {
+class AutoBundleBindingField {
 
     private final String fieldName;
     private final String argKey;
@@ -32,12 +32,12 @@ public class AutoBundleBindingField {
     private final String setterName;
     private final List<ClassName> annotations;
 
-    public AutoBundleBindingField(VariableElement element,
-                                  AutoBundleField annotation,
-                                  Elements elementUtils,
-                                  Types typeUtils,
-                                  String getterName,
-                                  String setterName) {
+    AutoBundleBindingField(VariableElement element,
+                           AutoBundleField annotation,
+                           Elements elementUtils,
+                           Types typeUtils,
+                           String getterName,
+                           String setterName) {
         this.fieldName = element.toString();
         this.argKey = annotation.key().length() > 0 ? annotation.key() : this.fieldName;
         this.required = annotation.required();
@@ -77,65 +77,65 @@ public class AutoBundleBindingField {
         }
     }
 
-    public TypeName getArgType() {
+    TypeName getArgType() {
         return argType;
     }
 
-    public String getFieldName() {
+    String getFieldName() {
         return fieldName;
     }
 
-    public String getArgKey() {
+    String getArgKey() {
         return argKey;
     }
 
-    public boolean isRequired() {
+    boolean isRequired() {
         return required;
     }
 
-    public TypeName getConverter() {
+    TypeName getConverter() {
         return converter;
     }
 
-    public boolean hasCustomConverter() {
+    boolean hasCustomConverter() {
         return hasCustomConverter;
     }
 
-    public String getOperationName(String operation) {
+    String getOperationName(String operation) {
         return operation + operationName;
     }
 
-    public String getGetterName() {
+    String getGetterName() {
         return getterName;
     }
 
-    public boolean hasGetter() {
+    boolean hasGetter() {
         return getterName != null && getterName.length() > 0;
     }
 
-    public String getSetterName() {
+    String getSetterName() {
         return setterName;
     }
 
-    public boolean hasSetter() {
+    boolean hasSetter() {
         return setterName != null && setterName.length() > 0;
     }
 
-    public boolean noCast() {
+    boolean noCast() {
         return operationName.equals("ParcelableArrayList") ||
                 operationName.equals("ParcelableArray") ||
                 operationName.equals("SparseParcelableArray");
     }
 
-    public List<ClassName> getAnnotations() {
+    List<ClassName> getAnnotations() {
         return annotations;
     }
 
-    public boolean hasAnnotations() {
+    boolean hasAnnotations() {
         return !annotations.isEmpty();
     }
 
-    static TypeName detectConvertedTypeByTypeElement(TypeElement element) {
+    private static TypeName detectConvertedTypeByTypeElement(TypeElement element) {
         TypeMirror typeMirror = getConverterGenericsTypesByTypeElement(element).get(1);
         TypeName typeName = TypeName.get(typeMirror);
         try {
@@ -144,7 +144,7 @@ public class AutoBundleBindingField {
         return typeName;
     }
 
-    static List<? extends TypeMirror> getConverterGenericsTypesByTypeElement(TypeElement element) {
+    private static List<? extends TypeMirror> getConverterGenericsTypesByTypeElement(TypeElement element) {
         TypeElement targetType = element;
         while (targetType != null) {
             if (!targetType.getInterfaces().isEmpty()) {
@@ -167,7 +167,7 @@ public class AutoBundleBindingField {
         throw new UnsupportedOperationException("Not found convert type: " + element.toString());
     }
 
-    static TypeName detectConvertedTypeNameByClass(Class clazz) {
+    private static TypeName detectConvertedTypeNameByClass(Class clazz) {
         Type converted = getConverterGenericsTypesByClass(clazz)[1];
         TypeName typeName = TypeName.get(converted);
         try {
@@ -176,7 +176,7 @@ public class AutoBundleBindingField {
         return typeName;
     }
 
-    static Type[] getConverterGenericsTypesByClass(Class clazz) {
+    private static Type[] getConverterGenericsTypesByClass(Class clazz) {
         Type type = AutoBundleConverter.class;
         Class targetClass = clazz;
         while (targetClass != null) {

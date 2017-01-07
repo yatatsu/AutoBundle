@@ -6,7 +6,7 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
 
 
-public class ModifierHelper {
+class ModifierHelper {
     static final int PRIVATE   = -1;
     static final int DEFAULT   = 0;
     static final int PROTECTED = 1;
