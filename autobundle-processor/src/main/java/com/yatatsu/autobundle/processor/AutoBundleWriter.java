@@ -11,6 +11,7 @@ import com.squareup.javapoet.TypeSpec;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.processing.Filer;
@@ -38,12 +39,14 @@ class AutoBundleWriter {
     }
 
     void write(Filer filer) throws IOException {
-        TypeSpec clazz = TypeSpec.classBuilder(bindingClass.getHelperClassName())
+        TypeSpec.Builder clazzBuilder = TypeSpec.classBuilder(bindingClass.getHelperClassName())
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addType(createBuilderClass(bindingClass))
-                .addMethod(createCallBuilderMethod(bindingClass))
-                .addMethod(createBindMethod(bindingClass))
-                .addMethod(createBindWithSourceMethod(bindingClass))
+                .addMethod(createCallBuilderMethod(bindingClass));
+        if (bindingClass.getBuilderType() != AutoBundleBindingClass.BuilderType.Any) {
+            clazzBuilder.addMethod(createBindMethod(bindingClass));
+        }
+        TypeSpec clazz = clazzBuilder.addMethod(createBindWithSourceMethod(bindingClass))
                 .addMethod(createPackMethod(bindingClass))
                 .build();
         JavaFile.builder(bindingClass.getPackageName(), clazz)
@@ -179,10 +182,13 @@ class AutoBundleWriter {
 
     private static List<MethodSpec> createBuildMethods(AutoBundleBindingClass target,
                                                        String fieldName) {
-        if (target.getBuilderType() == AutoBundleBindingClass.BuilderType.Fragment) {
-            return createFragmentBuildMethods(target, fieldName);
-        } else {
-            return createIntentBuildMethods(target, fieldName);
+        switch (target.getBuilderType()) {
+            case Fragment:
+                return createFragmentBuildMethods(target, fieldName);
+            case Intent:
+                return createIntentBuildMethods(target, fieldName);
+            default:
+                return Collections.emptyList();
         }
     }
 

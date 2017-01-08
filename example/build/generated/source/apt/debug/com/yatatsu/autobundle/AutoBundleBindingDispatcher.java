@@ -6,6 +6,8 @@ import com.yatatsu.autobundle.example.ExampleActivity;
 import com.yatatsu.autobundle.example.ExampleActivityAutoBundle;
 import com.yatatsu.autobundle.example.ExampleBroadcastReceiver;
 import com.yatatsu.autobundle.example.ExampleBroadcastReceiverAutoBundle;
+import com.yatatsu.autobundle.example.ExampleBundleDelegate;
+import com.yatatsu.autobundle.example.ExampleBundleDelegateAutoBundle;
 import com.yatatsu.autobundle.example.ExampleFragment;
 import com.yatatsu.autobundle.example.ExampleFragmentAutoBundle;
 import com.yatatsu.autobundle.example.ExampleIntentService;
@@ -22,6 +24,10 @@ public final class AutoBundleBindingDispatcher {
     }
     if (target instanceof ExampleBroadcastReceiver) {
       ExampleBroadcastReceiverAutoBundle.bind((ExampleBroadcastReceiver)target, args);
+      return;
+    }
+    if (target instanceof ExampleBundleDelegate) {
+      ExampleBundleDelegateAutoBundle.bind((ExampleBundleDelegate)target, args);
       return;
     }
     if (target instanceof ExampleFragment) {
@@ -52,6 +58,10 @@ public final class AutoBundleBindingDispatcher {
     }
     if (target instanceof ExampleBroadcastReceiver) {
       ExampleBroadcastReceiverAutoBundle.pack((ExampleBroadcastReceiver)target, args);
+      return;
+    }
+    if (target instanceof ExampleBundleDelegate) {
+      ExampleBundleDelegateAutoBundle.pack((ExampleBundleDelegate)target, args);
       return;
     }
     if (target instanceof ExampleFragment) {

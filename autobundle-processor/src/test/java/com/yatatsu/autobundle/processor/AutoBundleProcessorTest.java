@@ -83,19 +83,6 @@ public class AutoBundleProcessorTest {
     }
 
     @Test
-    public void testWrongSuperClass() throws Exception {
-        JavaFileObject source = JavaFileObjects.forResource("UnsupportedSubtype.java");
-
-        assert_().about(javaSource())
-                .that(source)
-                .processedWith(new AutoBundleProcessor())
-                .failsToCompile()
-                .withErrorCount(1)
-                .withErrorContaining("AutoBundle target class must be subtype of" +
-                        " 'Fragment', 'Activity', 'Receiver' or 'Service'.");
-    }
-
-    @Test
     public void testPrivateAnnotatedGetter() throws Exception {
         JavaFileObject source = JavaFileObjects.forResource("PrivateAnnotatedGetter.java");
 
@@ -129,15 +116,6 @@ public class AutoBundleProcessorTest {
                 .failsToCompile()
                 .withErrorCount(1)
                 .withErrorContaining(" does not support private field without setter/getter.");
-    }
-
-    private void assertJavaSource(JavaFileObject source, JavaFileObject expected) {
-        assert_().about(javaSource())
-                .that(source)
-                .processedWith(new AutoBundleProcessor())
-                .compilesWithoutError()
-                .and()
-                .generatesSources(expected);
     }
 
 }

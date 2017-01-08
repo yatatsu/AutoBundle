@@ -20,7 +20,7 @@ class AutoBundleBindingClass {
     private static final String SERVICE = "android.app.Service";
 
     enum BuilderType {
-        Intent, Fragment, None;
+        Intent, Fragment, Any;
 
         public static BuilderType byTypeName(Element element,
                                              Elements elementUtils,
@@ -44,7 +44,7 @@ class AutoBundleBindingClass {
                     typeUtils.isSubtype(targetType, serviceType)) {
                 return Intent;
             }
-            return None;
+            return Any;
         }
     }
 
@@ -63,7 +63,6 @@ class AutoBundleBindingClass {
         this.packageName = BindingDetector.getPackageName(elementsUtils, typeElement);
         this.className = BindingDetector.getClassName(typeElement, this.packageName);
         this.builderType = BuilderType.byTypeName(typeElement, elementsUtils, typeUtils);
-        Validator.checkAutoBundleTargetClass(builderType);
         this.requiredArgs = BindingDetector
                 .findArgFields(typeElement, true, elementsUtils, typeUtils);
         this.notRequiredArgs = BindingDetector
