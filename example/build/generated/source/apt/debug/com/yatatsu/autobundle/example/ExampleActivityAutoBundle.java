@@ -12,9 +12,9 @@ import java.lang.String;
 import java.util.ArrayList;
 
 public final class ExampleActivityAutoBundle {
-  public static @NonNull ExampleActivityAutoBundle.IntentBuilder createIntentBuilder(@ExampleActivity.IntType int type2,
+  public static @NonNull ExampleActivityAutoBundle.Builder builder(@ExampleActivity.IntType int type2,
       @NonNull String name) {
-    return new ExampleActivityAutoBundle.IntentBuilder(type2, name);
+    return new ExampleActivityAutoBundle.Builder(type2, name);
   }
 
   public static void bind(@NonNull ExampleActivity target, @NonNull Intent intent) {
@@ -99,35 +99,35 @@ public final class ExampleActivityAutoBundle {
     args.putInt("intOption", source.intOption);
   }
 
-  public static final class IntentBuilder {
+  public static final class Builder {
     final Bundle args;
 
-    public IntentBuilder(@ExampleActivity.IntType int type2, @NonNull String name) {
+    public Builder(@ExampleActivity.IntType int type2, @NonNull String name) {
       this.args = new Bundle();
       this.args.putInt("type2", type2);
       this.args.putString("name", name);
     }
 
-    public @NonNull ExampleActivityAutoBundle.IntentBuilder type1(@ExampleActivity.IntType int type1) {
+    public @NonNull ExampleActivityAutoBundle.Builder type1(@ExampleActivity.IntType int type1) {
       args.putInt("type1", type1);
       return this;
     }
 
-    public @NonNull ExampleActivityAutoBundle.IntentBuilder optionalName(@Nullable String optionalName) {
+    public @NonNull ExampleActivityAutoBundle.Builder optionalName(@Nullable String optionalName) {
       if (optionalName != null) {
         args.putString("optionalName", optionalName);
       }
       return this;
     }
 
-    public @NonNull ExampleActivityAutoBundle.IntentBuilder fooList(@Nullable ArrayList<CharSequence> fooList) {
+    public @NonNull ExampleActivityAutoBundle.Builder fooList(@Nullable ArrayList<CharSequence> fooList) {
       if (fooList != null) {
         args.putCharSequenceArrayList("fooList", fooList);
       }
       return this;
     }
 
-    public @NonNull ExampleActivityAutoBundle.IntentBuilder exampleData(@Nullable ExampleData exampleData) {
+    public @NonNull ExampleActivityAutoBundle.Builder exampleData(@Nullable ExampleData exampleData) {
       if (exampleData != null) {
         ParcelableConverter exampleDataConverter = new ParcelableConverter();
         args.putParcelable("exampleData", exampleDataConverter.convert(exampleData) );
@@ -135,14 +135,14 @@ public final class ExampleActivityAutoBundle {
       return this;
     }
 
-    public @NonNull ExampleActivityAutoBundle.IntentBuilder persons(@Nullable ArrayList<Person> persons) {
+    public @NonNull ExampleActivityAutoBundle.Builder persons(@Nullable ArrayList<Person> persons) {
       if (persons != null) {
         args.putParcelableArrayList("persons", persons);
       }
       return this;
     }
 
-    public @NonNull ExampleActivityAutoBundle.IntentBuilder exampleData2(@Nullable ExampleData exampleData2) {
+    public @NonNull ExampleActivityAutoBundle.Builder exampleData2(@Nullable ExampleData exampleData2) {
       if (exampleData2 != null) {
         ParcelableConverter exampleData2Converter = new ParcelableConverter();
         args.putParcelable("exampleData2", exampleData2Converter.convert(exampleData2) );
@@ -150,21 +150,21 @@ public final class ExampleActivityAutoBundle {
       return this;
     }
 
-    public @NonNull ExampleActivityAutoBundle.IntentBuilder integerField(@Nullable Integer integerField) {
+    public @NonNull ExampleActivityAutoBundle.Builder integerField(@Nullable Integer integerField) {
       if (integerField != null) {
         args.putInt("integerField", integerField);
       }
       return this;
     }
 
-    public @NonNull ExampleActivityAutoBundle.IntentBuilder booleanField(@Nullable Boolean booleanField) {
+    public @NonNull ExampleActivityAutoBundle.Builder booleanField(@Nullable Boolean booleanField) {
       if (booleanField != null) {
         args.putBoolean("booleanField", booleanField);
       }
       return this;
     }
 
-    public @NonNull ExampleActivityAutoBundle.IntentBuilder intOption(int intOption) {
+    public @NonNull ExampleActivityAutoBundle.Builder intOption(int intOption) {
       args.putInt("intOption", intOption);
       return this;
     }

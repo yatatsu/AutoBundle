@@ -6,9 +6,9 @@ import java.lang.String;
 import java.util.Date;
 
 public final class ExampleFragmentAutoBundle {
-  public static @NonNull ExampleFragmentAutoBundle.FragmentBuilder createFragmentBuilder(@NonNull String title,
+  public static @NonNull ExampleFragmentAutoBundle.Builder builder(@NonNull String title,
       @NonNull Date targetDate) {
-    return new ExampleFragmentAutoBundle.FragmentBuilder(title, targetDate);
+    return new ExampleFragmentAutoBundle.Builder(title, targetDate);
   }
 
   public static void bind(@NonNull ExampleFragment target) {
@@ -45,10 +45,10 @@ public final class ExampleFragmentAutoBundle {
     }
   }
 
-  public static final class FragmentBuilder {
+  public static final class Builder {
     final Bundle args;
 
-    public FragmentBuilder(@NonNull String title, @NonNull Date targetDate) {
+    public Builder(@NonNull String title, @NonNull Date targetDate) {
       this.args = new Bundle();
       this.args.putString("title", title);
       ExampleFragment.DateArgConverter targetDateConverter = new ExampleFragment.DateArgConverter();

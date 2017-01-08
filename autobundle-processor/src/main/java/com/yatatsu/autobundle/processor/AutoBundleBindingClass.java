@@ -94,10 +94,6 @@ class AutoBundleBindingClass {
         return notRequiredArgs;
     }
 
-    String getBuilderClassName() {
-        return builderType.name() + "Builder";
-    }
-
     String getHelperClassName() {
         return className + "AutoBundle";
     }

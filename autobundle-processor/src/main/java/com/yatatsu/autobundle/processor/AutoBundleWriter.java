@@ -31,6 +31,8 @@ class AutoBundleWriter {
     private static final AnnotationSpec ANNOTATION_NULLABLE
             = AnnotationSpec.builder(ClassName.get("android.support.annotation", "Nullable")).build();
 
+    private static final String CLASS_NAME_BUILDER = "Builder";
+
     AutoBundleWriter(AutoBundleBindingClass target) {
         this.bindingClass = target;
     }
@@ -50,13 +52,13 @@ class AutoBundleWriter {
     }
 
     private static ClassName getBuilderClassName(AutoBundleBindingClass target) {
-        return ClassName.get(target.getHelperClassName(), target.getBuilderClassName());
+        return ClassName.get(target.getHelperClassName(), CLASS_NAME_BUILDER);
     }
 
     private static MethodSpec createCallBuilderMethod(AutoBundleBindingClass target) {
         ClassName builderClass = getBuilderClassName(target);
         MethodSpec.Builder builder =
-                MethodSpec.methodBuilder("create" + target.getBuilderType().name() + "Builder")
+                MethodSpec.methodBuilder("builder")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .returns(builderClass.annotated(ANNOTATION_NONNULL))
                 .addCode("return new $T(", builderClass);
@@ -83,7 +85,7 @@ class AutoBundleWriter {
     }
 
     private static TypeSpec createBuilderClass(AutoBundleBindingClass target) {
-        return TypeSpec.classBuilder(target.getBuilderClassName())
+        return TypeSpec.classBuilder(CLASS_NAME_BUILDER)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL, Modifier.STATIC)
                 .addField(createField(FIELD_BUNDLE_NAME))
                 .addMethod(createBuilderConstructor(target, FIELD_BUNDLE_NAME))

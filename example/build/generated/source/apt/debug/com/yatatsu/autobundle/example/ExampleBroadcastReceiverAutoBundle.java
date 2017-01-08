@@ -7,8 +7,8 @@ import android.support.annotation.NonNull;
 import java.lang.String;
 
 public final class ExampleBroadcastReceiverAutoBundle {
-  public static @NonNull ExampleBroadcastReceiverAutoBundle.IntentBuilder createIntentBuilder(@NonNull String message) {
-    return new ExampleBroadcastReceiverAutoBundle.IntentBuilder(message);
+  public static @NonNull ExampleBroadcastReceiverAutoBundle.Builder builder(@NonNull String message) {
+    return new ExampleBroadcastReceiverAutoBundle.Builder(message);
   }
 
   public static void bind(@NonNull ExampleBroadcastReceiver target, @NonNull Intent intent) {
@@ -33,10 +33,10 @@ public final class ExampleBroadcastReceiverAutoBundle {
     }
   }
 
-  public static final class IntentBuilder {
+  public static final class Builder {
     final Bundle args;
 
-    public IntentBuilder(@NonNull String message) {
+    public Builder(@NonNull String message) {
       this.args = new Bundle();
       this.args.putString("message", message);
     }

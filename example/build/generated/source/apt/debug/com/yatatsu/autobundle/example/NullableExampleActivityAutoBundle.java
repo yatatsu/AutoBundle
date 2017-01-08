@@ -9,8 +9,8 @@ import java.lang.Integer;
 import java.lang.String;
 
 public final class NullableExampleActivityAutoBundle {
-  public static @NonNull NullableExampleActivityAutoBundle.IntentBuilder createIntentBuilder() {
-    return new NullableExampleActivityAutoBundle.IntentBuilder();
+  public static @NonNull NullableExampleActivityAutoBundle.Builder builder() {
+    return new NullableExampleActivityAutoBundle.Builder();
   }
 
   public static void bind(@NonNull NullableExampleActivity target, @NonNull Intent intent) {
@@ -37,21 +37,21 @@ public final class NullableExampleActivityAutoBundle {
     }
   }
 
-  public static final class IntentBuilder {
+  public static final class Builder {
     final Bundle args;
 
-    public IntentBuilder() {
+    public Builder() {
       this.args = new Bundle();
     }
 
-    public @NonNull NullableExampleActivityAutoBundle.IntentBuilder name(@Nullable String name) {
+    public @NonNull NullableExampleActivityAutoBundle.Builder name(@Nullable String name) {
       if (name != null) {
         args.putString("name", name);
       }
       return this;
     }
 
-    public @NonNull NullableExampleActivityAutoBundle.IntentBuilder number(@Nullable Integer number) {
+    public @NonNull NullableExampleActivityAutoBundle.Builder number(@Nullable Integer number) {
       if (number != null) {
         args.putInt("number", number);
       }
