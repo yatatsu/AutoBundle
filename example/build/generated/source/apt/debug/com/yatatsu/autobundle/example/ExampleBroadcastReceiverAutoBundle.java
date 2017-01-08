@@ -34,7 +34,7 @@ public final class ExampleBroadcastReceiverAutoBundle {
   }
 
   public static final class Builder {
-    final Bundle args;
+    private final Bundle args;
 
     public Builder(@NonNull String message) {
       this.args = new Bundle();
@@ -50,6 +50,10 @@ public final class ExampleBroadcastReceiverAutoBundle {
     public @NonNull Intent build(@NonNull Intent intent) {
       intent.putExtras(args);
       return intent;
+    }
+
+    public @NonNull Bundle bundle() {
+      return args;
     }
   }
 }

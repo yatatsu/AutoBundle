@@ -100,7 +100,7 @@ public final class ExampleActivityAutoBundle {
   }
 
   public static final class Builder {
-    final Bundle args;
+    private final Bundle args;
 
     public Builder(@ExampleActivity.IntType int type2, @NonNull String name) {
       this.args = new Bundle();
@@ -178,6 +178,10 @@ public final class ExampleActivityAutoBundle {
     public @NonNull Intent build(@NonNull Intent intent) {
       intent.putExtras(args);
       return intent;
+    }
+
+    public @NonNull Bundle bundle() {
+      return args;
     }
   }
 }

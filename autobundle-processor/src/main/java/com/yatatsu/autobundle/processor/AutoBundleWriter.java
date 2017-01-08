@@ -91,6 +91,7 @@ class AutoBundleWriter {
                 .addMethod(createBuilderConstructor(target, FIELD_BUNDLE_NAME))
                 .addMethods(createBuilderMethods(target, FIELD_BUNDLE_NAME))
                 .addMethods(createBuildMethods(target, FIELD_BUNDLE_NAME))
+                .addMethod(createBuildBundleMethod(FIELD_BUNDLE_NAME))
                 .build();
     }
 
@@ -131,7 +132,7 @@ class AutoBundleWriter {
     }
 
     private static FieldSpec createField(String fieldName) {
-        return FieldSpec.builder(CLASS_BUNDLE, fieldName, Modifier.FINAL).build();
+        return FieldSpec.builder(CLASS_BUNDLE, fieldName, Modifier.FINAL, Modifier.PRIVATE).build();
     }
 
     private static List<MethodSpec> createBuilderMethods(AutoBundleBindingClass target,
@@ -233,6 +234,14 @@ class AutoBundleWriter {
         methodSpecs.add(buildWithContext);
         methodSpecs.add(buildWithIntent);
         return methodSpecs;
+    }
+
+    private static MethodSpec createBuildBundleMethod(String fieldName) {
+        return MethodSpec.methodBuilder("bundle")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(CLASS_BUNDLE.annotated(ANNOTATION_NONNULL))
+                .addStatement("return $N", fieldName)
+                .build();
     }
 
     private static MethodSpec createBindWithSourceMethod(AutoBundleBindingClass target) {

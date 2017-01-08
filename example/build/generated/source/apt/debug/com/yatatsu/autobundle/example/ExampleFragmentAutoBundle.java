@@ -46,7 +46,7 @@ public final class ExampleFragmentAutoBundle {
   }
 
   public static final class Builder {
-    final Bundle args;
+    private final Bundle args;
 
     public Builder(@NonNull String title, @NonNull Date targetDate) {
       this.args = new Bundle();
@@ -64,6 +64,10 @@ public final class ExampleFragmentAutoBundle {
     public @NonNull ExampleFragment build(@NonNull ExampleFragment fragment) {
       fragment.setArguments(args);
       return fragment;
+    }
+
+    public @NonNull Bundle bundle() {
+      return args;
     }
   }
 }

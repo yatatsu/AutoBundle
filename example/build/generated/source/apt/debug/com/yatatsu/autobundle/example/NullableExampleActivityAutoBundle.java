@@ -38,7 +38,7 @@ public final class NullableExampleActivityAutoBundle {
   }
 
   public static final class Builder {
-    final Bundle args;
+    private final Bundle args;
 
     public Builder() {
       this.args = new Bundle();
@@ -67,6 +67,10 @@ public final class NullableExampleActivityAutoBundle {
     public @NonNull Intent build(@NonNull Intent intent) {
       intent.putExtras(args);
       return intent;
+    }
+
+    public @NonNull Bundle bundle() {
+      return args;
     }
   }
 }
