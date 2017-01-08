@@ -3,20 +3,21 @@ package com.yatatsu.autobundle.example;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import java.lang.String;
 
 public final class ExampleBroadcastReceiverAutoBundle {
-  public static ExampleBroadcastReceiverAutoBundle.IntentBuilder createIntentBuilder(String message) {
-    return new ExampleBroadcastReceiverAutoBundle.IntentBuilder(message);
+  public static @NonNull ExampleBroadcastReceiverAutoBundle.Builder builder(@NonNull String message) {
+    return new ExampleBroadcastReceiverAutoBundle.Builder(message);
   }
 
-  public static void bind(ExampleBroadcastReceiver target, Intent intent) {
+  public static void bind(@NonNull ExampleBroadcastReceiver target, @NonNull Intent intent) {
     if (intent.getExtras() != null) {
       bind(target, intent.getExtras());
     }
   }
 
-  public static void bind(ExampleBroadcastReceiver target, Bundle source) {
+  public static void bind(@NonNull ExampleBroadcastReceiver target, @NonNull Bundle source) {
     if (source.containsKey("message")) {
       target.message = (String) source.getString("message");
     } else {
@@ -24,7 +25,7 @@ public final class ExampleBroadcastReceiverAutoBundle {
     }
   }
 
-  public static void pack(ExampleBroadcastReceiver source, Bundle args) {
+  public static void pack(@NonNull ExampleBroadcastReceiver source, @NonNull Bundle args) {
     if (source.message != null) {
       args.putString("message", source.message);
     } else {
@@ -32,23 +33,27 @@ public final class ExampleBroadcastReceiverAutoBundle {
     }
   }
 
-  public static final class IntentBuilder {
-    final Bundle args;
+  public static final class Builder {
+    private final Bundle args;
 
-    public IntentBuilder(String message) {
+    public Builder(@NonNull String message) {
       this.args = new Bundle();
       this.args.putString("message", message);
     }
 
-    public Intent build(Context context) {
+    public @NonNull Intent build(@NonNull Context context) {
       Intent intent = new Intent(context, ExampleBroadcastReceiver.class);
       intent.putExtras(args);
       return intent;
     }
 
-    public Intent build(Intent intent) {
+    public @NonNull Intent build(@NonNull Intent intent) {
       intent.putExtras(args);
       return intent;
+    }
+
+    public @NonNull Bundle bundle() {
+      return args;
     }
   }
 }

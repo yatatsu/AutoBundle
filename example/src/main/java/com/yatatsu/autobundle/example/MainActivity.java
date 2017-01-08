@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         messages.add("this is");
         messages.add("messages");
         Intent intent = ExampleActivityAutoBundle
-                .createIntentBuilder(ExampleActivity.TYPE_A, "hello, example!")
+                .builder(ExampleActivity.TYPE_A, "hello, example!")
                 .optionalName("optionalName")
                 .fooList(messages)
                 .exampleData(new ExampleData(100, "one hundred"))
@@ -65,20 +65,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     void startExampleFragment() {
         ExampleFragment fragment = ExampleFragmentAutoBundle
-                .createFragmentBuilder("hello, example!", new Date())
+                .builder("hello, example!", new Date())
                 .build();
         fragment.show(getSupportFragmentManager(), "ExampleFragment");
     }
 
     void startExampleReceiver() {
         startService(ExampleIntentServiceAutoBundle
-                .createIntentBuilder("hello, example!")
+                .builder("hello, example!")
                 .build(this));
     }
 
     void startExampleService() {
         sendBroadcast(ExampleBroadcastReceiverAutoBundle
-                .createIntentBuilder("hello, example!")
+                .builder("hello, example!")
                 .build(this));
     }
 }

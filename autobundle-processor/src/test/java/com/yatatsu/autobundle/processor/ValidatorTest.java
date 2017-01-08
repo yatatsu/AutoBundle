@@ -16,14 +16,6 @@ public class ValidatorTest {
     public ExpectedException expectedException = ExpectedException.none();
 
     @Test
-    public void invalidBuilderType() {
-        expectedException.expect(ProcessingException.class);
-        expectedException.expectMessage("AutoBundle target class must be subtype of" +
-                " 'Fragment', 'Activity', 'Receiver' or 'Service'.");
-        Validator.checkAutoBundleTargetClass(AutoBundleBindingClass.BuilderType.None);
-    }
-
-    @Test
     public void invalidSupportedClass() {
         expectedException.expect(ProcessingException.class);
         expectedException.expectMessage(" is not supported type.");

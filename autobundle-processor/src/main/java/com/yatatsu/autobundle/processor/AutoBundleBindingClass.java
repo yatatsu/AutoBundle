@@ -12,15 +12,15 @@ import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 
 
-public class AutoBundleBindingClass {
+class AutoBundleBindingClass {
     private static final String FRAGMENT = "android.app.Fragment";
     private static final String SUPPORT_FRAGMENT = "android.support.v4.app.Fragment";
     private static final String ACTIVITY = "android.app.Activity";
     private static final String BROADCAST_RECEIVER = "android.content.BroadcastReceiver";
     private static final String SERVICE = "android.app.Service";
 
-    public enum BuilderType {
-        Intent, Fragment, None;
+    enum BuilderType {
+        Intent, Fragment, Any;
 
         public static BuilderType byTypeName(Element element,
                                              Elements elementUtils,
@@ -44,7 +44,7 @@ public class AutoBundleBindingClass {
                     typeUtils.isSubtype(targetType, serviceType)) {
                 return Intent;
             }
-            return None;
+            return Any;
         }
     }
 
@@ -55,15 +55,14 @@ public class AutoBundleBindingClass {
     private final List<AutoBundleBindingField> requiredArgs;
     private final List<AutoBundleBindingField> notRequiredArgs;
 
-    public AutoBundleBindingClass(TypeElement typeElement,
-                                  Elements elementsUtils,
-                                  Types typeUtils) {
+    AutoBundleBindingClass(TypeElement typeElement,
+                           Elements elementsUtils,
+                           Types typeUtils) {
         this.targetType = ClassName.get(typeElement);
         Validator.checkAutoBundleTargetModifier(typeElement);
         this.packageName = BindingDetector.getPackageName(elementsUtils, typeElement);
         this.className = BindingDetector.getClassName(typeElement, this.packageName);
         this.builderType = BuilderType.byTypeName(typeElement, elementsUtils, typeUtils);
-        Validator.checkAutoBundleTargetClass(builderType);
         this.requiredArgs = BindingDetector
                 .findArgFields(typeElement, true, elementsUtils, typeUtils);
         this.notRequiredArgs = BindingDetector
@@ -74,31 +73,27 @@ public class AutoBundleBindingClass {
         Validator.checkDuplicatedArgsKey(args);
     }
 
-    public ClassName getTargetType() {
+    ClassName getTargetType() {
         return targetType;
     }
 
-    public String getPackageName() {
+    String getPackageName() {
         return packageName;
     }
 
-    public BuilderType getBuilderType() {
+    BuilderType getBuilderType() {
         return builderType;
     }
 
-    public List<AutoBundleBindingField> getRequiredArgs() {
+    List<AutoBundleBindingField> getRequiredArgs() {
         return requiredArgs;
     }
 
-    public List<AutoBundleBindingField> getNotRequiredArgs() {
+    List<AutoBundleBindingField> getNotRequiredArgs() {
         return notRequiredArgs;
     }
 
-    public String getBuilderClassName() {
-        return builderType.name() + "Builder";
-    }
-
-    public String getHelperClassName() {
+    String getHelperClassName() {
         return className + "AutoBundle";
     }
 }

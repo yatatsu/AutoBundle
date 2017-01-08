@@ -3,23 +3,27 @@ package com.yatatsu.autobundle.example;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import java.lang.Boolean;
 import java.lang.CharSequence;
+import java.lang.Integer;
 import java.lang.String;
 import java.util.ArrayList;
 
 public final class ExampleActivityAutoBundle {
-  public static ExampleActivityAutoBundle.IntentBuilder createIntentBuilder(@ExampleActivity.IntType int type2,
-      String name) {
-    return new ExampleActivityAutoBundle.IntentBuilder(type2,name);
+  public static @NonNull ExampleActivityAutoBundle.Builder builder(@ExampleActivity.IntType int type2,
+      @NonNull String name) {
+    return new ExampleActivityAutoBundle.Builder(type2, name);
   }
 
-  public static void bind(ExampleActivity target, Intent intent) {
+  public static void bind(@NonNull ExampleActivity target, @NonNull Intent intent) {
     if (intent.getExtras() != null) {
       bind(target, intent.getExtras());
     }
   }
 
-  public static void bind(ExampleActivity target, Bundle source) {
+  public static void bind(@NonNull ExampleActivity target, @NonNull Bundle source) {
     if (source.containsKey("type2")) {
       target.type2 = (int) source.getInt("type2");
     } else {
@@ -50,9 +54,18 @@ public final class ExampleActivityAutoBundle {
       ParcelableConverter exampleData2Converter = new ParcelableConverter();
       target.setExampleData2( (ExampleData) exampleData2Converter.original( source.getParcelable("exampleData2") ) );
     }
+    if (source.containsKey("integerField")) {
+      target.integerField = (Integer) source.getInt("integerField");
+    }
+    if (source.containsKey("booleanField")) {
+      target.booleanField = (Boolean) source.getBoolean("booleanField");
+    }
+    if (source.containsKey("intOption")) {
+      target.intOption = (int) source.getInt("intOption");
+    }
   }
 
-  public static void pack(ExampleActivity source, Bundle args) {
+  public static void pack(@NonNull ExampleActivity source, @NonNull Bundle args) {
     args.putInt("type2", source.type2);
     if (source.getName() != null) {
       args.putString("name", source.getName());
@@ -77,37 +90,44 @@ public final class ExampleActivityAutoBundle {
       ParcelableConverter exampleData2Converter = new ParcelableConverter();
       args.putParcelable("exampleData2", exampleData2Converter.convert(source.getExampleData2()) );
     }
+    if (source.integerField != null) {
+      args.putInt("integerField", source.integerField);
+    }
+    if (source.booleanField != null) {
+      args.putBoolean("booleanField", source.booleanField);
+    }
+    args.putInt("intOption", source.intOption);
   }
 
-  public static final class IntentBuilder {
-    final Bundle args;
+  public static final class Builder {
+    private final Bundle args;
 
-    public IntentBuilder(@ExampleActivity.IntType int type2, String name) {
+    public Builder(@ExampleActivity.IntType int type2, @NonNull String name) {
       this.args = new Bundle();
       this.args.putInt("type2", type2);
       this.args.putString("name", name);
     }
 
-    public ExampleActivityAutoBundle.IntentBuilder type1(@ExampleActivity.IntType int type1) {
+    public @NonNull ExampleActivityAutoBundle.Builder type1(@ExampleActivity.IntType int type1) {
       args.putInt("type1", type1);
       return this;
     }
 
-    public ExampleActivityAutoBundle.IntentBuilder optionalName(String optionalName) {
+    public @NonNull ExampleActivityAutoBundle.Builder optionalName(@Nullable String optionalName) {
       if (optionalName != null) {
         args.putString("optionalName", optionalName);
       }
       return this;
     }
 
-    public ExampleActivityAutoBundle.IntentBuilder fooList(ArrayList<CharSequence> fooList) {
+    public @NonNull ExampleActivityAutoBundle.Builder fooList(@Nullable ArrayList<CharSequence> fooList) {
       if (fooList != null) {
         args.putCharSequenceArrayList("fooList", fooList);
       }
       return this;
     }
 
-    public ExampleActivityAutoBundle.IntentBuilder exampleData(ExampleData exampleData) {
+    public @NonNull ExampleActivityAutoBundle.Builder exampleData(@Nullable ExampleData exampleData) {
       if (exampleData != null) {
         ParcelableConverter exampleDataConverter = new ParcelableConverter();
         args.putParcelable("exampleData", exampleDataConverter.convert(exampleData) );
@@ -115,14 +135,14 @@ public final class ExampleActivityAutoBundle {
       return this;
     }
 
-    public ExampleActivityAutoBundle.IntentBuilder persons(ArrayList<Person> persons) {
+    public @NonNull ExampleActivityAutoBundle.Builder persons(@Nullable ArrayList<Person> persons) {
       if (persons != null) {
         args.putParcelableArrayList("persons", persons);
       }
       return this;
     }
 
-    public ExampleActivityAutoBundle.IntentBuilder exampleData2(ExampleData exampleData2) {
+    public @NonNull ExampleActivityAutoBundle.Builder exampleData2(@Nullable ExampleData exampleData2) {
       if (exampleData2 != null) {
         ParcelableConverter exampleData2Converter = new ParcelableConverter();
         args.putParcelable("exampleData2", exampleData2Converter.convert(exampleData2) );
@@ -130,15 +150,38 @@ public final class ExampleActivityAutoBundle {
       return this;
     }
 
-    public Intent build(Context context) {
+    public @NonNull ExampleActivityAutoBundle.Builder integerField(@Nullable Integer integerField) {
+      if (integerField != null) {
+        args.putInt("integerField", integerField);
+      }
+      return this;
+    }
+
+    public @NonNull ExampleActivityAutoBundle.Builder booleanField(@Nullable Boolean booleanField) {
+      if (booleanField != null) {
+        args.putBoolean("booleanField", booleanField);
+      }
+      return this;
+    }
+
+    public @NonNull ExampleActivityAutoBundle.Builder intOption(int intOption) {
+      args.putInt("intOption", intOption);
+      return this;
+    }
+
+    public @NonNull Intent build(@NonNull Context context) {
       Intent intent = new Intent(context, ExampleActivity.class);
       intent.putExtras(args);
       return intent;
     }
 
-    public Intent build(Intent intent) {
+    public @NonNull Intent build(@NonNull Intent intent) {
       intent.putExtras(args);
       return intent;
+    }
+
+    public @NonNull Bundle bundle() {
+      return args;
     }
   }
 }

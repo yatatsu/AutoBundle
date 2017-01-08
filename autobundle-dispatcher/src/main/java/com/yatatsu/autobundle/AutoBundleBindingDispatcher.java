@@ -1,6 +1,5 @@
 package com.yatatsu.autobundle;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 /**
@@ -10,9 +9,6 @@ import android.os.Bundle;
 public class AutoBundleBindingDispatcher {
 
     public void bind(Object target, Bundle args) {
-    }
-
-    public void bind(Object target, Intent intent) {
     }
 
     public void bind(Object target) {

@@ -1,5 +1,6 @@
 package com.yatatsu.autobundle.processor;
 
+import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
@@ -10,30 +11,42 @@ import com.squareup.javapoet.TypeSpec;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.processing.Filer;
 import javax.lang.model.element.Modifier;
 
 
-public class AutoBundleWriter {
+class AutoBundleWriter {
 
     private final AutoBundleBindingClass bindingClass;
 
     private static final String FIELD_BUNDLE_NAME = "args";
     private static final ClassName CLASS_BUNDLE = ClassName.get("android.os", "Bundle");
+    private static final ClassName CLASS_CONTEXT = ClassName.get("android.content", "Context");
+    private static final ClassName CLASS_INTENT = ClassName.get("android.content", "Intent");
 
-    public AutoBundleWriter(AutoBundleBindingClass target) {
+    private static final AnnotationSpec ANNOTATION_NONNULL
+            = AnnotationSpec.builder(ClassName.get("android.support.annotation", "NonNull")).build();
+    private static final AnnotationSpec ANNOTATION_NULLABLE
+            = AnnotationSpec.builder(ClassName.get("android.support.annotation", "Nullable")).build();
+
+    private static final String CLASS_NAME_BUILDER = "Builder";
+
+    AutoBundleWriter(AutoBundleBindingClass target) {
         this.bindingClass = target;
     }
 
-    public void write(Filer filer) throws IOException {
-        TypeSpec clazz = TypeSpec.classBuilder(bindingClass.getHelperClassName())
+    void write(Filer filer) throws IOException {
+        TypeSpec.Builder clazzBuilder = TypeSpec.classBuilder(bindingClass.getHelperClassName())
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addType(createBuilderClass(bindingClass))
-                .addMethod(createCallBuilderMethod(bindingClass))
-                .addMethod(createBindMethod(bindingClass))
-                .addMethod(createBindWithSourceMethod(bindingClass))
+                .addMethod(createCallBuilderMethod(bindingClass));
+        if (bindingClass.getBuilderType() != AutoBundleBindingClass.BuilderType.Any) {
+            clazzBuilder.addMethod(createBindMethod(bindingClass));
+        }
+        TypeSpec clazz = clazzBuilder.addMethod(createBindWithSourceMethod(bindingClass))
                 .addMethod(createPackMethod(bindingClass))
                 .build();
         JavaFile.builder(bindingClass.getPackageName(), clazz)
@@ -42,27 +55,31 @@ public class AutoBundleWriter {
     }
 
     private static ClassName getBuilderClassName(AutoBundleBindingClass target) {
-        return ClassName.get(target.getHelperClassName(), target.getBuilderClassName());
+        return ClassName.get(target.getHelperClassName(), CLASS_NAME_BUILDER);
     }
 
     private static MethodSpec createCallBuilderMethod(AutoBundleBindingClass target) {
         ClassName builderClass = getBuilderClassName(target);
         MethodSpec.Builder builder =
-                MethodSpec.methodBuilder("create" + target.getBuilderType().name() + "Builder")
+                MethodSpec.methodBuilder("builder")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-                .returns(builderClass)
+                .returns(builderClass.annotated(ANNOTATION_NONNULL))
                 .addCode("return new $T(", builderClass);
         for (int i = 0, count = target.getRequiredArgs().size(); i < count; i++) {
-            if (i > 0) {
-                builder.addCode(",");
-            }
             AutoBundleBindingField arg = target.getRequiredArgs().get(i);
             ParameterSpec.Builder paramBuilder = ParameterSpec.builder(arg.getArgType(),
                     arg.getArgKey());
+            // annotations
             if (arg.hasAnnotations()) {
-                for (ClassName annotation : arg.getAnnotations()) {
-                    paramBuilder.addAnnotation(annotation);
-                }
+                arg.getAnnotations().forEach(paramBuilder::addAnnotation);
+            }
+            // nonnull
+            if (!arg.getArgType().isPrimitive()) {
+                paramBuilder.addAnnotation(ANNOTATION_NONNULL);
+            }
+            // statement
+            if (i > 0) {
+                builder.addCode(", ");
             }
             builder.addParameter(paramBuilder.build())
                     .addCode("$N", arg.getArgKey());
@@ -71,12 +88,13 @@ public class AutoBundleWriter {
     }
 
     private static TypeSpec createBuilderClass(AutoBundleBindingClass target) {
-        return TypeSpec.classBuilder(target.getBuilderClassName())
+        return TypeSpec.classBuilder(CLASS_NAME_BUILDER)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL, Modifier.STATIC)
                 .addField(createField(FIELD_BUNDLE_NAME))
                 .addMethod(createBuilderConstructor(target, FIELD_BUNDLE_NAME))
                 .addMethods(createBuilderMethods(target, FIELD_BUNDLE_NAME))
                 .addMethods(createBuildMethods(target, FIELD_BUNDLE_NAME))
+                .addMethod(createBuildBundleMethod(FIELD_BUNDLE_NAME))
                 .build();
     }
 
@@ -89,14 +107,20 @@ public class AutoBundleWriter {
         for (AutoBundleBindingField arg : target.getRequiredArgs()) {
             String key = arg.getArgKey();
             TypeName type = arg.getArgType();
-            String operationName = arg.getOperationName("put");
+            // parameter for constructor
+            // support annotation
             ParameterSpec.Builder paramBuilder = ParameterSpec.builder(type, key);
             if (arg.hasAnnotations()) {
-                for (ClassName annotation : arg.getAnnotations()) {
-                    paramBuilder.addAnnotation(annotation);
-                }
+                arg.getAnnotations().forEach(paramBuilder::addAnnotation);
+            }
+            // nonnull
+            if (!type.isPrimitive()) {
+                paramBuilder.addAnnotation(ANNOTATION_NONNULL);
             }
             builder.addParameter(paramBuilder.build());
+
+            // statement
+            String operationName = arg.getOperationName("put");
             if (arg.hasCustomConverter()) {
                 TypeName converter = arg.getConverter();
                 builder.addStatement("$T $NConverter = new $T()", converter, key, converter)
@@ -111,7 +135,7 @@ public class AutoBundleWriter {
     }
 
     private static FieldSpec createField(String fieldName) {
-        return FieldSpec.builder(CLASS_BUNDLE, fieldName, Modifier.FINAL).build();
+        return FieldSpec.builder(CLASS_BUNDLE, fieldName, Modifier.FINAL, Modifier.PRIVATE).build();
     }
 
     private static List<MethodSpec> createBuilderMethods(AutoBundleBindingClass target,
@@ -124,17 +148,18 @@ public class AutoBundleWriter {
 
             ParameterSpec.Builder paramBuilder = ParameterSpec.builder(argType, argKey);
             if (arg.hasAnnotations()) {
-                for (ClassName annotation : arg.getAnnotations()) {
-                    paramBuilder.addAnnotation(annotation);
-                }
+                arg.getAnnotations().forEach(paramBuilder::addAnnotation);
+            }
+            final boolean nullable = !argType.isPrimitive();
+            if (nullable) {
+                paramBuilder.addAnnotation(ANNOTATION_NULLABLE);
             }
             MethodSpec.Builder builder = MethodSpec.methodBuilder(argKey)
                     .addModifiers(Modifier.PUBLIC)
                     .addParameter(paramBuilder.build())
-                    .returns(getBuilderClassName(target));
+                    .returns(getBuilderClassName(target).annotated(ANNOTATION_NONNULL));
 
-            final boolean checkNull = !arg.getArgType().isPrimitive();
-            if (checkNull) {
+            if (nullable) {
                 builder.beginControlFlow("if ($N != null)", argKey);
             }
             if (arg.hasCustomConverter()) {
@@ -145,7 +170,7 @@ public class AutoBundleWriter {
             } else {
                 builder.addStatement("$N.$N($S, $N)", fieldName, operationName, argKey, argKey);
             }
-            if (checkNull) {
+            if (nullable) {
                 builder.endControlFlow();
             }
 
@@ -157,10 +182,13 @@ public class AutoBundleWriter {
 
     private static List<MethodSpec> createBuildMethods(AutoBundleBindingClass target,
                                                        String fieldName) {
-        if (target.getBuilderType() == AutoBundleBindingClass.BuilderType.Fragment) {
-            return createFragmentBuildMethods(target, fieldName);
-        } else {
-            return createIntentBuildMethods(target, fieldName);
+        switch (target.getBuilderType()) {
+            case Fragment:
+                return createFragmentBuildMethods(target, fieldName);
+            case Intent:
+                return createIntentBuildMethods(target, fieldName);
+            default:
+                return Collections.emptyList();
         }
     }
 
@@ -170,15 +198,16 @@ public class AutoBundleWriter {
         ClassName targetClass = target.getTargetType();
         MethodSpec buildWithNoParam = MethodSpec.methodBuilder("build")
                 .addModifiers(Modifier.PUBLIC)
-                .returns(targetClass)
+                .returns(targetClass.annotated(ANNOTATION_NONNULL))
                 .addStatement("$T fragment = new $T()", targetClass, targetClass)
                 .addStatement("fragment.setArguments($N)", fieldName)
                 .addStatement("return fragment")
                 .build();
         MethodSpec buildWithFragment = MethodSpec.methodBuilder("build")
                 .addModifiers(Modifier.PUBLIC)
-                .addParameter(targetClass, "fragment")
-                .returns(targetClass)
+                .addParameter(ParameterSpec.builder(targetClass, "fragment")
+                        .addAnnotation(ANNOTATION_NONNULL).build())
+                .returns(targetClass.annotated(ANNOTATION_NONNULL))
                 .addStatement("fragment.setArguments($N)", fieldName)
                 .addStatement("return fragment")
                 .build();
@@ -190,27 +219,35 @@ public class AutoBundleWriter {
     private static List<MethodSpec> createIntentBuildMethods(AutoBundleBindingClass target,
                                                              String fieldName) {
         List<MethodSpec> methodSpecs = new ArrayList<>(2);
-        ClassName contextClass = ClassName.get("android.content", "Context");
-        ClassName intentClass = ClassName.get("android.content", "Intent");
         MethodSpec buildWithContext = MethodSpec.methodBuilder("build")
                 .addModifiers(Modifier.PUBLIC)
-                .addParameter(contextClass, "context")
-                .returns(intentClass)
+                .addParameter(ParameterSpec.builder(CLASS_CONTEXT, "context")
+                        .addAnnotation(ANNOTATION_NONNULL).build())
+                .returns(CLASS_INTENT.annotated(ANNOTATION_NONNULL))
                 .addStatement("$T intent = new $T(context, $T.class)",
-                        intentClass, intentClass, target.getTargetType())
+                        CLASS_INTENT, CLASS_INTENT, target.getTargetType())
                 .addStatement("intent.putExtras($N)", fieldName)
                 .addStatement("return intent")
                 .build();
         MethodSpec buildWithIntent = MethodSpec.methodBuilder("build")
                 .addModifiers(Modifier.PUBLIC)
-                .addParameter(intentClass, "intent")
-                .returns(intentClass)
+                .addParameter(ParameterSpec.builder(CLASS_INTENT, "intent")
+                        .addAnnotation(ANNOTATION_NONNULL).build())
+                .returns(CLASS_INTENT.annotated(ANNOTATION_NONNULL))
                 .addStatement("intent.putExtras($N)", fieldName)
                 .addStatement("return intent")
                 .build();
         methodSpecs.add(buildWithContext);
         methodSpecs.add(buildWithIntent);
         return methodSpecs;
+    }
+
+    private static MethodSpec createBuildBundleMethod(String fieldName) {
+        return MethodSpec.methodBuilder("bundle")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(CLASS_BUNDLE.annotated(ANNOTATION_NONNULL))
+                .addStatement("return $N", fieldName)
+                .build();
     }
 
     private static MethodSpec createBindWithSourceMethod(AutoBundleBindingClass target) {
@@ -221,8 +258,12 @@ public class AutoBundleWriter {
         MethodSpec.Builder builder = MethodSpec.methodBuilder("bind")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .returns(void.class)
-                .addParameter(target.getTargetType(), "target")
-                .addParameter(CLASS_BUNDLE, "source");
+                .addParameter(
+                        ParameterSpec.builder(target.getTargetType(), "target")
+                                .addAnnotation(ANNOTATION_NONNULL).build())
+                .addParameter(
+                        ParameterSpec.builder(CLASS_BUNDLE, "source")
+                                .addAnnotation(ANNOTATION_NONNULL).build());
 
         for (AutoBundleBindingField arg : args) {
             String key = arg.getArgKey();
@@ -276,14 +317,20 @@ public class AutoBundleWriter {
         MethodSpec.Builder builder = MethodSpec.methodBuilder("bind")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .returns(void.class)
-                .addParameter(target.getTargetType(), "target");
+                .addParameter(
+                        ParameterSpec.builder(target.getTargetType(), "target")
+                                .addAnnotation(ANNOTATION_NONNULL).build());
 
         switch (target.getBuilderType()) {
             case Fragment:
-                builder.addStatement("bind(target, target.getArguments())");
+                builder.beginControlFlow("if (target.getArguments() != null)")
+                        .addStatement("bind(target, target.getArguments())")
+                        .endControlFlow();
                 break;
             case Intent:
-                builder.addParameter(ClassName.get("android.content", "Intent"), "intent");
+                builder.addParameter(
+                        ParameterSpec.builder(CLASS_INTENT, "intent")
+                                .addAnnotation(ANNOTATION_NONNULL).build());
                 builder.beginControlFlow("if (intent.getExtras() != null)")
                         .addStatement("bind(target, intent.getExtras())")
                         .endControlFlow();
@@ -300,8 +347,12 @@ public class AutoBundleWriter {
         MethodSpec.Builder builder = MethodSpec.methodBuilder("pack")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .returns(void.class)
-                .addParameter(target.getTargetType(), "source")
-                .addParameter(CLASS_BUNDLE, "args");
+                .addParameter(
+                        ParameterSpec.builder(target.getTargetType(), "source")
+                                .addAnnotation(ANNOTATION_NONNULL).build())
+                .addParameter(
+                        ParameterSpec.builder(CLASS_BUNDLE, "args")
+                                .addAnnotation(ANNOTATION_NONNULL).build());
 
         for (AutoBundleBindingField arg : args) {
             String fieldName = arg.getFieldName();

@@ -23,6 +23,7 @@ android {
 dependencies {
     compile project(':autobundle-annotations')
     provided project(':autobundle-dispatcher')
+    compile "com.android.support:support-annotations:${supportLibraryVersion}"
 }
 
 publish {

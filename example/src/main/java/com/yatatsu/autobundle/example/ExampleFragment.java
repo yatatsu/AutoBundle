@@ -20,11 +20,6 @@ public class ExampleFragment extends DialogFragment {
     @AutoBundleField(converter = DateArgConverter.class)
     Date targetDate;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        ExampleFragmentAutoBundle.bind(this);
-    }
 
     @NonNull
     @Override
@@ -32,6 +27,8 @@ public class ExampleFragment extends DialogFragment {
         if (savedInstanceState != null) {
             // restore from savedInstanceState.
             AutoBundle.bind(this, savedInstanceState);
+        } else {
+            AutoBundle.bind(this);
         }
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(title)
