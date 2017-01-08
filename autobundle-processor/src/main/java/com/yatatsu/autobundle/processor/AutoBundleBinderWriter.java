@@ -21,7 +21,6 @@ class AutoBundleBinderWriter {
   private static final String TARGET_CLASS_NAME = "AutoBundleBindingDispatcher";
   private static final String TARGET_PACKAGE_NAME = "com.yatatsu.autobundle";
   private static final ClassName CLASS_BUNDLE = ClassName.get("android.os", "Bundle");
-  private static final ClassName CLASS_INTENT = ClassName.get("android.content", "Intent");
 
   private static final AnnotationSpec ANNOTATION_NONNULL
           = AnnotationSpec.builder(ClassName.get("android.support.annotation", "NonNull")).build();
@@ -34,7 +33,6 @@ class AutoBundleBinderWriter {
     TypeSpec clazz = TypeSpec.classBuilder(TARGET_CLASS_NAME)
             .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
             .addMethod(createBindWithArgsMethod(bindingClasses))
-            .addMethod(createBindWithIntentMethod(bindingClasses))
             .addMethod(createBindFragmentMethod(bindingClasses))
             .addMethod(createPackMethod(bindingClasses))
             .build();
@@ -58,30 +56,6 @@ class AutoBundleBinderWriter {
               ClassName.get(bindingClass.getPackageName(), bindingClass.getHelperClassName());
       builder.beginControlFlow("if (target instanceof $T)", type)
               .addStatement("$T.bind(($T)target, args)", bindClassType, type)
-              .addStatement("return")
-              .endControlFlow();
-    }
-    return builder.build();
-  }
-
-  private static MethodSpec createBindWithIntentMethod(List<AutoBundleBindingClass> classes) {
-    MethodSpec.Builder builder = MethodSpec.methodBuilder("bind")
-            .addModifiers(Modifier.PUBLIC)
-            .addParameter(ParameterSpec.builder(Object.class, "target")
-                    .addAnnotation(ANNOTATION_NONNULL).build())
-            .addParameter(ParameterSpec.builder(CLASS_INTENT, "intent")
-                    .addAnnotation(ANNOTATION_NONNULL).build())
-            .returns(void.class);
-
-    for (AutoBundleBindingClass bindingClass : classes) {
-      if (bindingClass.getBuilderType() != AutoBundleBindingClass.BuilderType.Intent) {
-        continue;
-      }
-      TypeName type = bindingClass.getTargetType();
-      ClassName bindClassType =
-              ClassName.get(bindingClass.getPackageName(), bindingClass.getHelperClassName());
-      builder.beginControlFlow("if (target instanceof $T)", type)
-              .addStatement("$T.bind(($T)target, intent)", bindClassType, type)
               .addStatement("return")
               .endControlFlow();
     }

@@ -1,6 +1,5 @@
 package com.yatatsu.autobundle;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import com.yatatsu.autobundle.example.ExampleActivity;
@@ -35,25 +34,6 @@ public final class AutoBundleBindingDispatcher {
     }
     if (target instanceof NullableExampleActivity) {
       NullableExampleActivityAutoBundle.bind((NullableExampleActivity)target, args);
-      return;
-    }
-  }
-
-  public void bind(@NonNull Object target, @NonNull Intent intent) {
-    if (target instanceof ExampleActivity) {
-      ExampleActivityAutoBundle.bind((ExampleActivity)target, intent);
-      return;
-    }
-    if (target instanceof ExampleBroadcastReceiver) {
-      ExampleBroadcastReceiverAutoBundle.bind((ExampleBroadcastReceiver)target, intent);
-      return;
-    }
-    if (target instanceof ExampleIntentService) {
-      ExampleIntentServiceAutoBundle.bind((ExampleIntentService)target, intent);
-      return;
-    }
-    if (target instanceof NullableExampleActivity) {
-      NullableExampleActivityAutoBundle.bind((NullableExampleActivity)target, intent);
       return;
     }
   }

@@ -72,7 +72,9 @@ public class AutoBundle {
      */
     public static void bind(@NonNull Object target, @NonNull Intent intent) {
         try {
-            dispatcher.bind(target, intent);
+            if (intent.getExtras() != null) {
+                dispatcher.bind(target, intent.getExtras());
+            }
         } catch (Exception e) {
             throw new RuntimeException("AutoBundle cannot bind with " + target.getClass(), e);
         }
