@@ -11,17 +11,15 @@ AutoBundle generates boilerplate code for field binding with ``android.os.Bundle
 
 ### 1. Generate builder method
 
-AutoBundle supports these classes.
+In your class which has state from `Bundle`
+ (`Activity`, `BroadcastReceiver`, `Service`, `Fragment` or others),
 
-- `Activity`
-- `Fragment`
-- `BroadcastReceiver`
-- `Service`
+declare fields with `@AutoBundleField`.
 
-Here is example for Fragment. First, declare the field with `@AutoBundleField`.
+Here is example for Activity.
 
 ```java
-public class ExampleFragment extends Fragment {
+public class MyActivity extends Activity {
     // field with @AutoBundleField, must not be private/protected.
     @AutoBundleField
     String title;
@@ -34,30 +32,76 @@ public class ExampleFragment extends Fragment {
 }
 ```
 
-In caller section, you can use generated builder.
+After build, `{YourClass}AutoBundle` class will be generated.
 
 ```java
-ExampleFragment fragment = ExampleFragmentAutoBundle
-        .createFragmentBuilder("hello, example!", 1)
-        .optionalId(2) // here is optional
-        .build();
+public final class MyActivityAutoBundle {
+
+  // ~~~
+
+  public static final class Builder {
+    private final Bundle args;
+
+    public Builder(@NonNull String title, int exampleId) {
+      this.args = new Bundle();
+      this.args.putString("title", title);
+      this.args.putInt("exampleId", exampleId);
+    }
+
+    public @NonNull MyActivityAutoBundle.Builder optionalId(int optionalId) {
+      args.putInt("optionalId", optionalId);
+      return this;
+    }
+
+    public @NonNull Intent build(@NonNull Context context) {
+      Intent intent = new Intent(context, MyActivity.class);
+      intent.putExtras(args);
+      return intent;
+    }
+
+    public @NonNull Intent build(@NonNull Intent intent) {
+      intent.putExtras(args);
+      return intent;
+    }
+
+    public @NonNull Bundle bundle() {
+      return args;
+    }
+  }
+}
 ```
 
-Helper class is named ``{YourClass}AutoBundle``.
-FragmentBuilder also has method ``build(Fragment fragment)``,
-so you can set bundle to existing instance.
-
-For ``Intent``, here is builder example.
+And you can create intent from builder.
 
 ```java
-Intent intent = ExampleActivityAutoBundle.createIntentBuilder("hello, example!")
-        .optionalName("optionalName")
-        .fooList(messages)
-        .build(this)
-        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+Intent intent = MyActivityAutoBundle.builder("hello, example!", 1)
+    .optionalId(2) // here is optional
+    .build(context);
+// your can also set bundle to other intent
+MyActivityAutoBundle.builder("hello, example!", 1)
+    .build(otherIntent);
 ```
 
-Builder class has both methods ``build(Context context)``, ``build(Intent intent)``.
+If target class is subclass of these, builder can create intent.
+
+- `Activity`
+- `Service`
+- `BroadcastReceiver`
+
+Or if target is subclass of `android.app.Fragment` or `android.support.v4.app.Fragment`,
+
+builder can create fragment.
+
+
+```java
+builder = ExampleFragmentAutoBundle.builder("hello, example!", 1)
+    .optionalId(2);
+ExampleFragment fragment = builder.build();
+// you can also set bundle to other fragment
+builder.build(otherFragment);
+```
+
+And all builder has `bundle()`, which returns `Bundle`.
 
 ### 2. Bind annotated fields
 
@@ -95,16 +139,29 @@ public class ExampleFragment extends DialogFragment {
 
 AutoBundle bindings are also useful as restoring value in ``onSaveInstanceState(Bundle outState)``.
 
+``pack(Object object, Bundle bundle)`` stores field value to bundle.
+For example, store in ``onSaveInstanceState`` and restore in ``onCreate``.
+
 ```java
 @Override
 public void onSaveInstanceState(Bundle outState) {
     super.onSaveInstanceState(outState);
     ExampleFragmentAutoBundle.pack(this, outState);
+    // or
+    AutoBundle.pack(this, outState);
+}
+
+@Override
+public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    if (savedInstanceState != null) {
+        // restore
+        AutoBundle.bind(this, savedInstanceState);
+    } else {
+        AutoBundle.bind(this)
+    }
 }
 ```
-
-``pack(Object object, Bundle bundle)`` stores field value to bundle.
-For example, store in ``onSaveInstanceState`` and restore in ``onCreate``.
 
 ## Advanced
 
@@ -131,8 +188,7 @@ int optionalId;
 then,
 
 ```java
-ExampleFragment fragment = ExampleFragmentAutoBundle
-        .createFragmentBuilder()
+ExampleFragment fragment = ExampleFragmentAutoBundle.builder()
         .optionalId(2)
         .build();
 ```
@@ -178,7 +234,7 @@ public class ExampleFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ExampleFragmentAutoBundle.bind(this);
+        AutoBundle.bind(this);
     }
 
     public static class DateArgConverter implements AutoBundleConverter<Date, Long> {
@@ -229,8 +285,8 @@ buildscript {
 apply plugin: 'android-apt'
 
 dependencies {
-    compile 'com.github.yatatsu:autobundle:3.1.1'
-    apt 'com.github.yatatsu:autobundle-processor:3.1.1'
+    compile 'com.github.yatatsu:autobundle:4.0.0'
+    apt 'com.github.yatatsu:autobundle-processor:4.0.0'
 }
 ```
 
