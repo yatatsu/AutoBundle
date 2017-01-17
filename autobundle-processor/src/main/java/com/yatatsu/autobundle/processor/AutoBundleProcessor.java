@@ -60,6 +60,10 @@ public class AutoBundleProcessor extends AbstractProcessor {
         try {
             String packageAsLibrary = processingEnv.getOptions().get("autoBundleAsLibrary");
 
+            String dispatcher = processingEnv.getOptions().get("autoBundleSubDispatchers");
+
+            messager.printMessage(Diagnostic.Kind.NOTE, "dispatcher ===> " + dispatcher);
+
             List<AutoBundleBindingClass> classes =
                     new ArrayList<>(BindingDetector.bindingClasses(roundEnv, elementUtils, typeUtils));
             for (AutoBundleBindingClass clazz : classes) {

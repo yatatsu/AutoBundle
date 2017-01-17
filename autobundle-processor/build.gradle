@@ -10,6 +10,11 @@ task copyTestResources(type: Copy) {
 }
 processTestResources.dependsOn copyTestResources
 
+tasks.withType(Test) {
+    scanForTestClasses = false
+    include "**/*Test.class"
+}
+
 dependencies {
     compile project(':autobundle-annotations')
     compile 'com.squareup:javapoet:1.8.0'
