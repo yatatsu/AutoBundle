@@ -1,4 +1,1 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.yatatsu.autobundle.stripped">
-
-</manifest>
+<manifest package="com.yatatsu.autobundle.stripped" />

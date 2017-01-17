@@ -6,6 +6,7 @@ import com.yatatsu.autobundle.processor.exceptions.ProcessingException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -47,17 +48,28 @@ public class AutoBundleProcessor extends AbstractProcessor {
     }
 
     @Override
+    public Set<String> getSupportedOptions() {
+        Set<String> options = new HashSet<>();
+        options.add("autoBundleAsLibrary");
+        options.add("autoBundleSubDispatchers");//TODO
+        return options;
+    }
+
+    @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         try {
+            String packageAsLibrary = processingEnv.getOptions().get("autoBundleAsLibrary");
+
             List<AutoBundleBindingClass> classes =
                     new ArrayList<>(BindingDetector.bindingClasses(roundEnv, elementUtils, typeUtils));
-            if (!classes.isEmpty()) {
-                AutoBundleBinderWriter binderWriter = new AutoBundleBinderWriter(classes);
-                binderWriter.write(filer);
-            }
             for (AutoBundleBindingClass clazz : classes) {
                 AutoBundleWriter writer = new AutoBundleWriter(clazz);
                 writer.write(filer);
+            }
+            if (!classes.isEmpty()) {
+                AutoBundleBinderWriter binderWriter =
+                        new AutoBundleBinderWriter(classes, packageAsLibrary);
+                binderWriter.write(filer);
             }
         } catch (ProcessingException | IOException e) {
             messager.printMessage(Diagnostic.Kind.ERROR, e.getMessage());

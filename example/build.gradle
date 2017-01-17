@@ -31,6 +31,7 @@ dependencies {
 
     compile project(':autobundle')
     annotationProcessor project(':autobundle-processor')
+    compile project(':example-library-project')
 
     compile "org.parceler:parceler-api:1.0.3"
     annotationProcessor "org.parceler:parceler:1.0.3"

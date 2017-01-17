@@ -18,25 +18,31 @@ import javax.lang.model.element.Modifier;
 class AutoBundleBinderWriter {
 
   private final List<AutoBundleBindingClass> bindingClasses;
+  private final String packageName;
   private static final String TARGET_CLASS_NAME = "AutoBundleBindingDispatcher";
   private static final String TARGET_PACKAGE_NAME = "com.yatatsu.autobundle";
   private static final ClassName CLASS_BUNDLE = ClassName.get("android.os", "Bundle");
+  private static final ClassName CLASS_DISPATCHER = ClassName.get(TARGET_PACKAGE_NAME, "AutoBundleDispatcher");
 
   private static final AnnotationSpec ANNOTATION_NONNULL
           = AnnotationSpec.builder(ClassName.get("android.support.annotation", "NonNull")).build();
 
-  AutoBundleBinderWriter(List<AutoBundleBindingClass> bindingClasses) {
+  AutoBundleBinderWriter(List<AutoBundleBindingClass> bindingClasses,
+                         String packageAsLibrary) {
     this.bindingClasses = bindingClasses;
+    boolean subDispatcher = packageAsLibrary != null;
+    this.packageName = subDispatcher ? packageAsLibrary : TARGET_PACKAGE_NAME;
   }
 
   void write(Filer filer) throws IOException {
     TypeSpec clazz = TypeSpec.classBuilder(TARGET_CLASS_NAME)
             .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
+            .addSuperinterface(CLASS_DISPATCHER)
             .addMethod(createBindWithArgsMethod(bindingClasses))
             .addMethod(createBindFragmentMethod(bindingClasses))
             .addMethod(createPackMethod(bindingClasses))
             .build();
-    JavaFile.builder(TARGET_PACKAGE_NAME, clazz)
+    JavaFile.builder(packageName, clazz)
             .build()
             .writeTo(filer);
   }
@@ -44,11 +50,12 @@ class AutoBundleBinderWriter {
   private static MethodSpec createBindWithArgsMethod(List<AutoBundleBindingClass> classes) {
     MethodSpec.Builder builder = MethodSpec.methodBuilder("bind")
             .addModifiers(Modifier.PUBLIC)
+            .addAnnotation(Override.class)
             .addParameter(ParameterSpec.builder(Object.class, "target")
                     .addAnnotation(ANNOTATION_NONNULL).build())
             .addParameter(ParameterSpec.builder(CLASS_BUNDLE, "args")
                     .addAnnotation(ANNOTATION_NONNULL).build())
-            .returns(void.class);
+            .returns(boolean.class);
 
     for (AutoBundleBindingClass bindingClass : classes) {
       TypeName type = bindingClass.getTargetType();
@@ -56,18 +63,19 @@ class AutoBundleBinderWriter {
               ClassName.get(bindingClass.getPackageName(), bindingClass.getHelperClassName());
       builder.beginControlFlow("if (target instanceof $T)", type)
               .addStatement("$T.bind(($T)target, args)", bindClassType, type)
-              .addStatement("return")
+              .addStatement("return true")
               .endControlFlow();
     }
-    return builder.build();
+    return builder.addStatement("return false").build();
   }
 
   private static MethodSpec createBindFragmentMethod(List<AutoBundleBindingClass> classes) {
     MethodSpec.Builder builder = MethodSpec.methodBuilder("bind")
             .addModifiers(Modifier.PUBLIC)
+            .addAnnotation(Override.class)
             .addParameter(ParameterSpec.builder(Object.class, "target")
                     .addAnnotation(ANNOTATION_NONNULL).build())
-            .returns(void.class);
+            .returns(boolean.class);
 
     for (AutoBundleBindingClass bindingClass : classes) {
       if (bindingClass.getBuilderType() != AutoBundleBindingClass.BuilderType.Fragment) {
@@ -78,20 +86,21 @@ class AutoBundleBinderWriter {
               ClassName.get(bindingClass.getPackageName(), bindingClass.getHelperClassName());
       builder.beginControlFlow("if (target instanceof $T)", type)
               .addStatement("$T.bind(($T)target)", bindClassType, type)
-              .addStatement("return")
+              .addStatement("return true")
               .endControlFlow();
     }
-    return builder.build();
+    return builder.addStatement("return false").build();
   }
 
   private static MethodSpec createPackMethod(List<AutoBundleBindingClass> classes) {
     MethodSpec.Builder builder = MethodSpec.methodBuilder("pack")
             .addModifiers(Modifier.PUBLIC)
+            .addAnnotation(Override.class)
             .addParameter(ParameterSpec.builder(Object.class, "target")
                     .addAnnotation(ANNOTATION_NONNULL).build())
             .addParameter(ParameterSpec.builder(CLASS_BUNDLE, "args")
                     .addAnnotation(ANNOTATION_NONNULL).build())
-            .returns(void.class);
+            .returns(boolean.class);
 
     for (AutoBundleBindingClass bindingClass : classes) {
       TypeName type = bindingClass.getTargetType();
@@ -99,9 +108,9 @@ class AutoBundleBinderWriter {
               ClassName.get(bindingClass.getPackageName(), bindingClass.getHelperClassName());
       builder.beginControlFlow("if (target instanceof $T)", type)
               .addStatement("$T.pack(($T)target, args)", bindClassType, type)
-              .addStatement("return")
+              .addStatement("return true")
               .endControlFlow();
     }
-    return builder.build();
+    return builder.addStatement("return false").build();
   }
 }
