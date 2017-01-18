@@ -14,7 +14,8 @@ android {
         javaCompileOptions {
             annotationProcessorOptions {
                 className 'com.yatatsu.autobundle.processor.AutoBundleProcessor'
-                arguments = [ subDispatchers : 'com.yatatsu.example.library.AutoBundleBindingDispatcher' ]
+                arguments = [ subDispatchers : 'com.yatatsu.example.library.AutoBundleBindingDispatcher'
+                        + ',com.yatatsu.example.library2.AutoBundleBindingDispatcher' ]
             }
         }
     }
@@ -39,6 +40,7 @@ dependencies {
     compile project(':autobundle')
     annotationProcessor project(':autobundle-processor')
     compile project(':example-library-project')
+    compile project(':example-library-project2')
 
     compile "org.parceler:parceler-api:1.0.3"
     annotationProcessor "org.parceler:parceler:1.0.3"
