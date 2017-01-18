@@ -18,6 +18,8 @@ import java.lang.Object;
 import java.lang.Override;
 
 public final class AutoBundleBindingDispatcher implements AutoBundleDispatcher {
+  private final AutoBundleDispatcher subDispatcher0 = new com.yatatsu.example.library.AutoBundleBindingDispatcher();
+
   @Override
   public boolean bind(@NonNull Object target, @NonNull Bundle args) {
     if (target instanceof ExampleActivity) {
@@ -44,6 +46,9 @@ public final class AutoBundleBindingDispatcher implements AutoBundleDispatcher {
       NullableExampleActivityAutoBundle.bind((NullableExampleActivity)target, args);
       return true;
     }
+    if (subDispatcher0.bind(target, args)) {
+      return true;
+    }
     return false;
   }
 
@@ -51,6 +56,9 @@ public final class AutoBundleBindingDispatcher implements AutoBundleDispatcher {
   public boolean bind(@NonNull Object target) {
     if (target instanceof ExampleFragment) {
       ExampleFragmentAutoBundle.bind((ExampleFragment)target);
+      return true;
+    }
+    if (subDispatcher0.bind(target)) {
       return true;
     }
     return false;
@@ -80,6 +88,9 @@ public final class AutoBundleBindingDispatcher implements AutoBundleDispatcher {
     }
     if (target instanceof NullableExampleActivity) {
       NullableExampleActivityAutoBundle.pack((NullableExampleActivity)target, args);
+      return true;
+    }
+    if (subDispatcher0.pack(target, args)) {
       return true;
     }
     return false;

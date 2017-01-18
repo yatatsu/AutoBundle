@@ -28,6 +28,9 @@ public class AutoBundleProcessor extends AbstractProcessor {
     private Elements elementUtils;
     private Types typeUtils;
 
+    private static final String OPTION_AS_LIBRARY = "autoBundleAsLibrary";
+    private static final String OPTION_SUB_DISPATCHERS = "subDispatchers";
+
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
         super.init(processingEnv);
@@ -50,19 +53,17 @@ public class AutoBundleProcessor extends AbstractProcessor {
     @Override
     public Set<String> getSupportedOptions() {
         Set<String> options = new HashSet<>();
-        options.add("autoBundleAsLibrary");
-        options.add("autoBundleSubDispatchers");//TODO
+        options.add(OPTION_AS_LIBRARY);
+        options.add(OPTION_SUB_DISPATCHERS);
         return options;
     }
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         try {
-            String packageAsLibrary = processingEnv.getOptions().get("autoBundleAsLibrary");
-
-            String dispatcher = processingEnv.getOptions().get("autoBundleSubDispatchers");
-
-            messager.printMessage(Diagnostic.Kind.NOTE, "dispatcher ===> " + dispatcher);
+            final String packageAsLibrary = processingEnv.getOptions().get(OPTION_AS_LIBRARY);
+            final String subDispatchers = processingEnv.getOptions().get(OPTION_SUB_DISPATCHERS);
+            final List<SubDispatcherHolder> subDispatcherHolders = SubDispatcherHolder.find(subDispatchers);
 
             List<AutoBundleBindingClass> classes =
                     new ArrayList<>(BindingDetector.bindingClasses(roundEnv, elementUtils, typeUtils));
@@ -72,7 +73,7 @@ public class AutoBundleProcessor extends AbstractProcessor {
             }
             if (!classes.isEmpty()) {
                 AutoBundleBinderWriter binderWriter =
-                        new AutoBundleBinderWriter(classes, packageAsLibrary);
+                        new AutoBundleBinderWriter(classes, subDispatcherHolders, packageAsLibrary);
                 binderWriter.write(filer);
             }
         } catch (ProcessingException | IOException e) {

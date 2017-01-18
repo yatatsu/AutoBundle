@@ -10,6 +10,13 @@ android {
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                className 'com.yatatsu.autobundle.processor.AutoBundleProcessor'
+                arguments = [ subDispatchers : 'com.yatatsu.example.library.AutoBundleBindingDispatcher' ]
+            }
+        }
     }
     buildTypes {
         release {
