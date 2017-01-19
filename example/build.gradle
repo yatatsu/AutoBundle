@@ -10,6 +10,14 @@ android {
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                className 'com.yatatsu.autobundle.processor.AutoBundleProcessor'
+                arguments = [ subDispatchers : 'com.yatatsu.example.library.AutoBundleBindingDispatcher'
+                        + ',com.yatatsu.example.library2.AutoBundleBindingDispatcher' ]
+            }
+        }
     }
     buildTypes {
         release {
@@ -31,6 +39,8 @@ dependencies {
 
     compile project(':autobundle')
     annotationProcessor project(':autobundle-processor')
+    compile project(':example-library-project')
+    compile project(':example-library-project2')
 
     compile "org.parceler:parceler-api:1.0.3"
     annotationProcessor "org.parceler:parceler:1.0.3"

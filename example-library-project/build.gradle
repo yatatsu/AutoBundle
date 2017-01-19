@@ -1,0 +1,29 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                className 'com.yatatsu.autobundle.processor.AutoBundleProcessor'
+                arguments = [ autoBundleAsLibrary : 'com.yatatsu.example.library' ]
+            }
+        }
+    }
+}
+
+dependencies {
+    compile "com.android.support:support-v4:${supportLibraryVersion}"
+    compile "com.android.support:support-annotations:${supportLibraryVersion}"
+    compile "com.android.support:appcompat-v7:${supportLibraryVersion}"
+
+    compile project(':autobundle')
+    annotationProcessor project(':autobundle-processor')
+}

@@ -12,7 +12,7 @@ import android.support.annotation.NonNull;
  */
 public class AutoBundle {
 
-    private static AutoBundleBindingDispatcher dispatcher = new AutoBundleBindingDispatcher();
+    private static AutoBundleDispatcher dispatcher = new AutoBundleBindingDispatcher();
 
     private AutoBundle() {
         throw new AssertionError("no instances");
@@ -43,11 +43,6 @@ public class AutoBundle {
 
     /**
      * assign arguments to target fields.
-     *
-     * target may be {@link android.app.Activity},
-     * {@link android.content.BroadcastReceiver},
-     * {@link android.app.Service},
-     * {@link android.app.Fragment} or these compatibility class.
      *
      * @param target target which has {@link AutoBundleField} annotated fields.
      * @param args source bundle.

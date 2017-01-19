@@ -6,14 +6,20 @@ import android.os.Bundle;
  * This class will not be include in package,
  * and replace with generated one.
  */
-public class AutoBundleBindingDispatcher {
+public class AutoBundleBindingDispatcher implements AutoBundleDispatcher {
 
-    public void bind(Object target, Bundle args) {
+    @Override
+    public boolean bind(Object target, Bundle args) {
+        return false;
     }
 
-    public void bind(Object target) {
+    @Override
+    public boolean bind(Object target) {
+        return false;
     }
 
-    public void pack(Object source, Bundle args) {
+    @Override
+    public boolean pack(Object source, Bundle args) {
+        return false;
     }
 }

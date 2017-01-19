@@ -1,8 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release'
 
-def metadata = rootProject.ext.metadata
-
 android {
     compileSdkVersion rootProject.ext.sdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -11,7 +9,6 @@ android {
         minSdkVersion 1
         targetSdkVersion rootProject.ext.sdkVersion
         versionName "${metadata.version}"
-        consumerProguardFiles 'autobundle-proguard-rules.pro'
     }
 
     compileOptions {
@@ -20,17 +17,10 @@ android {
     }
 }
 
-dependencies {
-    compile project(':autobundle-annotations')
-    compile project(':autobundle-common')
-    provided project(':autobundle-dispatcher')
-    compile "com.android.support:support-annotations:${supportLibraryVersion}"
-}
-
 publish {
     groupId = metadata.groupId
-    artifactId = 'autobundle'
-    desc = metadata.desc
+    artifactId = 'autobundle-common'
+    desc = 'common lib for AutoBundle'
     publishVersion = metadata.version
     website = metadata.website
     repository = metadata.repository
