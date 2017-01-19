@@ -1,1 +1,1 @@
-include ':example', ':autobundle-processor', ':autobundle', ':autobundle-annotations', ':autobundle-dispatcher', ':example-library-project', ':autobundle-common', ':example-library-project2'
+include ':example', ':autobundle-processor', ':autobundle', ':autobundle-annotations', ':autobundle-dispatcher', ':example-library-project', ':autobundle-common', ':example-library-project2', ':example-apt'
