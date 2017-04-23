@@ -12,7 +12,7 @@ android {
 
         javaCompileOptions {
             annotationProcessorOptions {
-                className 'com.yatatsu.autobundle.processor.AutoBundleProcessor'
+                //className 'com.yatatsu.autobundle.processor.AutoBundleProcessor'
                 arguments = [ autoBundleAsLibrary : 'com.yatatsu.example.library2' ]
             }
         }

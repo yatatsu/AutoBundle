@@ -285,7 +285,6 @@ android {
     defaultConfig {
         javaCompileOptions {
             annotationProcessorOptions {
-                className 'com.yatatsu.autobundle.processor.AutoBundleProcessor'
                 // pachage name as you like
                 arguments = [ autoBundleAsLibrary : 'com.yatatsu.example.library' ]
             }
@@ -310,7 +309,6 @@ Pass package name of library's dispatcher.
 
 ```groovy
 annotationProcessorOptions {
-    className 'com.yatatsu.autobundle.processor.AutoBundleProcessor'
     // pass package of library's dispatcher (multi dispatchers with comma)
     arguments = [ subDispatchers : 'com.yatatsu.example.library.AutoBundleBindingDispatcher'
             + ',com.yatatsu.example.library2.AutoBundleBindingDispatcher' ]
