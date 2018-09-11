@@ -63,7 +63,8 @@ class AutoBundleWriter {
         MethodSpec.Builder builder =
                 MethodSpec.methodBuilder("builder")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-                .returns(builderClass.annotated(ANNOTATION_NONNULL))
+                .addAnnotation(ANNOTATION_NONNULL)
+                .returns(builderClass)
                 .addCode("return new $T(", builderClass);
         for (int i = 0, count = target.getRequiredArgs().size(); i < count; i++) {
             AutoBundleBindingField arg = target.getRequiredArgs().get(i);
@@ -157,7 +158,8 @@ class AutoBundleWriter {
             MethodSpec.Builder builder = MethodSpec.methodBuilder(argKey)
                     .addModifiers(Modifier.PUBLIC)
                     .addParameter(paramBuilder.build())
-                    .returns(getBuilderClassName(target).annotated(ANNOTATION_NONNULL));
+                    .addAnnotation(ANNOTATION_NONNULL)
+                    .returns(getBuilderClassName(target));
 
             if (nullable) {
                 builder.beginControlFlow("if ($N != null)", argKey);
@@ -198,7 +200,8 @@ class AutoBundleWriter {
         ClassName targetClass = target.getTargetType();
         MethodSpec buildWithNoParam = MethodSpec.methodBuilder("build")
                 .addModifiers(Modifier.PUBLIC)
-                .returns(targetClass.annotated(ANNOTATION_NONNULL))
+                .addAnnotation(ANNOTATION_NONNULL)
+                .returns(targetClass)
                 .addStatement("$T fragment = new $T()", targetClass, targetClass)
                 .addStatement("fragment.setArguments($N)", fieldName)
                 .addStatement("return fragment")
@@ -207,7 +210,8 @@ class AutoBundleWriter {
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(ParameterSpec.builder(targetClass, "fragment")
                         .addAnnotation(ANNOTATION_NONNULL).build())
-                .returns(targetClass.annotated(ANNOTATION_NONNULL))
+                .addAnnotation(ANNOTATION_NONNULL)
+                .returns(targetClass)
                 .addStatement("fragment.setArguments($N)", fieldName)
                 .addStatement("return fragment")
                 .build();
@@ -223,7 +227,8 @@ class AutoBundleWriter {
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(ParameterSpec.builder(CLASS_CONTEXT, "context")
                         .addAnnotation(ANNOTATION_NONNULL).build())
-                .returns(CLASS_INTENT.annotated(ANNOTATION_NONNULL))
+                .addAnnotation(ANNOTATION_NONNULL)
+                .returns(CLASS_INTENT)
                 .addStatement("$T intent = new $T(context, $T.class)",
                         CLASS_INTENT, CLASS_INTENT, target.getTargetType())
                 .addStatement("intent.putExtras($N)", fieldName)
@@ -233,7 +238,8 @@ class AutoBundleWriter {
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(ParameterSpec.builder(CLASS_INTENT, "intent")
                         .addAnnotation(ANNOTATION_NONNULL).build())
-                .returns(CLASS_INTENT.annotated(ANNOTATION_NONNULL))
+                .addAnnotation(ANNOTATION_NONNULL)
+                .returns(CLASS_INTENT)
                 .addStatement("intent.putExtras($N)", fieldName)
                 .addStatement("return intent")
                 .build();
@@ -245,7 +251,8 @@ class AutoBundleWriter {
     private static MethodSpec createBuildBundleMethod(String fieldName) {
         return MethodSpec.methodBuilder("bundle")
                 .addModifiers(Modifier.PUBLIC)
-                .returns(CLASS_BUNDLE.annotated(ANNOTATION_NONNULL))
+                .addAnnotation(ANNOTATION_NONNULL)
+                .returns(CLASS_BUNDLE)
                 .addStatement("return $N", fieldName)
                 .build();
     }

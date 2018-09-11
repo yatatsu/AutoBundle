@@ -7,7 +7,8 @@ import android.support.annotation.NonNull;
 import java.lang.String;
 
 public final class ExampleIntentServiceAutoBundle {
-  public static @NonNull ExampleIntentServiceAutoBundle.Builder builder(@NonNull String message) {
+  @NonNull
+  public static ExampleIntentServiceAutoBundle.Builder builder(@NonNull String message) {
     return new ExampleIntentServiceAutoBundle.Builder(message);
   }
 
@@ -41,18 +42,21 @@ public final class ExampleIntentServiceAutoBundle {
       this.args.putString("message", message);
     }
 
-    public @NonNull Intent build(@NonNull Context context) {
+    @NonNull
+    public Intent build(@NonNull Context context) {
       Intent intent = new Intent(context, ExampleIntentService.class);
       intent.putExtras(args);
       return intent;
     }
 
-    public @NonNull Intent build(@NonNull Intent intent) {
+    @NonNull
+    public Intent build(@NonNull Intent intent) {
       intent.putExtras(args);
       return intent;
     }
 
-    public @NonNull Bundle bundle() {
+    @NonNull
+    public Bundle bundle() {
       return args;
     }
   }

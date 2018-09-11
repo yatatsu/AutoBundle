@@ -12,7 +12,8 @@ import java.lang.String;
 import java.util.ArrayList;
 
 public final class ExampleActivityAutoBundle {
-  public static @NonNull ExampleActivityAutoBundle.Builder builder(@ExampleActivity.IntType int type2,
+  @NonNull
+  public static ExampleActivityAutoBundle.Builder builder(@ExampleActivity.IntType int type2,
       @NonNull String name) {
     return new ExampleActivityAutoBundle.Builder(type2, name);
   }
@@ -108,26 +109,30 @@ public final class ExampleActivityAutoBundle {
       this.args.putString("name", name);
     }
 
-    public @NonNull ExampleActivityAutoBundle.Builder type1(@ExampleActivity.IntType int type1) {
+    @NonNull
+    public ExampleActivityAutoBundle.Builder type1(@ExampleActivity.IntType int type1) {
       args.putInt("type1", type1);
       return this;
     }
 
-    public @NonNull ExampleActivityAutoBundle.Builder optionalName(@Nullable String optionalName) {
+    @NonNull
+    public ExampleActivityAutoBundle.Builder optionalName(@Nullable String optionalName) {
       if (optionalName != null) {
         args.putString("optionalName", optionalName);
       }
       return this;
     }
 
-    public @NonNull ExampleActivityAutoBundle.Builder fooList(@Nullable ArrayList<CharSequence> fooList) {
+    @NonNull
+    public ExampleActivityAutoBundle.Builder fooList(@Nullable ArrayList<CharSequence> fooList) {
       if (fooList != null) {
         args.putCharSequenceArrayList("fooList", fooList);
       }
       return this;
     }
 
-    public @NonNull ExampleActivityAutoBundle.Builder exampleData(@Nullable ExampleData exampleData) {
+    @NonNull
+    public ExampleActivityAutoBundle.Builder exampleData(@Nullable ExampleData exampleData) {
       if (exampleData != null) {
         ParcelableConverter exampleDataConverter = new ParcelableConverter();
         args.putParcelable("exampleData", exampleDataConverter.convert(exampleData) );
@@ -135,14 +140,16 @@ public final class ExampleActivityAutoBundle {
       return this;
     }
 
-    public @NonNull ExampleActivityAutoBundle.Builder persons(@Nullable ArrayList<Person> persons) {
+    @NonNull
+    public ExampleActivityAutoBundle.Builder persons(@Nullable ArrayList<Person> persons) {
       if (persons != null) {
         args.putParcelableArrayList("persons", persons);
       }
       return this;
     }
 
-    public @NonNull ExampleActivityAutoBundle.Builder exampleData2(@Nullable ExampleData exampleData2) {
+    @NonNull
+    public ExampleActivityAutoBundle.Builder exampleData2(@Nullable ExampleData exampleData2) {
       if (exampleData2 != null) {
         ParcelableConverter exampleData2Converter = new ParcelableConverter();
         args.putParcelable("exampleData2", exampleData2Converter.convert(exampleData2) );
@@ -150,37 +157,43 @@ public final class ExampleActivityAutoBundle {
       return this;
     }
 
-    public @NonNull ExampleActivityAutoBundle.Builder integerField(@Nullable Integer integerField) {
+    @NonNull
+    public ExampleActivityAutoBundle.Builder integerField(@Nullable Integer integerField) {
       if (integerField != null) {
         args.putInt("integerField", integerField);
       }
       return this;
     }
 
-    public @NonNull ExampleActivityAutoBundle.Builder booleanField(@Nullable Boolean booleanField) {
+    @NonNull
+    public ExampleActivityAutoBundle.Builder booleanField(@Nullable Boolean booleanField) {
       if (booleanField != null) {
         args.putBoolean("booleanField", booleanField);
       }
       return this;
     }
 
-    public @NonNull ExampleActivityAutoBundle.Builder intOption(int intOption) {
+    @NonNull
+    public ExampleActivityAutoBundle.Builder intOption(int intOption) {
       args.putInt("intOption", intOption);
       return this;
     }
 
-    public @NonNull Intent build(@NonNull Context context) {
+    @NonNull
+    public Intent build(@NonNull Context context) {
       Intent intent = new Intent(context, ExampleActivity.class);
       intent.putExtras(args);
       return intent;
     }
 
-    public @NonNull Intent build(@NonNull Intent intent) {
+    @NonNull
+    public Intent build(@NonNull Intent intent) {
       intent.putExtras(args);
       return intent;
     }
 
-    public @NonNull Bundle bundle() {
+    @NonNull
+    public Bundle bundle() {
       return args;
     }
   }
