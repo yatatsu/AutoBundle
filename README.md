@@ -60,23 +60,27 @@ public final class MyActivityAutoBundle {
       this.args.putInt("exampleId", exampleId);
     }
 
-    public @NonNull MyActivityAutoBundle.Builder optionalId(int optionalId) {
+    @NonNull
+    public MyActivityAutoBundle.Builder optionalId(int optionalId) {
       args.putInt("optionalId", optionalId);
       return this;
     }
 
-    public @NonNull Intent build(@NonNull Context context) {
+    @NonNull
+    public Intent build(@NonNull Context context) {
       Intent intent = new Intent(context, MyActivity.class);
       intent.putExtras(args);
       return intent;
     }
 
-    public @NonNull Intent build(@NonNull Intent intent) {
+    @NonNull
+    public Intent build(@NonNull Intent intent) {
       intent.putExtras(args);
       return intent;
     }
 
-    public @NonNull Bundle bundle() {
+    @NonNull
+    public Bundle bundle() {
       return args;
     }
   }

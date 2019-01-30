@@ -9,7 +9,8 @@ import java.lang.Integer;
 import java.lang.String;
 
 public final class NullableExampleActivityAutoBundle {
-  public static @NonNull NullableExampleActivityAutoBundle.Builder builder() {
+  @NonNull
+  public static NullableExampleActivityAutoBundle.Builder builder() {
     return new NullableExampleActivityAutoBundle.Builder();
   }
 
@@ -44,32 +45,37 @@ public final class NullableExampleActivityAutoBundle {
       this.args = new Bundle();
     }
 
-    public @NonNull NullableExampleActivityAutoBundle.Builder name(@Nullable String name) {
+    @NonNull
+    public NullableExampleActivityAutoBundle.Builder name(@Nullable String name) {
       if (name != null) {
         args.putString("name", name);
       }
       return this;
     }
 
-    public @NonNull NullableExampleActivityAutoBundle.Builder number(@Nullable Integer number) {
+    @NonNull
+    public NullableExampleActivityAutoBundle.Builder number(@Nullable Integer number) {
       if (number != null) {
         args.putInt("number", number);
       }
       return this;
     }
 
-    public @NonNull Intent build(@NonNull Context context) {
+    @NonNull
+    public Intent build(@NonNull Context context) {
       Intent intent = new Intent(context, NullableExampleActivity.class);
       intent.putExtras(args);
       return intent;
     }
 
-    public @NonNull Intent build(@NonNull Intent intent) {
+    @NonNull
+    public Intent build(@NonNull Intent intent) {
       intent.putExtras(args);
       return intent;
     }
 
-    public @NonNull Bundle bundle() {
+    @NonNull
+    public Bundle bundle() {
       return args;
     }
   }

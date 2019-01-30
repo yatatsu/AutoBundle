@@ -7,7 +7,8 @@ import java.lang.String;
 import java.util.ArrayList;
 
 public final class ExampleBundleDelegateAutoBundle {
-  public static @NonNull ExampleBundleDelegateAutoBundle.Builder builder(@NonNull String name) {
+  @NonNull
+  public static ExampleBundleDelegateAutoBundle.Builder builder(@NonNull String name) {
     return new ExampleBundleDelegateAutoBundle.Builder(name);
   }
 
@@ -45,19 +46,22 @@ public final class ExampleBundleDelegateAutoBundle {
       this.args.putString("name", name);
     }
 
-    public @NonNull ExampleBundleDelegateAutoBundle.Builder number(int number) {
+    @NonNull
+    public ExampleBundleDelegateAutoBundle.Builder number(int number) {
       args.putInt("number", number);
       return this;
     }
 
-    public @NonNull ExampleBundleDelegateAutoBundle.Builder list(@Nullable ArrayList<String> list) {
+    @NonNull
+    public ExampleBundleDelegateAutoBundle.Builder list(@Nullable ArrayList<String> list) {
       if (list != null) {
         args.putStringArrayList("list", list);
       }
       return this;
     }
 
-    public @NonNull Bundle bundle() {
+    @NonNull
+    public Bundle bundle() {
       return args;
     }
   }

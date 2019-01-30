@@ -6,7 +6,8 @@ import java.lang.String;
 import java.util.Date;
 
 public final class ExampleFragmentAutoBundle {
-  public static @NonNull ExampleFragmentAutoBundle.Builder builder(@NonNull String title,
+  @NonNull
+  public static ExampleFragmentAutoBundle.Builder builder(@NonNull String title,
       @NonNull Date targetDate) {
     return new ExampleFragmentAutoBundle.Builder(title, targetDate);
   }
@@ -55,18 +56,21 @@ public final class ExampleFragmentAutoBundle {
       this.args.putLong("targetDate", targetDateConverter.convert(targetDate) );
     }
 
-    public @NonNull ExampleFragment build() {
+    @NonNull
+    public ExampleFragment build() {
       ExampleFragment fragment = new ExampleFragment();
       fragment.setArguments(args);
       return fragment;
     }
 
-    public @NonNull ExampleFragment build(@NonNull ExampleFragment fragment) {
+    @NonNull
+    public ExampleFragment build(@NonNull ExampleFragment fragment) {
       fragment.setArguments(args);
       return fragment;
     }
 
-    public @NonNull Bundle bundle() {
+    @NonNull
+    public Bundle bundle() {
       return args;
     }
   }
