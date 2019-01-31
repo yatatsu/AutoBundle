@@ -337,8 +337,8 @@ AutBundle provide this pattern as builder method instead of "createIntent".
 
 ```groovy
 dependencies {
-    compile 'com.github.yatatsu:autobundle:4.1.0'
-    annotationProcessor 'com.github.yatatsu:autobundle-processor:4.1.0'
+    compile 'com.github.yatatsu:autobundle:4.1.1'
+    annotationProcessor 'com.github.yatatsu:autobundle-processor:4.1.1'
 }
 ```
 
@@ -354,8 +354,8 @@ buildscript {
 apply plugin: 'android-apt'
 
 dependencies {
-    compile 'com.github.yatatsu:autobundle:4.1.0'
-    apt 'com.github.yatatsu:autobundle-processor:4.1.0'
+    compile 'com.github.yatatsu:autobundle:4.1.1'
+    apt 'com.github.yatatsu:autobundle-processor:4.1.1'
 }
 ```
 
