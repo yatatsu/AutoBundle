@@ -5,7 +5,7 @@ ext {
             desc: 'AutoBundle generates boilerplate code for field binding with android.os.Bundle',
             website: 'https://github.com/yatatsu/AutoBundle',
             repository: 'git@github.com:yatatsu/AutoBundle.git',
-            version: '5.0.0',
+            version: '5.0.2',
             licences: ['Apache-2.0'],
             developer: {
                 id 'yatatsu'
