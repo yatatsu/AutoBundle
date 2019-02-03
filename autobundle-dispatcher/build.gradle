@@ -2,7 +2,6 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion rootProject.ext.sdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
         minSdkVersion 1
@@ -15,5 +14,5 @@ android {
 }
 
 dependencies {
-    compile project(':autobundle-common')
+    implementation project(':autobundle-common')
 }

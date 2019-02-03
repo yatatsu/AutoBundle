@@ -1,7 +1,7 @@
 package com.yatatsu.autobundle.example;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import java.lang.String;
 import java.util.Date;
 

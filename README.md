@@ -104,7 +104,7 @@ If target class is subclass of these, builder can create intent.
 - `Service`
 - `BroadcastReceiver`
 
-Or if target is subclass of `android.app.Fragment` or `android.support.v4.app.Fragment`,
+Or if target is subclass of `android.app.Fragment` or `androidx.fragment.app.Fragment`,
 
 builder can create fragment.
 
@@ -297,16 +297,6 @@ android {
 }
 ```
 
-or with android-apt,
-
-```groovy
-apt {
-    arguments {
-        autoBundleAsLibrary 'com.yatatsu.example.library'
-    }
-}
-```
-
 You can use library module's binding from app module by `subDispatchers` option.
 Pass package name of library's dispatcher.
  (It maybe `your.package.AutoBundleBindingDispatcher`!)
@@ -339,23 +329,6 @@ AutBundle provide this pattern as builder method instead of "createIntent".
 dependencies {
     compile 'com.github.yatatsu:autobundle:4.1.1'
     annotationProcessor 'com.github.yatatsu:autobundle-processor:4.1.1'
-}
-```
-
-If your gradle plugin < 2.2, use `android-apt` plugin.
-
-```groovy
-buildscript {
-    dependencies {
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-    }
-}
-
-apply plugin: 'android-apt'
-
-dependencies {
-    compile 'com.github.yatatsu:autobundle:4.1.1'
-    apt 'com.github.yatatsu:autobundle-processor:4.1.1'
 }
 ```
 

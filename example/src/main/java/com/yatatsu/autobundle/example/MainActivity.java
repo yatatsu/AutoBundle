@@ -2,8 +2,8 @@ package com.yatatsu.autobundle.example;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 
@@ -16,16 +16,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Button button1 = (Button) findViewById(R.id.button_activity);
+        Button button1 = findViewById(R.id.button_activity);
         button1.setOnClickListener(this);
-        Button button2 = (Button) findViewById(R.id.button_fragment);
+        Button button2 = findViewById(R.id.button_fragment);
         button2.setOnClickListener(this);
-        Button button3 = (Button) findViewById(R.id.button_receiver);
+        Button button3 = findViewById(R.id.button_receiver);
         button3.setOnClickListener(this);
-        Button button4 = (Button) findViewById(R.id.button_service);
+        Button button4 = findViewById(R.id.button_service);
         button4.setOnClickListener(this);
     }
 

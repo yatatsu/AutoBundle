@@ -16,24 +16,24 @@ final m2Repository = "${androidSdkPath}/extras/android/m2repository"
 
 buildscript {
     repositories {
+        google()
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.1'
-        classpath 'com.novoda:bintray-release:0.3.4'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath 'com.android.tools.build:gradle:3.3.0'
+        classpath 'com.novoda:bintray-release:0.9'
     }
 }
 
 ext {
-    androidJar = fileTree(dir: "${androidSdkPath}/platforms/android-25/", include:  "android.jar")
-    sdkVersion = 25
-    buildToolsVersion = '25.0.2'
-    supportLibraryVersion = '25.1.0'
+    sdkVersion = 28
+    androidJar = fileTree(dir: "${androidSdkPath}/platforms/android-${sdkVersion}/", include:  "android.jar")
+    supportLibraryVersion = '1.0.0'
 }
 
 allprojects {
     repositories {
+        google()
         maven {
             url m2Repository
         }

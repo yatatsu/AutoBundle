@@ -1,12 +1,11 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion rootProject.ext.sdkVersion
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 25
+        targetSdkVersion rootProject.ext.sdkVersion
         versionCode 1
         versionName "1.0"
 
@@ -20,10 +19,9 @@ android {
 }
 
 dependencies {
-    compile "com.android.support:support-v4:${supportLibraryVersion}"
-    compile "com.android.support:support-annotations:${supportLibraryVersion}"
-    compile "com.android.support:appcompat-v7:${supportLibraryVersion}"
+    implementation "androidx.annotation:annotation:${supportLibraryVersion}"
+    implementation "androidx.appcompat:appcompat:${supportLibraryVersion}"
 
-    compile project(':autobundle')
+    implementation project(':autobundle')
     annotationProcessor project(':autobundle-processor')
 }

@@ -5,7 +5,6 @@ def metadata = rootProject.ext.metadata
 
 android {
     compileSdkVersion rootProject.ext.sdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
         minSdkVersion 1
@@ -21,13 +20,14 @@ android {
 }
 
 dependencies {
-    compile project(':autobundle-annotations')
-    compile project(':autobundle-common')
-    provided project(':autobundle-dispatcher')
-    compile "com.android.support:support-annotations:${supportLibraryVersion}"
+    api project(':autobundle-annotations')
+    api project(':autobundle-common')
+    compileOnly project(':autobundle-dispatcher')
+    implementation "androidx.annotation:annotation:${supportLibraryVersion}"
 }
 
 publish {
+    userOrg = 'yatatsu'
     groupId = metadata.groupId
     artifactId = 'autobundle'
     desc = metadata.desc

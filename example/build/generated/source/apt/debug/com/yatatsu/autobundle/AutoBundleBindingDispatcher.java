@@ -1,7 +1,7 @@
 package com.yatatsu.autobundle;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import com.yatatsu.autobundle.example.ExampleActivity;
 import com.yatatsu.autobundle.example.ExampleActivityAutoBundle;
 import com.yatatsu.autobundle.example.ExampleBroadcastReceiver;
@@ -24,28 +24,28 @@ public final class AutoBundleBindingDispatcher implements AutoBundleDispatcher {
 
   @Override
   public boolean bind(@NonNull Object target, @NonNull Bundle args) {
-    if (target instanceof ExampleActivity) {
-      ExampleActivityAutoBundle.bind((ExampleActivity)target, args);
-      return true;
-    }
-    if (target instanceof ExampleBroadcastReceiver) {
-      ExampleBroadcastReceiverAutoBundle.bind((ExampleBroadcastReceiver)target, args);
-      return true;
-    }
-    if (target instanceof ExampleBundleDelegate) {
-      ExampleBundleDelegateAutoBundle.bind((ExampleBundleDelegate)target, args);
+    if (target instanceof ExampleIntentService) {
+      ExampleIntentServiceAutoBundle.bind((ExampleIntentService)target, args);
       return true;
     }
     if (target instanceof ExampleFragment) {
       ExampleFragmentAutoBundle.bind((ExampleFragment)target, args);
       return true;
     }
-    if (target instanceof ExampleIntentService) {
-      ExampleIntentServiceAutoBundle.bind((ExampleIntentService)target, args);
+    if (target instanceof ExampleBundleDelegate) {
+      ExampleBundleDelegateAutoBundle.bind((ExampleBundleDelegate)target, args);
       return true;
     }
     if (target instanceof NullableExampleActivity) {
       NullableExampleActivityAutoBundle.bind((NullableExampleActivity)target, args);
+      return true;
+    }
+    if (target instanceof ExampleBroadcastReceiver) {
+      ExampleBroadcastReceiverAutoBundle.bind((ExampleBroadcastReceiver)target, args);
+      return true;
+    }
+    if (target instanceof ExampleActivity) {
+      ExampleActivityAutoBundle.bind((ExampleActivity)target, args);
       return true;
     }
     if (subDispatcher0.bind(target, args)) {
@@ -74,28 +74,28 @@ public final class AutoBundleBindingDispatcher implements AutoBundleDispatcher {
 
   @Override
   public boolean pack(@NonNull Object target, @NonNull Bundle args) {
-    if (target instanceof ExampleActivity) {
-      ExampleActivityAutoBundle.pack((ExampleActivity)target, args);
-      return true;
-    }
-    if (target instanceof ExampleBroadcastReceiver) {
-      ExampleBroadcastReceiverAutoBundle.pack((ExampleBroadcastReceiver)target, args);
-      return true;
-    }
-    if (target instanceof ExampleBundleDelegate) {
-      ExampleBundleDelegateAutoBundle.pack((ExampleBundleDelegate)target, args);
+    if (target instanceof ExampleIntentService) {
+      ExampleIntentServiceAutoBundle.pack((ExampleIntentService)target, args);
       return true;
     }
     if (target instanceof ExampleFragment) {
       ExampleFragmentAutoBundle.pack((ExampleFragment)target, args);
       return true;
     }
-    if (target instanceof ExampleIntentService) {
-      ExampleIntentServiceAutoBundle.pack((ExampleIntentService)target, args);
+    if (target instanceof ExampleBundleDelegate) {
+      ExampleBundleDelegateAutoBundle.pack((ExampleBundleDelegate)target, args);
       return true;
     }
     if (target instanceof NullableExampleActivity) {
       NullableExampleActivityAutoBundle.pack((NullableExampleActivity)target, args);
+      return true;
+    }
+    if (target instanceof ExampleBroadcastReceiver) {
+      ExampleBroadcastReceiverAutoBundle.pack((ExampleBroadcastReceiver)target, args);
+      return true;
+    }
+    if (target instanceof ExampleActivity) {
+      ExampleActivityAutoBundle.pack((ExampleActivity)target, args);
       return true;
     }
     if (subDispatcher0.pack(target, args)) {
