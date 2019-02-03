@@ -104,7 +104,7 @@ If target class is subclass of these, builder can create intent.
 - `Service`
 - `BroadcastReceiver`
 
-Or if target is subclass of `android.app.Fragment` or `android.support.v4.app.Fragment`,
+Or if target is subclass of `android.app.Fragment` or `androidx.fragment.app.Fragment`,
 
 builder can create fragment.
 
