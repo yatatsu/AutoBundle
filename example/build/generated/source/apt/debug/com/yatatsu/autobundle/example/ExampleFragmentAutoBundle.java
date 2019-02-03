@@ -7,8 +7,7 @@ import java.util.Date;
 
 public final class ExampleFragmentAutoBundle {
   @NonNull
-  public static ExampleFragmentAutoBundle.Builder builder(@NonNull String title,
-      @NonNull Date targetDate) {
+  public static ExampleFragmentAutoBundle.Builder builder(@NonNull String title, @NonNull Date targetDate) {
     return new ExampleFragmentAutoBundle.Builder(title, targetDate);
   }
 

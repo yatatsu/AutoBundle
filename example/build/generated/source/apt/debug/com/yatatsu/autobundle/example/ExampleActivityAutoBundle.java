@@ -13,8 +13,7 @@ import java.util.ArrayList;
 
 public final class ExampleActivityAutoBundle {
   @NonNull
-  public static ExampleActivityAutoBundle.Builder builder(@ExampleActivity.IntType int type2,
-      @NonNull String name) {
+  public static ExampleActivityAutoBundle.Builder builder(@ExampleActivity.IntType int type2, @NonNull String name) {
     return new ExampleActivityAutoBundle.Builder(type2, name);
   }
 

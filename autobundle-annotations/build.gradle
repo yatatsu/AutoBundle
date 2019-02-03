@@ -5,6 +5,7 @@ targetCompatibility = JavaVersion.VERSION_1_7
 sourceCompatibility = JavaVersion.VERSION_1_7
 
 publish {
+    userOrg = 'yatatsu'
     groupId = metadata.groupId
     artifactId = 'autobundle-annotations'
     desc = 'annotations for AutoBundle'

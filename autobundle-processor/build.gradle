@@ -29,6 +29,7 @@ dependencies {
 
 publish {
     def metadata = rootProject.ext.metadata
+    userOrg = 'yatatsu'
     groupId = metadata.groupId
     artifactId = 'autobundle-processor'
     desc = metadata.desc

@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
 
     defaultConfig {
         applicationId "com.yatatsu.autobundle.example"
@@ -32,20 +31,20 @@ android {
 }
 
 dependencies {
-    compile "com.android.support:support-v4:${supportLibraryVersion}"
-    compile "com.android.support:support-annotations:${supportLibraryVersion}"
-    compile "com.android.support:appcompat-v7:${supportLibraryVersion}"
-    compile "com.android.support:design:${supportLibraryVersion}"
+    implementation "com.android.support:support-v4:${supportLibraryVersion}"
+    implementation "com.android.support:support-annotations:${supportLibraryVersion}"
+    implementation "com.android.support:appcompat-v7:${supportLibraryVersion}"
+    implementation "com.android.support:design:${supportLibraryVersion}"
 
-    compile project(':autobundle')
+    implementation project(':autobundle')
     annotationProcessor project(':autobundle-processor')
-    compile project(':example-library-project')
-    compile project(':example-library-project2')
+    implementation project(':example-library-project')
+    implementation project(':example-library-project2')
 
-    compile "org.parceler:parceler-api:1.0.3"
+    implementation "org.parceler:parceler-api:1.0.3"
     annotationProcessor "org.parceler:parceler:1.0.3"
 
-    compile 'com.google.dagger:dagger:2.9'
+    implementation 'com.google.dagger:dagger:2.9'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.9'
-    provided 'javax.annotation:jsr250-api:1.0'
+    compileOnly 'javax.annotation:jsr250-api:1.0'
 }
