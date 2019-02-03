@@ -1,5 +1,4 @@
 apply plugin: 'java'
-apply plugin: 'com.novoda.bintray-release'
 
 targetCompatibility = JavaVersion.VERSION_1_8
 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -25,14 +24,5 @@ dependencies {
     testImplementation 'com.google.testing.compile:compile-testing:0.10'
 }
 
-publish {
-    def metadata = rootProject.ext.metadata
-    userOrg = 'yatatsu'
-    groupId = metadata.groupId
-    artifactId = 'autobundle-processor'
-    desc = metadata.desc
-    publishVersion = metadata.version
-    website = metadata.website
-    repository = metadata.repository
-    licences = metadata.licences
-}
+archivesBaseName = 'autobundle-processor'
+apply from: "${project.rootDir}/publish.gradle"

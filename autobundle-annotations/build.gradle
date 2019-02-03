@@ -1,16 +1,8 @@
 apply plugin: 'java'
-apply plugin: 'com.novoda.bintray-release'
 
 targetCompatibility = JavaVersion.VERSION_1_7
 sourceCompatibility = JavaVersion.VERSION_1_7
 
-publish {
-    userOrg = 'yatatsu'
-    groupId = metadata.groupId
-    artifactId = 'autobundle-annotations'
-    desc = 'annotations for AutoBundle'
-    publishVersion = metadata.version
-    website = metadata.website
-    repository = metadata.repository
-    licences = metadata.licences
-}
+archivesBaseName = 'autobundle-annotations'
+metadata.desc = 'annotations for AutoBundle'
+apply from: "${project.rootDir}/publish.gradle"

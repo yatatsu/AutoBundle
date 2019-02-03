@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'com.github.dcendents.android-maven'
 
 def metadata = rootProject.ext.metadata
 
@@ -26,13 +26,5 @@ dependencies {
     implementation "androidx.annotation:annotation:${supportLibraryVersion}"
 }
 
-publish {
-    userOrg = 'yatatsu'
-    groupId = metadata.groupId
-    artifactId = 'autobundle'
-    desc = metadata.desc
-    publishVersion = metadata.version
-    website = metadata.website
-    repository = metadata.repository
-    licences = metadata.licences
-}
+archivesBaseName = 'autobundle'
+apply from: "${project.rootDir}/publish.gradle"

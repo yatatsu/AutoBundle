@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'com.github.dcendents.android-maven'
 
 android {
     compileSdkVersion rootProject.ext.sdkVersion
@@ -16,13 +16,6 @@ android {
     }
 }
 
-publish {
-    userOrg = 'yatatsu'
-    groupId = metadata.groupId
-    artifactId = 'autobundle-common'
-    desc = 'common lib for AutoBundle'
-    publishVersion = metadata.version
-    website = metadata.website
-    repository = metadata.repository
-    licences = metadata.licences
-}
+archivesBaseName = 'autobundle-common'
+metadata.desc = 'common lib for AutoBundle'
+apply from: "${project.rootDir}/publish.gradle"
