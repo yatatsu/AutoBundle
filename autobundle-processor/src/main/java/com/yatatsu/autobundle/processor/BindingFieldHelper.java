@@ -63,17 +63,17 @@ class BindingFieldHelper {
 
     private static final List<String> SUPPORT_ANNOTATIONS = Arrays.asList(
             // TypeDef
-            "android.support.annotation.IntDef",
-            "android.support.annotation.StringDef",
+            "androidx.annotation.IntDef",
+            "androidx.annotation.StringDef",
             // Resource
-            "android.support.annotation.StringRes",
-            "android.support.annotation.DrawableRes",
-            "android.support.annotation.DimenRes",
-            "android.support.annotation.ColorRes",
-            "android.support.annotation.InterpolatorRes",
-            "android.support.annotation.AnyRes",
+            "androidx.annotation.StringRes",
+            "androidx.annotation.DrawableRes",
+            "androidx.annotation.DimenRes",
+            "androidx.annotation.ColorRes",
+            "androidx.annotation.InterpolatorRes",
+            "androidx.annotation.AnyRes",
             // Others
-            "android.support.annotation.ColorInt");
+            "androidx.annotation.ColorInt");
 
     static String getOperationName(TypeName target, Elements elements, Types types) {
         if (fieldTypes.containsKey(target)) {

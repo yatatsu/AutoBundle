@@ -31,7 +31,7 @@ class AutoBundleBinderWriter {
   private static final ClassName CLASS_DISPATCHER = ClassName.get(TARGET_PACKAGE_NAME, "AutoBundleDispatcher");
 
   private static final AnnotationSpec ANNOTATION_NONNULL
-          = AnnotationSpec.builder(ClassName.get("android.support.annotation", "NonNull")).build();
+          = AnnotationSpec.builder(ClassName.get("androidx.annotation", "NonNull")).build();
 
   AutoBundleBinderWriter(List<AutoBundleBindingClass> bindingClasses,
                          List<SubDispatcherHolder> subDispatcherHolders,

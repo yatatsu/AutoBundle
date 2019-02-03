@@ -1,13 +1,14 @@
 package com.yatatsu.autobundle.example;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import java.lang.String;
 import java.util.Date;
 
 public final class ExampleFragmentAutoBundle {
   @NonNull
-  public static ExampleFragmentAutoBundle.Builder builder(@NonNull String title, @NonNull Date targetDate) {
+  public static ExampleFragmentAutoBundle.Builder builder(@NonNull String title,
+      @NonNull Date targetDate) {
     return new ExampleFragmentAutoBundle.Builder(title, targetDate);
   }
 

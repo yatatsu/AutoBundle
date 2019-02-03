@@ -1,7 +1,7 @@
 package com.yatatsu.autobundle;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import com.yatatsu.autobundle.example.ExampleActivity;
 import com.yatatsu.autobundle.example.ExampleActivityAutoBundle;
 import com.yatatsu.autobundle.example.ExampleBroadcastReceiver;

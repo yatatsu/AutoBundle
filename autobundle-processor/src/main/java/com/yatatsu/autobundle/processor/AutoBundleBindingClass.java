@@ -14,7 +14,7 @@ import javax.lang.model.util.Types;
 
 class AutoBundleBindingClass {
     private static final String FRAGMENT = "android.app.Fragment";
-    private static final String SUPPORT_FRAGMENT = "android.support.v4.app.Fragment";
+    private static final String SUPPORT_FRAGMENT = "androidx.fragment.app.Fragment";
     private static final String ACTIVITY = "android.app.Activity";
     private static final String BROADCAST_RECEIVER = "android.content.BroadcastReceiver";
     private static final String SERVICE = "android.app.Service";

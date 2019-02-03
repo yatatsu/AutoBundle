@@ -3,8 +3,8 @@ package com.yatatsu.autobundle.example;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import java.lang.Boolean;
 import java.lang.CharSequence;
 import java.lang.Integer;
@@ -13,7 +13,8 @@ import java.util.ArrayList;
 
 public final class ExampleActivityAutoBundle {
   @NonNull
-  public static ExampleActivityAutoBundle.Builder builder(@ExampleActivity.IntType int type2, @NonNull String name) {
+  public static ExampleActivityAutoBundle.Builder builder(@ExampleActivity.IntType int type2,
+      @NonNull String name) {
     return new ExampleActivityAutoBundle.Builder(type2, name);
   }
 

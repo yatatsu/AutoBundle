@@ -28,9 +28,9 @@ class AutoBundleWriter {
     private static final ClassName CLASS_INTENT = ClassName.get("android.content", "Intent");
 
     private static final AnnotationSpec ANNOTATION_NONNULL
-            = AnnotationSpec.builder(ClassName.get("android.support.annotation", "NonNull")).build();
+            = AnnotationSpec.builder(ClassName.get("androidx.annotation", "NonNull")).build();
     private static final AnnotationSpec ANNOTATION_NULLABLE
-            = AnnotationSpec.builder(ClassName.get("android.support.annotation", "Nullable")).build();
+            = AnnotationSpec.builder(ClassName.get("androidx.annotation", "Nullable")).build();
 
     private static final String CLASS_NAME_BUILDER = "Builder";
 
