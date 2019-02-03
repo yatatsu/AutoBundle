@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion rootProject.ext.sdkVersion
 
     defaultConfig {
         applicationId "com.yatatsu.autobundle.example"
         minSdkVersion 16
-        targetSdkVersion 25
+        targetSdkVersion rootProject.ext.sdkVersion
         versionCode 1
         versionName "1.0"
 

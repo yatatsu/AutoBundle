@@ -26,9 +26,9 @@ buildscript {
 }
 
 ext {
-    androidJar = fileTree(dir: "${androidSdkPath}/platforms/android-25/", include:  "android.jar")
-    sdkVersion = 25
-    supportLibraryVersion = '25.1.0'
+    sdkVersion = 28
+    androidJar = fileTree(dir: "${androidSdkPath}/platforms/android-${sdkVersion}/", include:  "android.jar")
+    supportLibraryVersion = '28.0.0'
 }
 
 allprojects {
