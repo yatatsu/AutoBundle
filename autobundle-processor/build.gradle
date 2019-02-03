@@ -16,15 +16,13 @@ tasks.withType(Test) {
 }
 
 dependencies {
-    compile project(':autobundle-annotations')
-    compile 'com.squareup:javapoet:1.8.0'
+    implementation project(':autobundle-annotations')
+    implementation 'com.squareup:javapoet:1.9.0'
 
-    testCompile 'junit:junit:4.12'
-    testCompile 'com.google.android:support-v4:r7'
-    testCompile rootProject.ext.androidJar
-    testCompile "androidx.legacy:legacy-support-v4:${supportLibraryVersion}"
-    testCompile "androidx.annotation:annotation:${supportLibraryVersion}"
-    testCompile 'com.google.testing.compile:compile-testing:0.10'
+    testImplementation 'junit:junit:4.12'
+    testImplementation rootProject.ext.androidJar
+    testImplementation "androidx.annotation:annotation:${supportLibraryVersion}"
+    testImplementation 'com.google.testing.compile:compile-testing:0.10'
 }
 
 publish {

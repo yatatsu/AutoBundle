@@ -1,8 +1,8 @@
 package com.yatatsu.autobundle.example;
 
 
+import android.app.Fragment;
 import android.os.Parcelable;
-import androidx.fragment.app.Fragment;
 import android.util.SparseArray;
 
 import com.yatatsu.autobundle.AutoBundleField;
