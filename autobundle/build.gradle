@@ -23,7 +23,7 @@ dependencies {
     api project(':autobundle-annotations')
     api project(':autobundle-common')
     compileOnly project(':autobundle-dispatcher')
-    implementation "com.android.support:support-annotations:${supportLibraryVersion}"
+    implementation "androidx.annotation:annotation:${supportLibraryVersion}"
 }
 
 publish {

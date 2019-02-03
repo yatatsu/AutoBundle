@@ -1,6 +1,6 @@
 package com.yatatsu.example.library2;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.yatatsu.autobundle.AutoBundleField;
 

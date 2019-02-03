@@ -19,9 +19,8 @@ android {
 }
 
 dependencies {
-    implementation "com.android.support:support-v4:${supportLibraryVersion}"
-    implementation "com.android.support:support-annotations:${supportLibraryVersion}"
-    implementation "com.android.support:appcompat-v7:${supportLibraryVersion}"
+    implementation "androidx.annotation:annotation:${supportLibraryVersion}"
+    implementation "androidx.appcompat:appcompat:${supportLibraryVersion}"
 
     implementation project(':autobundle')
     annotationProcessor project(':autobundle-processor')
