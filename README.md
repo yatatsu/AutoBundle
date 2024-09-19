@@ -327,8 +327,8 @@ AutBundle provide this pattern as builder method instead of "createIntent".
 
 ```groovy
 dependencies {
-    compile 'com.github.yatatsu:autobundle:5.0.2'
-    annotationProcessor 'com.github.yatatsu:autobundle-processor:5.0.2'
+    compile 'com.github.yatatsu.autobundle:autobundle:5.0.2'
+    annotationProcessor 'com.github.yatatsu.autobundle:autobundle-processor:5.0.2'
 }
 ```
 
